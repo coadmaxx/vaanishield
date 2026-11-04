@@ -8,20 +8,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# vaaniguard Agent Rules & Architecture Directives
+# vaanishield Agent Rules & Architecture Directives
 
 ## 1. Core Mandate
-vaaniguard is a target-conditioned recorded-audio forensic system that streams 16-bit mono PCM audio at 16 kHz over WebSockets to a FastAPI forensic backend. The backend scores risk, detects synthetic audio/cloning, and enforces autonomous transaction interlocks.
+vaanishield is a target-conditioned recorded-audio forensic system that streams 16-bit mono PCM audio at 16 kHz over WebSockets to a FastAPI forensic backend. The backend scores risk, detects synthetic audio/cloning, and enforces autonomous transaction interlocks.
 
 ## 2. Separation of Concerns
-- **Backend owns the verdict & interlocks**: `vaaniguard-backend` computes the Bayesian fused risk score and determines whether an interlock is `ALLOW`, `CHALLENGE`, or `BLOCK`. The Next.js frontend only displays verdicts and locks controls accordingly.
-- **WebSocket Protocol contract**: Any changes to message fields or formats MUST match `docs/PROTOCOL.md`. Both `frontend/app/page.tsx` and `vaaniguard-backend/vaaniguard/server/app.py` must stay in sync with this protocol.
-- **Server-Side Alerting**: Outbound security webhooks (`vaaniguard/alerts/`) must execute server-side. Never dispatch alert webhooks or store webhook secrets in client code.
+- **Backend owns the verdict & interlocks**: `vaanishield-backend` computes the Bayesian fused risk score and determines whether an interlock is `ALLOW`, `CHALLENGE`, or `BLOCK`. The Next.js frontend only displays verdicts and locks controls accordingly.
+- **WebSocket Protocol contract**: Any changes to message fields or formats MUST match `docs/PROTOCOL.md`. Both `frontend/app/page.tsx` and `vaanishield-backend/vaanishield/server/app.py` must stay in sync with this protocol.
+- **Server-Side Alerting**: Outbound security webhooks (`vaanishield/alerts/`) must execute server-side. Never dispatch alert webhooks or store webhook secrets in client code.
 
 ## 3. Git & Hygiene
 - Keep `.opencode/`, `.workbuddy-ai/`, `.venv/`, and audio datasets out of git.
 - Adhere to `CONTRIBUTING.md` for branch naming, PR syncs, and verification steps.
-- **Push Target**: When requested to push code, always push to `https://github.com/BeastAyyG/vaaniguard` (remote `upstream`).
+- **Push Target**: When requested to push code, always push to `https://github.com/coadmaxx/vaanishield` (remote `upstream`).
 
 <!-- graft:start -->
 ## Graft — repo context graph

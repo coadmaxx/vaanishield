@@ -10,7 +10,7 @@ dev:
 	npm run dev --prefix frontend
 
 backend:
-	cd vanirakshak-backend && python run.py
+	cd -bavaanishieldckend && python run.py
 
 lint:
 	npm run lint --prefix frontend
@@ -25,10 +25,10 @@ check-docs:
 	python scripts/check_docs.py
 
 eval:
-	cd vanirakshak-backend && python -m vanirakshak eval
+	cd vaanishield-backend && python -m vaanishield eval
 
 bench:
-	cd vanirakshak-backend && python -m vanirakshak bench
+	cd vaanishield-backend && python -m vaanishield bench
 
 benchmarks:
 	python benchmarks/run_benchmarks.py
