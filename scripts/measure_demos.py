@@ -12,12 +12,12 @@ import time
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 sys.path.insert(0, str(BACKEND_ROOT))
 
 from fastapi.testclient import TestClient  # noqa: E402
 
-from vaaniguard.server.app import app  # noqa: E402
+from vaanishield.server.app import app  # noqa: E402
 
 DEMOS = [
     "demo_01_genuine.wav",

@@ -1,4 +1,4 @@
-"""vaaniguard End-to-End (E2E) Test Suite.
+"""vaanishield End-to-End (E2E) Test Suite.
 
 Covers Tiers 1 through 4 across all 19 system features:
 - Tier 1: Feature Coverage (>=5 tests per feature)

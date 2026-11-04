@@ -209,8 +209,8 @@ def _t2(ctx: Ctx, device: str) -> dict:
     if device == "cpu":
         env["CUDA_VISIBLE_DEVICES"] = ""
     ctx.progress(0, 1, f"probing loaded backends on {device}")
-    probe = ("import sys; sys.path.insert(0, 'vaaniguard-backend'); "
-             "from vaaniguard.detectors.pipeline import DetectionPipeline as P; p = P(); "
+    probe = ("import sys; sys.path.insert(0, 'vaanishield-backend'); "
+             "from vaanishield.detectors.pipeline import DetectionPipeline as P; p = P(); "
              "print('LOADED_BACKENDS', p.asv.name, p.cm.name, getattr(p.cm, 'operating_threshold', None))")
     ctx.run([PY, "-c", probe], env=env, timeout=1800)
     ctx.progress(0, 1, f"integration_check on {device}")
@@ -513,10 +513,10 @@ def _pad(x: np.ndarray, seed: int) -> np.ndarray:
 
 
 def w2c_hindi_asr(ctx: Ctx) -> dict:
-    sys.path.insert(0, str(REPO / "vaaniguard-backend"))
-    from vaaniguard.challenge.engine import extract_digits
-    from vaaniguard.challenge.transcribe import ChallengeTranscriber
-    from vaaniguard.data.synthetic import synthetic_spoofed
+    sys.path.insert(0, str(REPO / "vaanishield-backend"))
+    from vaanishield.challenge.engine import extract_digits
+    from vaanishield.challenge.transcribe import ChallengeTranscriber
+    from vaanishield.data.synthetic import synthetic_spoofed
 
     ffmpeg = _ffmpeg()
     if not ffmpeg:

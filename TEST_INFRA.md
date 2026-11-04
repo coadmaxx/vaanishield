@@ -1,8 +1,8 @@
-# vaaniguard E2E Test Infrastructure Specification
+# vaanishield E2E Test Infrastructure Specification
 
 ## 1. Test Philosophy: Opaque-Box & Requirement-Driven
 
-The end-to-end (E2E) testing framework for vaaniguard enforces strict **opaque-box, requirement-driven verification**. System components are evaluated across operational boundaries (network interfaces, protocol envelopes, serialization contracts, and statistical inference bounds) rather than implementation-specific internals.
+The end-to-end (E2E) testing framework for vaanishield enforces strict **opaque-box, requirement-driven verification**. System components are evaluated across operational boundaries (network interfaces, protocol envelopes, serialization contracts, and statistical inference bounds) rather than implementation-specific internals.
 
 ### Authoritative Derivation
 
@@ -60,7 +60,7 @@ The test suite provides end-to-end verification for all 19 features across the p
 | **F13** | Per-Attack Breakdown | M5 | Disaggregated forensic metrics segmented across individual spoof attack classes (A01–A28) |
 | **F14** | Bayesian Risk Calibration | M5 | Logistic regression fitting for `VG_FUSION_W_CM` and `VG_FUSION_BIAS` with fixed offset bounds |
 | **F15** | Live Detector Integration | M6 | `CMModelAASIST` loading under `VG_CM_BACKEND=aasist`, graceful fallback, LLR transformation |
-| **F16** | Backend Unit Test Suite | M6 | 100% test pass on all backend unit tests (`vaaniguard-backend/tests/`) |
+| **F16** | Backend Unit Test Suite | M6 | 100% test pass on all backend unit tests (`vaanishield-backend/tests/`) |
 | **F17** | Integration Check Verification | M6 | `scripts/integration_check.py` end-to-end slice verification (health, analyze, verify, audit, stream) |
 | **F18** | Documentation Audit | M6 | `scripts/check_docs.py` zero hard failures (strict path checking, VG_* env parity, protocol keys) |
 | **F19** | WebSocket Protocol Conformance | M6 | `docs/PROTOCOL.md` contract (text handshake, 1003 rejection, session_ack, sliding window verdicts) |
@@ -134,5 +134,5 @@ A test run is considered successful if and only if:
 2. All Tier 2 boundary/corner tests pass (>= 95/95).
 3. All Tier 3 cross-feature combination tests pass.
 4. All Tier 4 real-world scenario tests pass.
-5. Zero regressions are introduced to existing backend unit tests (`vaaniguard-backend/tests/`).
+5. Zero regressions are introduced to existing backend unit tests (`vaanishield-backend/tests/`).
 6. Exit code is 0.

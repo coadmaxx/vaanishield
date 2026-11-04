@@ -1,4 +1,4 @@
-"""vaaniguard — ASVspoof-5 Loss Functions & Objective Formulations.
+"""vaanishield — ASVspoof-5 Loss Functions & Objective Formulations.
 
 Provides:
   1. AdditiveMarginSoftmaxLoss (AM-Softmax): Enforces an angular separation margin

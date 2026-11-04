@@ -1,8 +1,8 @@
-# vaaniguard
+# vaanishield
 
 **Real-time protection against AI voice-clone fraud on live calls.**
 
-vaaniguard listens to a call as it happens, decides whether the voice is
+vaanishield listens to a call as it happens, decides whether the voice is
 genuinely who it claims to be, and can hold a transaction mid-call when it isn't —
 before the money moves.
 
@@ -25,7 +25,7 @@ before the money moves.
   two headless emulators: 75 s bidirectional call, 95 verdict frames.
 - **Trained countermeasure**: WavLM-base-plus Layer-5 frontend + AASIST-L head,
   production threshold 21.9308. All 33 training checkpoints are backed up in the
-  private Hugging Face repo BeastAgpandey/vaaniguard-weights.
+  private Hugging Face repo BeastAgpandey/vaanishield-weights.
 - **Still ahead**: background incoming-call ringing (needs Firebase FCM) and
   PSTN call screening through a SIP/CPaaS layer.
 

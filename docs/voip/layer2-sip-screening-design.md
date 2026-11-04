@@ -1,12 +1,12 @@
-# Layer-2 PSTN Screening Design: "vaaniguard Call" Internet Calling
+# Layer-2 PSTN Screening Design: "vaanishield Call" Internet Calling
 
 Status: Phase 5, design plus code skeleton only. No accounts created, no provider credentials touched, no lab-beast access used. All provider facts in this document are either cited against current provider documentation or marked TBD.
 
 ## 1. What Layer-2 is
 
-Layer-1 (parallel workstream): in-app WebRTC calling between two vaaniguard users, app to app over the internet.
+Layer-1 (parallel workstream): in-app WebRTC calling between two vaanishield users, app to app over the internet.
 
-Layer-2 (this document): screening REAL unknown callers arriving from the public phone network. The user forwards unknown cellular calls to a vaaniguard screening number rented from a CPaaS provider. The provider answers the PSTN call, hands live audio to our screening server over a WebSocket media stream, we score the audio with the existing AASIST-L / WavLM scorer (operating threshold LLR 21.9308, bonafide about +26 and spoof about -35, verified 2026-10), and then:
+Layer-2 (this document): screening REAL unknown callers arriving from the public phone network. The user forwards unknown cellular calls to a vaanishield screening number rented from a CPaaS provider. The provider answers the PSTN call, hands live audio to our screening server over a WebSocket media stream, we score the audio with the existing AASIST-L / WavLM scorer (operating threshold LLR 21.9308, bonafide about +26 and spoof about -35, verified 2026-10), and then:
 
 - ALLOW: bridge the call to the user's app (or the user's real phone number),
 - CHALLENGE: play a spoken challenge (random phrase to repeat, or a DTMF digit to press) and rescore,
@@ -123,7 +123,7 @@ Edge cases in scoring:
 
 Played at answer time, before any analysis. Draft script (English; Hindi version TBD):
 
-"This call is answered by vaaniguard, a call screening service. Your voice will be analyzed for authenticity before the call is connected. This call is not recorded. If you do not agree, please hang up now."
+"This call is answered by vaanishield, a call screening service. Your voice will be analyzed for authenticity before the call is connected. This call is not recorded. If you do not agree, please hang up now."
 
 Requirements on the notice:
 - It must complete before caller audio is sent to the scorer (consent precedes processing, DPDP Act section 6: consent must be free, specific, informed, unconditional, and unambiguous).

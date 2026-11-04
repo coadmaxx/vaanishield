@@ -1,5 +1,5 @@
 """
-Groq Whisper ASR Provider for vaaniguard
+Groq Whisper ASR Provider for vaanishield
 Powered by Groq Cloud LPU Inference (model: whisper-large-v3-turbo)
 
 Delivers state-of-the-art multi-lingual speech-to-text with sub-second latency
@@ -28,7 +28,7 @@ from .provider import ASRProvider
 from .types import TranscriptionResult, ASRConfig
 from .transliteration import HinglishTransliterationService
 
-logger = logging.getLogger("vaaniguard.asr.groq")
+logger = logging.getLogger("vaanishield.asr.groq")
 
 # Default Groq Whisper model
 DEFAULT_GROQ_MODEL = "whisper-large-v3-turbo"
@@ -232,7 +232,7 @@ class GroqWhisperASR(ASRProvider):
             "language": lang_display,
             # Groq verbose_json returns no language confidence — None, not a
             # fabricated 0.99. No consumer reads this key (nothing in
-            # vaaniguard-backend references language_probability).
+            # vaanishield-backend references language_probability).
             "language_probability": None,
             "duration": round(duration, 2),
             "inference_sec": round(inference_sec, 3),

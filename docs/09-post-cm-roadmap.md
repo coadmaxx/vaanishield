@@ -31,7 +31,7 @@ is a log of who was scored and when.
 
 ### 2. The semantic layer contradicts the zero-retention claim
 
-`vaaniguard/semantic/signal.py` uploads the caller's 4.04 s audio window to
+`vaanishield/semantic/signal.py` uploads the caller's 4.04 s audio window to
 **Groq**, a third-party US cloud, for transcription. Meanwhile
 `GET /v1/health` reports `zero_retention: true` and every `/analyze` response
 carries `dpdp_compliance.zero_retention_verified: true` citing DPDP Act 2023
@@ -45,7 +45,7 @@ consented to it in any flow this repo implements.
 
 Options, in descending order of honesty:
 - Run ASR on-device/on-prem (the OpenVINO Whisper path in
-  **vaaniguard SACH** already demonstrates local transcription) and drop the
+  **vaanishield SACH** already demonstrates local transcription) and drop the
   cloud dependency for the semantic layer entirely.
 - Keep Groq but make it opt-in per session, disclosed in the UI, off by
   default, and reword the health/DPDP fields to say exactly what is and is
@@ -61,7 +61,7 @@ consent from the data principal; the *other* party to the call is a data
 principal too, and there is no flow anywhere in this repo that obtains,
 records, or evidences their consent — `data/consent/` holds disclosures but
 nothing enforces them at runtime. The Android guard
-(**vaaniguard Kavach**) makes this sharper, since it captures during real
+(**vaanishield Kavach**) makes this sharper, since it captures during real
 calls, and app-store policy on call recording is its own separate constraint.
 
 This is a legal-review item, not an engineering one. It should be answered

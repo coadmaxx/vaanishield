@@ -1,15 +1,15 @@
-# vaaniguard Kavach (Android) — Design & Architecture
+# vaanishield Kavach (Android) — Design & Architecture
 
 > Replaces a stray "Pinterest design-system analysis" that was previously
-> committed under this filename and had nothing to do with vaaniguard.
+> committed under this filename and had nothing to do with vaanishield.
 
 **Package:** `com.vericall`
-**Module dir:** `vaaniguard-android/`
+**Module dir:** `vaanishield-android/`
 **Role in the system:** the on-device call-guard client. It owns the microphone
-during a live call, ships audio to the vaaniguard forensic backend, and
+during a live call, ships audio to the vaanishield forensic backend, and
 enforces the autonomous interlock (ALLOW / CHALLENGE / BLOCK) on the handset.
 
-The web console (`frontend/`) and the FastAPI engine (`vaaniguard-backend/`)
+The web console (`frontend/`) and the FastAPI engine (`vaanishield-backend/`)
 are the rest of the system. **The server owns the verdict** — the phone renders
 and enforces it, it does not compute it locally.
 
@@ -114,7 +114,7 @@ must degrade to "unavailable" rather than faking a result.
   spectral diff ratio), never trained or validated against real synthetic/
   cloned audio — the same category of limitation as the Python `cm.py` stub,
   but a **separate, unreconciled implementation**: it shares no code, weights,
-  or calibration with `vaaniguard-backend/vaaniguard/detectors/`. The phone
+  or calibration with `vaanishield-backend/vaanishield/detectors/`. The phone
   and the backend can disagree about the same audio and nothing reconciles it.
   Full writeup: `docs/archive/AUDIT_REPORT.md` §12.3.
 - The one thing that *is* backend-authoritative is `VaniSpeakerVerifier`'s
@@ -157,7 +157,7 @@ controller.
       `adb reverse` dependency — `adb reverse` remains the default path).
 
 ### Open
-- [ ] `Payment_Source_Code.zip` and `vaaniguard_app-debug.apk` sit untracked in
+- [ ] `Payment_Source_Code.zip` and `vaanishield_app-debug.apk` sit untracked in
       the working tree; `*.apk` is now gitignored. Consider deleting them — they
       are regenerable local artifacts, not source.
 - [ ] This module's build files were fixed without a compiling environment:

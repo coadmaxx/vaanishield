@@ -1,18 +1,18 @@
-# vaaniguard - development and test environment
+# vaanishield - development and test environment
 #
 # Why this file exists: the repo previously had no single manifest that could
 # bootstrap it. Dependencies were split across backend/requirements.txt,
-# ml/requirements.txt and vaaniguard-backend/requirements.txt, and NONE of them
+# ml/requirements.txt and vaanishield-backend/requirements.txt, and NONE of them
 # included pytest -- so `make test` (which runs bare `pytest`) could never work
 # on a clean checkout.
 #
 # This manifest installs enough to run `pytest` (15 tests, pytest.ini's
-# testpaths = vaaniguard-backend/tests) and to boot the one live backend
-# (vaaniguard-backend/). It does NOT by itself cover the root-level tests/
+# testpaths = vaanishield-backend/tests) and to boot the one live backend
+# (vaanishield-backend/). It does NOT by itself cover the root-level tests/
 # directory (18 more tests, the ASR stack) -- that additionally needs `groq`
 # and `python-dotenv` from the root requirements.txt, which `make setup` does
 # not install. Run `pip install -r requirements.txt` too if you're touching
-# backend/services/asr/ or vaaniguard/semantic/.
+# backend/services/asr/ or vaanishield/semantic/.
 #
 #   pip install -r requirements-dev.txt
 #
@@ -29,7 +29,7 @@ pytest>=8.0
 numpy>=1.24
 scipy>=1.10
 
-# --- vaaniguard-backend (deterministic-stub realtime service) ---------------
+# --- vaanishield-backend (deterministic-stub realtime service) ---------------
 fastapi>=0.115
 uvicorn[standard]>=0.30
 pydantic>=2.9
@@ -41,7 +41,7 @@ websockets>=12.0
 # The standalone backend/ server these were originally installed for has been
 # retired (backend/README.md) -- backend/app/models/{ecapa_verifier,
 # wavlm_detector}.py now serve as shared modules imported by
-# vaaniguard/detectors/{asv_ecapa,cm_wavlm}.py (VG_ASV_BACKEND=ecapa,
+# vaanishield/detectors/{asv_ecapa,cm_wavlm}.py (VG_ASV_BACKEND=ecapa,
 # VG_CM_BACKEND=wavlm) and by ml_bridge.py (the ml/ identity model, MFCC
 # features via librosa). None of this is required for the default,
 # zero-dependency stub detectors -- only for the real backends and

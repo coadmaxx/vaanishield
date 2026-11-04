@@ -1,5 +1,5 @@
 """
-Hinglish / Romanization Service for vaaniguard ASR
+Hinglish / Romanization Service for vaanishield ASR
 
 Converts canonical native Devanagari Hindi transcripts into clean, natural Romanized
 Hinglish while strictly PRESERVING English words, banking terminology, and fraud keywords:

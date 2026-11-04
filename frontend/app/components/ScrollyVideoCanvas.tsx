@@ -32,7 +32,7 @@ const STAGES: StageInfo[] = [
     title: "Edge-First Audio Ingestion",
     subtitle: "Lossless acoustic capture & spectral baseline calibration",
     description:
-      "vaaniguard hooks directly into the incoming raw audio stream, sampling micro-transients and background acoustic ambient profiles with zero buffer lag.",
+      "vaanishield hooks directly into the incoming raw audio stream, sampling micro-transients and background acoustic ambient profiles with zero buffer lag.",
     stats: [
       { label: "Capture Latency", value: "< 12 ms" },
       { label: "Sample Depth", value: "16-bit PCM" },

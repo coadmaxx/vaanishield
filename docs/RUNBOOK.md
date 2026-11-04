@@ -1,4 +1,4 @@
-# vaaniguard — Operations Runbook
+# vaanishield — Operations Runbook
 
 ## Starting the Stack
 
@@ -8,7 +8,7 @@
 npm run dev:all
 ```
 
-`scripts/dev.js` creates `vaaniguard-backend/.venv` on first run, boots the
+`scripts/dev.js` creates `vaanishield-backend/.venv` on first run, boots the
 backend on :8000, waits for `/api/v1/health`, then starts the frontend on
 :3001 with `NEXT_PUBLIC_BACKEND_URL`/`NEXT_PUBLIC_BACKEND_WS` pointed at it.
 This is what `.claude/launch.json` uses. **Runs the deterministic stub
@@ -22,7 +22,7 @@ evaluating detection quality.
 npm run dev:all:real
 ```
 
-Same launcher with `--real`: installs `vaaniguard-backend/requirements-asv.txt`
+Same launcher with `--real`: installs `vaanishield-backend/requirements-asv.txt`
 into the venv (~one extra `pip install`, first run only) and sets
 `VG_ASV_BACKEND=ecapa` / `VG_CM_BACKEND=aasist` unless you already exported
 either yourself. Both models download pretrained weights from Hugging Face on
@@ -33,7 +33,7 @@ the health-check timeout is longer under `--real`. `GET /api/v1/health`'s
 ### Backend only (port 8000)
 
 ```bash
-cd vaaniguard-backend
+cd vaanishield-backend
 pip install -r requirements.txt
 python run.py
 ```
@@ -62,14 +62,14 @@ curl http://localhost:8000/api/v1/health
 ### WebSocket Protocol Conformance
 
 ```bash
-cd vaaniguard-backend
+cd vaanishield-backend
 python tests/test_stream_e2e.py
 ```
 
 ### Backend Unit Tests
 
 ```bash
-cd vaaniguard-backend
+cd vaanishield-backend
 python -m pytest tests/ -v
 ```
 
@@ -90,7 +90,7 @@ already-running server instead.
 ### Real detector backends (optional, verified working)
 
 ```bash
-cd vaaniguard-backend
+cd vaanishield-backend
 pip install -r requirements-asv.txt --extra-index-url https://download.pytorch.org/whl/cpu
 set VG_ASV_BACKEND=ecapa
 set VG_CM_BACKEND=aasist
@@ -129,7 +129,7 @@ heuristic fallback.
 # 1. Real detectors: npm run dev:all:real (see above) instead of the four
 #    lines this used to be — installs requirements-asv.txt and sets both
 #    env vars for you. Manual equivalent, for a backend-only launch:
-#    pip install -r vaaniguard-backend/requirements-asv.txt
+#    pip install -r vaanishield-backend/requirements-asv.txt
 #    $env:VG_ASV_BACKEND="ecapa"; $env:VG_CM_BACKEND="aasist"
 # 2. Trained countermeasure — Available via data/cm_aasist.pt (dev EER 16.415%, minDCF 0.9912;
 #    codec/telephony-augmented retrain — see docs/08 §12.1 for the tradeoff vs the 10.404% pre-aug run).
@@ -160,13 +160,13 @@ python scripts/check_docs.py
 Verifies every file path and `VG_*` environment variable a doc mentions
 actually exists, and that documented WebSocket verdict keys match what
 `test_stream_e2e.py` asserts. Run after touching `docs/PROTOCOL.md`,
-`docs/API_SPEC.md`, or `vaaniguard/config.py`.
+`docs/API_SPEC.md`, or `vaanishield/config.py`.
 
 ### Synthetic Evaluation Harness
 
 ```bash
-cd vaaniguard-backend
-python -m vaaniguard eval
+cd vaanishield-backend
+python -m vaanishield eval
 ```
 
 ### Frontend Lint + Build
@@ -223,13 +223,13 @@ hard way:
   `inference_ms` is a real per-`push_chunk` wall-clock timing;
   `speech_ratio`/`is_voiced` come from a simple short-time-energy VAD and
   `zcr_variance` from per-frame zero-crossing variance
-  (`vaaniguard/detectors/voice.py`) — honest signal-energy heuristics, not
+  (`vaanishield/detectors/voice.py`) — honest signal-energy heuristics, not
   a trained VAD, so treat them as indicative, not ground truth.
 - **The impostor label and the impostor interlock use different
   thresholds (decided).** `/analyze`'s `IMPOSTOR_SPEAKER` verdict label fires below
   `mean_speaker_sim < 0.40` (report-level identity: "not the enrolled voice");
   the actual `BLOCK` override (`VG_IMPOSTOR_BLOCK_BELOW`, default `0.10` in
-  `vaaniguard/config.py`, enforced in `risk/fusion.py`) fires only on decisive
+  `vaanishield/config.py`, enforced in `risk/fusion.py`) fires only on decisive
   mismatch. A clip in `[0.10, 0.40)` is therefore *labelled* `IMPOSTOR_SPEAKER`
   while its *tier* stays `CHALLENGE` — label states identity, tier states
   interlock action. Kept split deliberately; do not "fix" by aligning the
@@ -249,13 +249,13 @@ hard way:
   or for unfetchable (no-CORS) sources. Colors and boundary markers were
   always data-driven.
 - **Standalone prototypes are a different product from the acoustic
-  pipeline above, and none is wired into it.** `vaaniguard_sotto/` —
-  **vaaniguard SACH** — is now verified working end-to-end (Groq Whisper +
+  pipeline above, and none is wired into it.** `vaanishield_sotto/` —
+  **vaanishield SACH** — is now verified working end-to-end (Groq Whisper +
   Gemini threat detection + Crawl4AI web grounding + Gemini fact
   verification, `GEMINI_API_KEY` set, `google-genai`/`crawl4ai` installed;
-  run with `cd vaaniguard_sotto && python server.py`, port 8082).
-  `vaaniguard_indic_conformer/` now boots too — verified via TestClient:
-  `/api/health` returns 200 as "vaaniguard IndicConformer Edition v2.2"
+  run with `cd vaanishield_sotto && python server.py`, port 8082).
+  `vaanishield_indic_conformer/` now boots too — verified via TestClient:
+  `/api/health` returns 200 as "vaanishield IndicConformer Edition v2.2"
   (Groq Whisper LPU with an Indic adaptation), and its Gemini client
   constructs, once a `.env` carrying `GEMINI_API_KEY` sits beside it (its
   loader walks `.` then two parents; there is no repo-root `.env`, so the

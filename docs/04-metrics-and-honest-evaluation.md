@@ -2,7 +2,7 @@
 
 ## 1. The ASVspoof 5 Metric Suite
 
-Forensic voice evaluation requires evaluation metrics that reflect asymmetric operational costs in security applications. Unlike simple classification accuracy or Area Under the ROC Curve (AUC)—which assume balanced priors and symmetric misclassification costs—vaaniguard adopts the official **ASVspoof 5 Challenge metric suite**.
+Forensic voice evaluation requires evaluation metrics that reflect asymmetric operational costs in security applications. Unlike simple classification accuracy or Area Under the ROC Curve (AUC)—which assume balanced priors and symmetric misclassification costs—vaanishield adopts the official **ASVspoof 5 Challenge metric suite**.
 
 The four primary metrics implemented in the evaluation harness are:
 1. **$\text{minDCF}$** (Minimum Detection Cost Function)
@@ -93,13 +93,13 @@ While less clinically tied to operational banking costs than $\text{minDCF}$, $\
 The evaluation harness is accessible via the CLI command:
 
 ```bash
-python -m vaaniguard eval
+python -m vaanishield eval
 # or
 python run.py eval
 ```
 
 ### Module References
-- **Harness Driver:** [`vaaniguard-backend/vaaniguard/cli/eval_synth.py`](file:///d:/vaaniguard/vaaniguard-backend/vaaniguard/cli/eval_synth.py)
+- **Harness Driver:** [`vaanishield-backend/vaanishield/cli/eval_synth.py`](file:///d:/vaanishield/vaanishield-backend/vaanishield/cli/eval_synth.py)
 - **Metric Computation Module:** `benchmarks/compute_mindcf.py` (which exposes `evaluate_system(bonafide_scores, spoof_scores)` and `print_metrics(results)`).
 
 The harness executes the following protocol:
@@ -113,12 +113,12 @@ The harness executes the following protocol:
 
 ## 3. Honest Evaluation Philosophy
 
-A core tenet of the vaaniguard engineering culture is **absolute technical honesty**:
+A core tenet of the vaanishield engineering culture is **absolute technical honesty**:
 
 > [!CAUTION]
 > **Synthetic Data + Synthetic Detectors $\neq$ Real-World Accuracy Claims**
 > 
-> Running `python -m vaaniguard eval` evaluates synthetic DSP audio against deterministic synthetic detector stubs. This test is intended **strictly for validating harness wiring, score plumbing, pipeline data structures, and metric calculations**.
+> Running `python -m vaanishield eval` evaluates synthetic DSP audio against deterministic synthetic detector stubs. This test is intended **strictly for validating harness wiring, score plumbing, pipeline data structures, and metric calculations**.
 > 
 > We explicitly do **NOT** cite these numbers as claims of 95%+ real-world deepfake detection accuracy against modern zero-day commercial neural voice clones (such as ElevenLabs, XTTS, or OpenVoice). Claiming production detection accuracy based on synthetic stubs is scientific fraud.
 
@@ -149,12 +149,12 @@ Real-time transaction interception requires strict latency boundaries: a banking
 The latency suite is executed via:
 
 ```bash
-python -m vaaniguard bench
+python -m vaanishield bench
 # or
 python run.py bench
 ```
 
-Implemented in [`vaaniguard-backend/vaaniguard/cli/bench.py`](file:///d:/vaaniguard/vaaniguard-backend/vaaniguard/cli/bench.py), the benchmark simulates 200 consecutive 1.0-second hops fed into a stateful `CallSession` with enrollment, sliding buffer ingestion, 4-layer forensic scoring, Bayesian fusion, audit logging, and challenge evaluation.
+Implemented in [`vaanishield-backend/vaanishield/cli/bench.py`](file:///d:/vaanishield/vaanishield-backend/vaanishield/cli/bench.py), the benchmark simulates 200 consecutive 1.0-second hops fed into a stateful `CallSession` with enrollment, sliding buffer ingestion, 4-layer forensic scoring, Bayesian fusion, audit logging, and challenge evaluation.
 
 ### Latency Profile (Single-Thread CPU Execution)
 

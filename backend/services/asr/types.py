@@ -1,5 +1,5 @@
 """
-vaaniguard ASR - Data Models and Configuration Types
+vaanishield ASR - Data Models and Configuration Types
 """
 
 from dataclasses import dataclass, field

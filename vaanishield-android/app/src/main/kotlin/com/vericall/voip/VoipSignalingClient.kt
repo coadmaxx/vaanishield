@@ -12,7 +12,7 @@ import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 /**
- * JSON-over-WebSocket client for the VaniRakshak Call signaling server
+ * JSON-over-WebSocket client for the vaanishield Call signaling server
  * (ws://host:8001/ws/signal). Wire protocol is documented in
  * hidden_files/voip-build/SIGNALING_PROTOCOL.md. Text frames only.
  */

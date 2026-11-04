@@ -1,4 +1,4 @@
-"""vaaniguard — Batch & CLI Feature Extraction Pipeline
+"""vaanishield — Batch & CLI Feature Extraction Pipeline
 Compliant with DPDP Act 2023 Section 8(7) (Zero-retention voice processing).
 
 Features:
@@ -36,7 +36,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logger = logging.getLogger("vaaniguard.extract_features")
+logger = logging.getLogger("vaanishield.extract_features")
 
 
 def extract_mfcc_features(
@@ -94,7 +94,7 @@ def batch_extract_manifest(
                 rows.append(cleaned)
 
     print("\n" + "=" * 65)
-    print("  [vaaniguard MFCC FEATURE EXTRACTION]")
+    print("  [vaanishield MFCC FEATURE EXTRACTION]")
     print("=" * 65)
     print(f" Manifest Source : {manifest_path}")
     print(f" Data Directory  : {data_dir}")
@@ -155,7 +155,7 @@ def batch_extract_manifest(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="vaaniguard — Acoustic Feature Extraction (MFCC & WavLM Vectors)"
+        description="vaanishield — Acoustic Feature Extraction (MFCC & WavLM Vectors)"
     )
     # Batch MFCC Manifest Mode
     parser.add_argument(

@@ -1,5 +1,5 @@
 """
-AI4Bharat IndicConformer ASR Provider for vaaniguard
+AI4Bharat IndicConformer ASR Provider for vaanishield
 
 Official Reference:
 - AI4Bharat IndicConformerASR: https://github.com/AI4Bharat/IndicConformerASR
@@ -23,7 +23,7 @@ from .provider import ASRProvider
 from .types import TranscriptionResult, ASRConfig
 from .transliteration import HinglishTransliterationService
 
-logger = logging.getLogger("vaaniguard.asr.indicconformer")
+logger = logging.getLogger("vaanishield.asr.indicconformer")
 
 
 class IndicConformerASR(ASRProvider):

@@ -10,7 +10,7 @@
   "phase": "2",
   "models": {
     "incumbent": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_aasist.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_aasist.pt",
       "checkpoint_sha256": "84390b55174a0059",
       "layer_index": null,
       "seed": null,
@@ -57,7 +57,7 @@
       "score_dump": "C:\\vr-out\\p2\\gate\\incumbent.npz"
     },
     "layer5": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_aasist_layer5.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_aasist_layer5.pt",
       "checkpoint_sha256": "a97e101578080d8a",
       "layer_index": 5,
       "seed": null,
@@ -104,7 +104,7 @@
       "score_dump": "C:\\vr-out\\p2\\gate\\layer5.npz"
     },
     "S42": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_docs20_armb_s42.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_docs20_armb_s42.pt",
       "checkpoint_sha256": "b4acbaf82f300850",
       "layer_index": 5,
       "seed": 42,
@@ -155,7 +155,7 @@
       "score_dump": "C:\\vr-out\\p2\\gate\\S42.npz"
     },
     "S43": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_docs20_armb_s43.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_docs20_armb_s43.pt",
       "checkpoint_sha256": "a74c5ea7daf4d8af",
       "layer_index": 5,
       "seed": 43,
@@ -206,7 +206,7 @@
       "score_dump": "C:\\vr-out\\p2\\gate\\S43.npz"
     },
     "B42": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_g4_control_s42.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_g4_control_s42.pt",
       "checkpoint_sha256": "001cfc1a1a0526fa",
       "layer_index": 5,
       "seed": 42,
@@ -257,7 +257,7 @@
       "score_dump": "C:\\vr-out\\p2\\gate\\B42.npz"
     },
     "B43": {
-      "checkpoint": "C:\\vaaniguard\\data\\cm_g4_control_s43.pt",
+      "checkpoint": "C:\\vaanishield\\data\\cm_g4_control_s43.pt",
       "checkpoint_sha256": "1be743d20648a5a6",
       "layer_index": 5,
       "seed": 43,

@@ -1,5 +1,5 @@
 """
-vaaniguard — ECAPA-TDNN Speaker Verification & Cross-Session Consistency Engine
+vaanishield — ECAPA-TDNN Speaker Verification & Cross-Session Consistency Engine
 Compliant with DPDP Act 2023 Section 8(7) (Zero-retention voice biometrics).
 
 Provides 192-dimensional unit-hypersphere embeddings, cosine similarity,
@@ -17,7 +17,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 import numpy as np
 import torch
 
-logger = logging.getLogger("vaaniguard.ecapa_verifier")
+logger = logging.getLogger("vaanishield.ecapa_verifier")
 
 EMBED_DIM = 192
 
@@ -186,7 +186,7 @@ def main() -> None:
     import soundfile as sf
 
     parser = argparse.ArgumentParser(
-        description="vaaniguard — ECAPA-TDNN Speaker Identity Verification & Zero-Shot Defense"
+        description="vaanishield — ECAPA-TDNN Speaker Identity Verification & Zero-Shot Defense"
     )
     parser.add_argument(
         "--audio",
@@ -237,7 +237,7 @@ def main() -> None:
     )
 
     print("\n========================================================")
-    print("   vaaniguard — Biometric Speaker Identity Report       ")
+    print("   vaanishield — Biometric Speaker Identity Report       ")
     print("========================================================")
     print(f"Test File:               {audio_path.name}")
     print(f"Target Enrolled Voice:   {target_name}")

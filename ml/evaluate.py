@@ -1,4 +1,4 @@
-"""vaaniguard — Comprehensive ML Benchmark & Forensic Evaluation Suite.
+"""vaanishield — Comprehensive ML Benchmark & Forensic Evaluation Suite.
 
 Evaluates:
   1. Fine-tuned Target Verification Model on dataset test splits (Accuracy, EER, minDCF, Confusion Matrix).
@@ -23,7 +23,7 @@ import torch
 
 # Add repository root and backend to path
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 if str(REPO_ROOT) not in sys.path:
@@ -37,23 +37,23 @@ if hasattr(sys.stderr, "reconfigure"):
 from benchmarks.compute_mindcf import evaluate_system, print_metrics
 from ml.dataset import FeatureDataset
 from ml.model import AcousticForensicClassifier
-from vaaniguard.data.augment import (
+from vaanishield.data.augment import (
     add_noise,
     alaw_encode_decode,
     amr_wb_simulate,
     gsm_efr_simulate,
     ulaw_encode_decode,
 )
-from vaaniguard.data.synthetic import synthetic_speech, synthetic_spoofed
-from vaaniguard.detectors.pipeline import DetectionPipeline
-from vaaniguard.session import CallSession, SessionContext
+from vaanishield.data.synthetic import synthetic_speech, synthetic_spoofed
+from vaanishield.detectors.pipeline import DetectionPipeline
+from vaanishield.session import CallSession, SessionContext
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.evaluate")
+logger = logging.getLogger("vaanishield.evaluate")
 
 
 def resolve_checkpoint_file(checkpoint_str: str) -> Path:
@@ -344,7 +344,7 @@ def benchmark_demo_dataset(ground_truth_path: Path) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="vaaniguard Benchmark & Evaluation Runner")
+    parser = argparse.ArgumentParser(description="vaanishield Benchmark & Evaluation Runner")
     # Custom trained model evaluation options
     parser.add_argument(
         "--data_dir",

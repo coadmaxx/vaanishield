@@ -1,8 +1,8 @@
-"""Audit helper: build a real import graph for the vaaniguard repo.
+"""Audit helper: build a real import graph for the vaanishield repo.
 
 Handles the two sys.path roots that the project injects:
   * REPO_ROOT            -> `backend.*`, `benchmarks.*`, `ml.*`
-  * REPO_ROOT/vaaniguard-backend -> `vaaniguard.*`
+  * REPO_ROOT/vaanishield-backend -> `vaanishield.*`
 """
 from __future__ import annotations
 
@@ -30,9 +30,9 @@ def importable_names(path: str) -> list[str]:
     if m.endswith(".__init__"):
         m = m[: -len(".__init__")]
     names.append(m)
-    # vaaniguard-backend/ is itself added to sys.path
-    if rel.startswith("vaaniguard-backend/"):
-        m2 = rel[len("vaaniguard-backend/") : -3].replace("/", ".")
+    # vaanishield-backend/ is itself added to sys.path
+    if rel.startswith("vaanishield-backend/"):
+        m2 = rel[len("vaanishield-backend/") : -3].replace("/", ".")
         if m2.endswith(".__init__"):
             m2 = m2[: -len(".__init__")]
         names.append(m2)

@@ -21,7 +21,7 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_logo_vanirakshak" />
+            android:src="@drawable/ic_logo_vaanishield" />
 
         <TextView
             android:layout_width="0dp"

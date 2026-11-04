@@ -1,4 +1,4 @@
-"""vaaniguard Machine Learning & Acoustic Forensic Models.
+"""vaanishield Machine Learning & Acoustic Forensic Models.
 
 Contains:
   * Neural acoustic countermeasure classifiers (model.py)

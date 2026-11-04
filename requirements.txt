@@ -1,4 +1,4 @@
-# vaaniguard — Core Speech-to-Text (ASR) & Verification Requirements
+# vaanishield — Core Speech-to-Text (ASR) & Verification Requirements
 
 # 1. Deep Learning & Audio Framework (CPU / CUDA auto-detected)
 torch>=2.2.0

@@ -98,7 +98,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_alert_warning"
         android:padding="16dp"
-        android:text="VaniRakshak safeguards speech and telephony against AI-generated voice cloning attacks."
+        android:text="vaanishield safeguards speech and telephony against AI-generated voice cloning attacks."
         android:textColor="@color/body"
         android:textSize="14sp" />
 

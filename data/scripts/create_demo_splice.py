@@ -1,5 +1,5 @@
 """
-vaaniguard — Demo Test Set Generator
+vaanishield — Demo Test Set Generator
 Creates standardized benchmark files in data/demo/ from enrolled target audio:
   - demo_01_genuine.wav: 10s natural speech from target speaker
   - demo_02_full_clone.wav: 10s vocoded / pitch-shifted cloned voice simulation
@@ -88,7 +88,7 @@ def main() -> None:
 
     # 5. Ground Truth JSON
     gt = {
-        "dataset_name": "vaaniguard Demo Benchmark Suite",
+        "dataset_name": "vaanishield Demo Benchmark Suite",
         "sample_rate": SAMPLE_RATE,
         "files": {
             "demo_01_genuine.wav": {

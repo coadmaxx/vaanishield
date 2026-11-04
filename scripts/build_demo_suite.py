@@ -165,7 +165,7 @@ def main() -> int:
     files["demo_04_impostor.wav"]["expected_verdict"] = "IMPOSTOR_SPEAKER"
 
     gt = {
-        "dataset_name": "vaaniguard Demo Benchmark Suite",
+        "dataset_name": "vaanishield Demo Benchmark Suite",
         "sample_rate": TARGET_SR,
         "enrolled_target": USER_ID,
         "rebuilt_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),

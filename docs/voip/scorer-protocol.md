@@ -8,9 +8,9 @@ frames received. Full probe output:
 `hidden_files/voip-build/scorer-probe-output.txt`.
 
 Android client source:
-`C:\vaaniguard-voip\vaaniguard-android\app\src\main\kotlin\com\vericall\audio\VaniStreamingClient.kt`
+`C:\vaanishield-voip\vaanishield-android\app\src\main\kotlin\com\vericall\audio\VaniStreamingClient.kt`
 Backend endpoint source:
-`C:\vaaniguard-voip\vaaniguard-backend\vaaniguard\server\app.py` (`stream_endpoint`)
+`C:\vaanishield-voip\vaanishield-backend\vaanishield\server\app.py` (`stream_endpoint`)
 
 ## Endpoint
 
@@ -72,7 +72,7 @@ Field notes (verified against source + live):
 ### 3. Windowing (server side)
 
 * Window 4.04 s, hop 1.0 s (`VG_WINDOW_SECONDS`, `VG_HOP_SECONDS`;
-  defaults in `vaaniguard/config.py`).
+  defaults in `vaanishield/config.py`).
 * First verdict arrives after 4.04 s of audio is buffered, then one verdict
   per 1.0 s hop. The probe sent 7.5 s and received 4 verdicts (windows
   ending at ~4.04 / 5.04 / 6.04 / 7.04 s of audio).

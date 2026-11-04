@@ -23,7 +23,7 @@ git switch -c <topic-branch> origin/main
 
 **Who may write to git depends on the agent:**
 
-- **Claude Code session (main worktree `D:/vaaniguard`)** — the only agent that
+- **Claude Code session (main worktree `D:/vaanishield`)** — the only agent that
   commits, pulls and pushes. `git pull --rebase` before starting and before
   pushing; never force-push.
 - **WorkBuddy (worktrees under `C:/Users/Ayyg/WorkBuddy/Worktrees/`)** — **no git
@@ -66,7 +66,7 @@ private; if it is ever made public again, re-read `docs/` for these items first.
 | G2 calibration | done | `reports/cm_calibrated_benchmark.json` |
 | G3 encoder fine-tune | **missed, closed** | `docs/10` G3 |
 | G4 attack diversity | **do not run as written** | `docs/10`, "augmentation finding" |
-| G5 authentication | done | `vaaniguard-backend/vaaniguard/server/auth.py` |
+| G5 authentication | done | `vaanishield-backend/vaanishield/server/auth.py` |
 | G6 semantic vs zero-retention | **done 2026-09-13 — off by default, disclosed when on** | `docs/10` G6 |
 | G7 ASV default | **done 2026-09-13 — labelled, not flipped** | `docs/10` G7 |
 
@@ -75,7 +75,7 @@ private; if it is ever made public again, re-read `docs/` for these items first.
 ## The four gates — run all of them before every push
 
 ```bash
-python -m pytest vaaniguard-backend/tests/
+python -m pytest vaanishield-backend/tests/
 python -m pytest tests/e2e/
 python scripts/integration_check.py
 python scripts/check_docs.py
@@ -110,7 +110,7 @@ complete one fast-forwarded in. Before starting a goal, run `git status` in
 ## G6 — Semantic layer vs the zero-retention claim — DONE
 
 Decided 2026-09-13: **off by default, disclosed when on.** `VG_SEMANTIC_ENABLED`
-gates the layer in `vaaniguard-backend/vaaniguard/semantic/signal.py` before
+gates the layer in `vaanishield-backend/vaanishield/semantic/signal.py` before
 the ASR client is imported; a `GROQ_API_KEY` alone does not enable it. Enabled,
 `/v1/health` and every `dpdp_compliance` block report `zero_retention: false`
 and name `groq`. Full record in `docs/10` G6.
@@ -122,9 +122,9 @@ it does not obtain consent.
 
 ## G7 — ASV ships as a random projection
 
-`vaaniguard-backend/vaaniguard/detectors/pipeline.py:62` reads
+`vaanishield-backend/vaanishield/detectors/pipeline.py:62` reads
 `os.environ.get("VG_ASV_BACKEND", "stub")`. The stub
-(`vaaniguard/detectors/asv.py:29`, `_stable_projection`) is a **fixed random
+(`vaanishield/detectors/asv.py:29`, `_stable_projection`) is a **fixed random
 projection of hand-crafted spectral statistics** — not biometrics.
 
 So by default every `asv_consistency` value the dashboard renders is synthetic,
@@ -134,7 +134,7 @@ and the impostor interlock that produces the demo BLOCK
 That is documented and defensible for a demo. What is not defensible is that it
 happens by accident of a default rather than by decision. Pick one:
 
-- Flip the default to `ecapa` and make `vaaniguard-backend/requirements-asv.txt`
+- Flip the default to `ecapa` and make `vaanishield-backend/requirements-asv.txt`
   a hard dependency; or
 - Make the dashboard state unmissably that the similarity shown is synthetic
   (`frontend/app/components/ForensicVerdictCard.tsx` already renders
@@ -160,7 +160,7 @@ The answer is no, and the reason is recorded in `docs/10` under "The
 augmentation finding". Six experiments — layer selection, attentive merging,
 uniform merging, calibration, encoder fine-tuning — have not beaten
 `data/cm_aasist.pt` on the metrics that decide cost, and that checkpoint is
-already the backend default (`vaaniguard/detectors/cm_aasist.py:84`).
+already the backend default (`vaanishield/detectors/cm_aasist.py:84`).
 
 Two specific traps:
 

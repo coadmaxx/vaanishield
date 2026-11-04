@@ -146,7 +146,7 @@ follow-up PR.
 
 **A perfect countermeasure cannot block a voice clone in the shipped product.**
 
-Under the real-backend fusion (`vaaniguard-backend/vaaniguard/config.py:136-139`:
+Under the real-backend fusion (`vaanishield-backend/vaanishield/config.py:136-139`:
 intercept -1.6, `w_cm` 1.5, `w_asv` 2.0) the CM term adds at most 1.5 logits
 (`risk/fusion.py:40-53`). For a clone that matches the enrolled voice — which is
 what a good clone *is* — risk tops out below the BLOCK line even when the CM is
@@ -160,9 +160,9 @@ certain the audio is synthetic:
 | 0.80 | 57.4 | CHALLENGE |
 
 The CHALLENGE that results is issued once per session and never re-armed
-(`vaaniguard-backend/vaaniguard/session.py:167-171`), and it is graded on
+(`vaanishield-backend/vaanishield/session.py:167-171`), and it is graded on
 client-supplied digit text and response latency only — no audio is scored
-(`vaaniguard-backend/vaaniguard/challenge/engine.py:89-109`). A live
+(`vaanishield-backend/vaanishield/challenge/engine.py:89-109`). A live
 real-time voice-conversion attacker reads the digits and passes. After that,
 only risk ≥ 70 or ASV < 0.10 can escalate, and neither fires for a good clone.
 
@@ -207,7 +207,7 @@ visible in `docs/10`.
 
 ## 2. Roles and how instructions travel
 
-- **Dev box, Claude Code session (`D:/vaaniguard`)** — the only GitHub writer.
+- **Dev box, Claude Code session (`D:/vaanishield`)** — the only GitHub writer.
   Opens and merges every PR, verifies every relayed number against committed
   artefacts, writes all code in Phases 1–2.
 - **Training box** — GPU only. Receives code as a **git bundle of a pinned
@@ -220,7 +220,7 @@ visible in `docs/10`.
   (`.corpus-manifests/`) or a USB drive, and are always copied to a local,
   non-synced path and sha256-verified before use.
 - **Interpreter.** Every training-box command uses the explicit venv:
-  `$py = 'C:\vaaniguard\.venv\Scripts\python.exe'`, preceded by a CUDA assert.
+  `$py = 'C:\vaanishield\.venv\Scripts\python.exe'`, preceded by a CUDA assert.
 
 ---
 
@@ -233,7 +233,7 @@ repeatedly). An unreferenced commit there is exposed to `git gc` pruning.
 
 **0.1 Protect (training box, first commands, in this order):**
 
-1. Stop every agent and sync tool that can reach `C:\vaaniguard-main` or
+1. Stop every agent and sync tool that can reach `C:\vaanishield-main` or
    `C:\vr-results`. Record which ones were running.
 2. In the repository that holds the objects: disable garbage collection
    (`git config gc.auto 0`, `gc.pruneExpire never`,
@@ -309,7 +309,7 @@ one-shot trigger). A torch-free simulator replays per-window scores through
 30 / 60 / 120 s genuine call).
 
 **1.5 Pin the operating-point arithmetic.** A torch-free unit test in
-`vaaniguard-backend/tests/` pins the fusion offsets over an ASV × channel grid
+`vaanishield-backend/tests/` pins the fusion offsets over an ASV × channel grid
 {0.80, 0.90, 0.95, 1.00} × {0 (wideband), 0.25 (narrowband)}, so a fusion refit
 fails CI instead of silently invalidating every gate below.
 
@@ -335,7 +335,7 @@ days, go to STOP-A.
 **Status 2026-09-25 (no criterion changed).** Phase 1 code is built:
 1.1 clone rule, 1.2 voice-scored challenge (response windows scored by CM and
 ASV, optional re-arm), 1.3 `operating_threshold`, 1.4 session simulator
-(`vaaniguard/risk/simulate.py`, replays through the real `CallSession`), and 1.5
+(`vaanishield/risk/simulate.py`, replays through the real `CallSession`), and 1.5
 fusion pin (`tests/test_decision_layer.py`). A trigger-persistence setting
 (`VG_CHALLENGE_TRIGGER_CONSECUTIVE`) was added because one-window triggering
 alone cannot meet P1-F. Every threshold ships **off** and is chosen on dev by
@@ -452,7 +452,7 @@ A candidate (single head or dev-fit fusion) ships only if **all** hold on the
 **Deploy** is a new write-once file plus a PR that points
 `VG_CM_AASIST_WEIGHTS` at it for the real-backend profile. It does **not**
 edit `ground_truth.json`. Wording is scoped to what exists: the Docker image
-runs stub detectors (`vaaniguard-backend/Dockerfile` installs no torch), so
+runs stub detectors (`vaanishield-backend/Dockerfile` installs no torch), so
 this is "the real-backend demo default", not a production deployment, until a
 real-backend container profile exists.
 

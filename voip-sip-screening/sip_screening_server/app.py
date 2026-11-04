@@ -31,7 +31,7 @@ from .session import CallSession, CallState, IllegalTransition
 log = logging.getLogger("sip_screening")
 
 NOTICE_TEXT = (
-    "This call is answered by vaaniguard, a call screening service. "
+    "This call is answered by vaanishield, a call screening service. "
     "Your voice will be analyzed for authenticity before the call is connected. "
     "This call is not recorded. If you do not agree, please hang up now."
 )
@@ -46,7 +46,7 @@ UNAVAILABLE_TEXT = (
     "Your call cannot be verified right now. Goodbye."
 )
 
-app = FastAPI(title="vaaniguard Layer-2 SIP screening (skeleton)")
+app = FastAPI(title="vaanishield Layer-2 SIP screening (skeleton)")
 
 # provider_call_id -> CallSession. In production this must be a shared store
 # (Redis) so webhook retries and reconnects hit the same session.

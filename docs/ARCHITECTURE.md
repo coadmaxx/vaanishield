@@ -1,14 +1,14 @@
-# vaaniguard — Architecture Overview
+# vaanishield — Architecture Overview
 
 > Three clients exist: the Next.js web console (below, the fully-wired
-> reference implementation), **vaaniguard Kavach** — a native Android
-> call-guard client (`vaaniguard-android/`, see its own `DESIGN.md` — real,
+> reference implementation), **vaanishield Kavach** — a native Android
+> call-guard client (`vaanishield-android/`, see its own `DESIGN.md` — real,
 > working, but with its own separate on-device heuristics not shown here) —
-> and a standalone fact-checking prototype, **vaaniguard SACH**
-> (`vaaniguard_sotto/`), a working Groq Whisper + Gemini + Crawl4AI voice
+> and a standalone fact-checking prototype, **vaanishield SACH**
+> (`vaanishield_sotto/`), a working Groq Whisper + Gemini + Crawl4AI voice
 > transcription and claim-verification server (port 8082) once
 > `GEMINI_API_KEY` is set — not wired into the acoustic pipeline above.
-> `vaaniguard_indic_conformer/` is a second fact-checking prototype of the
+> `vaanishield_indic_conformer/` is a second fact-checking prototype of the
 > same shape (Groq Whisper with an Indic adaptation + Gemini + Crawl4AI);
 > it also boots and answers `/api/health` once a `.env` carrying
 > `GEMINI_API_KEY` exists beside it. Neither prototype is wired into the

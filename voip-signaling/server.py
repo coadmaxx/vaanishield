@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-r"""vaaniguard VoIP signaling server (Phase 2).
+r"""vaanishield VoIP signaling server (Phase 2).
 
-JSON-over-WebSocket call signaling for the vaaniguard Call feature.
+JSON-over-WebSocket call signaling for the vaanishield Call feature.
 Listens on 0.0.0.0:8001, endpoint /ws/signal.
 
-Run:  C:\vaaniguard\.venv\Scripts\python.exe server.py
+Run:  C:\vaanishield\.venv\Scripts\python.exe server.py
 Logs: C:\vr-out\voip-build-logs\signaling.log  (via launch_signaling.cmd)
 
 Full protocol: SIGNALING_PROTOCOL.md (voip-build docs).

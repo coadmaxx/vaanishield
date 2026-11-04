@@ -1,4 +1,4 @@
-# vaaniguard Call Signaling Protocol
+# vaanishield Call Signaling Protocol
 
 Phase 2 signaling server for WebRTC call setup between Android clients.
 Verified live on lab-beast 2026-10-09 (17/17 handshake steps PASS).
@@ -12,9 +12,9 @@ Verified live on lab-beast 2026-10-09 (17/17 handshake steps PASS).
 
 Transport: WebSocket, text frames only. Every message is a JSON object with a
 string `type` field. Binary frames get a `PROTOCOL` error. Server binds
-`0.0.0.0:8001`. Implementation: `C:\vaaniguard-voip\voip-signaling\server.py`
+`0.0.0.0:8001`. Implementation: `C:\vaanishield-voip\voip-signaling\server.py`
 (asyncio + websockets), launched via
-`C:\vaaniguard-voip\ops\launch_signaling.cmd`, logs at
+`C:\vaanishield-voip\ops\launch_signaling.cmd`, logs at
 `C:\vr-out\voip-build-logs\signaling.log`.
 
 ## Registration

@@ -1,4 +1,4 @@
-"""Codec & telephony audio augmentation pipeline for vaaniguard CM training.
+"""Codec & telephony audio augmentation pipeline for vaanishield CM training.
 
 Implements the augmentation transforms specified in docs/08-cm-training-plan.md §4
 and docs/03-codec-augmentation-and-telephony.md:
@@ -12,7 +12,7 @@ and docs/03-codec-augmentation-and-telephony.md:
   - Random gain jitter (±6 dB)
   - Telephony bandpass filtering
 
-Wraps and leverages the DSP primitives in vaaniguard-backend/vaaniguard/data/augment.py.
+Wraps and leverages the DSP primitives in vaanishield-backend/vaanishield/data/augment.py.
 """
 
 from __future__ import annotations
@@ -25,14 +25,14 @@ from typing import Optional, Sequence, Union
 import numpy as np
 import torch
 
-# Ensure vaaniguard-backend is discoverable for primitive imports
+# Ensure vaanishield-backend is discoverable for primitive imports
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
 try:
-    from vaaniguard.data.augment import (
+    from vaanishield.data.augment import (
         AUGMENT_REGISTRY,
         AugmentSpec,
         _bandlimit,
@@ -51,10 +51,10 @@ try:
     )
 except ImportError as e:
     raise ImportError(
-        f"Failed to import augmentation primitives from vaaniguard.data.augment: {e}"
+        f"Failed to import augmentation primitives from vaanishield.data.augment: {e}"
     ) from e
 
-logger = logging.getLogger("vaaniguard.ml.augment")
+logger = logging.getLogger("vaanishield.ml.augment")
 
 # ---------------------------------------------------------------------------
 # Telephony Bandpass Helper

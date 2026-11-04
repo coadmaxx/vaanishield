@@ -323,7 +323,7 @@ class TempContactsActivity : AppCompatActivity() {
                 append("✓ Banking OTP & Financial Coercion Shield: Armed\n\n")
                 append("You can simulate incoming clone attacks or genuine calls anytime using the buttons below.")
             } else {
-                append("VaniRakshak requires permissions to protect live telephony sessions:\n\n")
+                append("vaanishield requires permissions to protect live telephony sessions:\n\n")
                 if (!screeningOn) append("• Call Screening Role: Pending (detects incoming calls)\n")
                 if (!notificationsOn) append("• Notification Alerts: Disabled (shows real-time risk meter)\n\n")
                 append("Tap 'Open Setup' to grant the remaining permissions.")

@@ -39,7 +39,7 @@ from transformers import WavLMModel
 
 # Add repository root and backend to path
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 for p in [str(REPO_ROOT), str(BACKEND_DIR)]:
     if p not in sys.path:
         sys.path.insert(0, p)
@@ -48,14 +48,14 @@ from benchmarks.compute_mindcf import compute_eer, compute_mindcf, evaluate_syst
 from ml.aasist_model import AASISTLHead
 from ml.augment import CodecTelephonyAugmenter, prepare_audio_window
 from ml.real_codecs import REAL_CODECS, RealCodecAugmenter
-from vaaniguard.detectors.cm_aasist import _validate_checkpoint
+from vaanishield.detectors.cm_aasist import _validate_checkpoint
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.train_cm")
+logger = logging.getLogger("vaanishield.train_cm")
 
 
 # ---------------------------------------------------------------------------
@@ -526,8 +526,8 @@ def evaluate_demo_clips(
     freeze_merge: bool = False,
 ) -> Dict[str, Dict[str, Any]]:
     """Evaluate model on the 4 demo benchmark clips via full pipeline and fusion."""
-    from vaaniguard.detectors.pipeline import DetectionPipeline
-    from vaaniguard.risk.fusion import RiskFusionEngine
+    from vaanishield.detectors.pipeline import DetectionPipeline
+    from vaanishield.risk.fusion import RiskFusionEngine
 
     demo_dir = REPO_ROOT / "data" / "demo"
     demo_clips = [

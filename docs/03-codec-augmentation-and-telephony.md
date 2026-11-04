@@ -9,7 +9,7 @@ In voice fraud attacks targeting Indian financial institutions, voice clones rar
 - OTT VoIP applications (WhatsApp Call, Telegram, Skype)
 - Physical room acoustics, speakerphones, and noisy ambient environments (crowded call centers, traffic, cafes)
 
-To guarantee that forensic detectors remain robust under real-world degradation, vaaniguard incorporates an acoustic channel simulation and data augmentation stack located in [`vaaniguard-backend/vaaniguard/data/augment.py`](file:///d:/vaaniguard/vaaniguard-backend/vaaniguard/data/augment.py).
+To guarantee that forensic detectors remain robust under real-world degradation, vaanishield incorporates an acoustic channel simulation and data augmentation stack located in [`vaanishield-backend/vaanishield/data/augment.py`](file:///d:/vaanishield/vaanishield-backend/vaanishield/data/augment.py).
 
 ---
 
@@ -87,7 +87,7 @@ The augmentation engine implements mathematical models of standard telecom compr
 
 ## 3. Augmentation Registry & Pipeline Execution
 
-Augmentations are registered and dispatched through a unified registry pattern in `vaaniguard/data/augment.py`:
+Augmentations are registered and dispatched through a unified registry pattern in `vaanishield/data/augment.py`:
 
 ```python
 AUGMENT_REGISTRY = {
@@ -117,7 +117,7 @@ y = apply_random_pipeline(
 
 ## 4. Pure NumPy / SciPy Architecture: Portability on Stage & Laptop
 
-A conscious design decision in vaaniguard is that the entire R1 augmentation stack runs in **pure NumPy and SciPy**:
+A conscious design decision in vaanishield is that the entire R1 augmentation stack runs in **pure NumPy and SciPy**:
 
 | Benefit | Explanation |
 |---|---|

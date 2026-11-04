@@ -11,7 +11,7 @@ but clean bonafide FRR regressed 6 to 18pp against the guard, so P16-3 failed.
 
 Follow-up question: was that failure intrinsic to augmentation, or an artifact of the threshold rule? Two read-only
 analyses ran 2026-09-30 against the docs/16 artifacts. Phase 0 (Pareto + recalibration). Phase 2 (SE artifact
-amplification prototype, Trachu et al. 2025). No training runs; nothing under `C:\vaaniguard` was modified.
+amplification prototype, Trachu et al. 2025). No training runs; nothing under `C:\vaanishield` was modified.
 
 ## 2. Phase 0: Pareto tradeoff curves and honest multi-condition recalibration
 

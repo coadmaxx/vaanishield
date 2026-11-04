@@ -1,7 +1,7 @@
 # Frontend ↔ Backend protocol
 
 Single source of truth for the WebSocket contract between the Next.js dashboard
-(`frontend/`) and the Python forensic backend (`vaaniguard-backend/`).
+(`frontend/`) and the Python forensic backend (`vaanishield-backend/`).
 
 - **Endpoint:** `ws://<host>:8000/ws/stream` (alias of `/v1/stream`, `/api/v1/stream`)
 - **Audio:** mono, 16-bit signed little-endian PCM, 16 000 Hz
@@ -315,7 +315,7 @@ live data the system does not have. It verifies the categorical class of claim
 scam scripts structurally depend on, where the contradiction holds regardless of
 caller or account.
 
-Produced by `vaaniguard/semantic/` (Groq Whisper transcription of the same
+Produced by `vaanishield/semantic/` (Groq Whisper transcription of the same
 4.04 s window the acoustic detectors score, then a scam-phrase keyword
 scorer over the transcript). **This is a parallel, advisory context signal —
 not a detector.** The acoustic pipeline (CM/ASV/channel/prosody → Bayesian
@@ -387,7 +387,7 @@ streaming audio again. Do not resume mid-stream.
 ## 7. Alerting (server → webhook)
 
 When a verdict has `trigger_challenge` or `interlock_active`, the backend POSTs
-an alert via `vaaniguard/alerts/`. This is server-side on purpose — the browser
+an alert via `vaanishield/alerts/`. This is server-side on purpose — the browser
 must never hold gateway credentials, and a client-reported interlock can be
 forged. Not part of the socket contract; the client only ever *displays* the
 alert payload it already received.
@@ -447,7 +447,7 @@ alert payload it already received.
 
 ## 9. Conformance test
 
-`vaaniguard-backend/tests/test_stream_e2e.py` replays exactly what the
+`vaanishield-backend/tests/test_stream_e2e.py` replays exactly what the
 dashboard does — handshake, then int16 PCM — and asserts that every verdict
 carries `risk_score`, `p_spoof`, `tier`, `metrics`, `interlock_active` plus
 `metrics.asv_consistency` and `metrics.snr_db`.
@@ -461,6 +461,6 @@ every verdict in the stream. Run either after changing any part of this
 contract:
 
 ```bash
-pytest vaaniguard-backend/tests/test_stream_e2e.py
+pytest vaanishield-backend/tests/test_stream_e2e.py
 python scripts/integration_check.py
 ```

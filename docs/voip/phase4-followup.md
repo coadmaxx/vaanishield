@@ -1,8 +1,8 @@
 # Phase 4 follow-up: 1003-close fix + NEUTRAL banner verification
 
 Date: 2026-10-09 ~03:40-03:55 IST. Machine: lab-beast (TON-618).
-Worktree: `C:\vaaniguard-voip`, branch `feat/voip-calling`. Nothing pushed.
-Original `C:\vaaniguard` checkout untouched.
+Worktree: `C:\vaanishield-voip`, branch `feat/voip-calling`. Nothing pushed.
+Original `C:\vaanishield` checkout untouched.
 
 ## 1. Backend health on entry
 
@@ -25,7 +25,7 @@ bare annotation, line 306). So *any* `ws.close()` on this stack raises
 Full traceback captured from `C:\vr-out\voip-build-logs\backend_serve.log`
 (lines 330-362) before the fix.
 
-**Fix** (`vaaniguard-backend/vaaniguard/server/app.py`, +17/-3 lines):
+**Fix** (`vaanishield-backend/vaanishield/server/app.py`, +17/-3 lines):
 - Added `_safe_ws_close(ws, code, reason="")` just above `stream_endpoint`
   (line ~911): best-effort close that swallows the library exception. The
   connection is torn down when the handler returns regardless, so a failed
@@ -34,7 +34,7 @@ Full traceback captured from `C:\vr-out\voip-build-logs\backend_serve.log`
   (auth fail, line 937), 1000 (revoked session, line 969).
 - `py_compile` passes. Backend restarted via WMI (old PID 7128 killed with
   `taskkill /F /PID 7128 /T`, relaunched with
-  `C:\vaaniguard-voip\ops\launch_backend.cmd`); health confirms
+  `C:\vaanishield-voip\ops\launch_backend.cmd`); health confirms
   `healthy` + `cm_backend=aasist_l_wavlm_dev_eer_0.045` (new PID 14504).
 
 **Verification.**

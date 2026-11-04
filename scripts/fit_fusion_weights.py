@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Fit vaaniguard/risk/fusion.py's FusionConfig weights against measured
+"""Fit vaanishield/risk/fusion.py's FusionConfig weights against measured
 detector-score distributions, replacing the current hand-picked defaults.
 
 Motivation: swapping in real ECAPA-TDNN (VG_ASV_BACKEND=ecapa) and WavLM
@@ -35,13 +35,13 @@ from typing import List
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 sys.path.insert(0, str(BACKEND_ROOT))
 
-from vaaniguard.config import settings  # noqa: E402
-from vaaniguard.detectors.pipeline import DetectionPipeline  # noqa: E402
-from vaaniguard.data.synthetic import synthetic_speech, synthetic_spoofed  # noqa: E402
-from vaaniguard.anchor import load_anchor  # noqa: E402
+from vaanishield.config import settings  # noqa: E402
+from vaanishield.detectors.pipeline import DetectionPipeline  # noqa: E402
+from vaanishield.data.synthetic import synthetic_speech, synthetic_spoofed  # noqa: E402
+from vaanishield.anchor import load_anchor  # noqa: E402
 
 
 def _load_enroll_anchor():

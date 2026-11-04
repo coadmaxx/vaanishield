@@ -44,11 +44,11 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT / "vaaniguard-backend"))
+sys.path.insert(0, str(REPO_ROOT / "vaanishield-backend"))
 
-from vaaniguard.config import ChallengeConfig, FusionConfig, RiskConfig, settings  # noqa: E402
-from vaaniguard.config import _REAL_BACKEND_OVERRIDES  # noqa: E402
-from vaaniguard.risk.simulate import bootstrap_sessions, simulate_session, summarise  # noqa: E402
+from vaanishield.config import ChallengeConfig, FusionConfig, RiskConfig, settings  # noqa: E402
+from vaanishield.config import _REAL_BACKEND_OVERRIDES  # noqa: E402
+from vaanishield.risk.simulate import bootstrap_sessions, simulate_session, summarise  # noqa: E402
 
 ASV_GRID = (0.80, 0.90, 0.95, 1.00)
 CHANNEL_GRID = (0.0, 0.25)

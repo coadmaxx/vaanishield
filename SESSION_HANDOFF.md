@@ -1,4 +1,4 @@
-# SESSION HANDOFF — vaaniguard (lab-beast)
+# SESSION HANDOFF — vaanishield (lab-beast)
 
 The previous Claude Code session (e836fe74) hit its context limit at ~00:24 IST on 2026-09-29.
 Training and GPU pipelines run DETACHED and are unaffected. This file is the full state
@@ -6,7 +6,7 @@ you need to continue. Read it, then check the live state files before acting.
 
 ## Machine and repo
 
-- Host: lab-beast (TON-618), repo `C:\vaaniguard`, branch `feat/gpu-group1-group2`, HEAD `8ce0efb`.
+- Host: lab-beast (TON-618), repo `C:\vaanishield`, branch `feat/gpu-group1-group2`, HEAD `8ce0efb`.
 - Corpus: `A:\cm-corpus\asvspoof5\`. Pipeline state: `C:\vr-out\pipeline\` (state_g1.json, state_g2.json, state_spk.json).
 - GPU dashboard: http://127.0.0.1:8787 (also on 100.89.248.108:8787).
 
@@ -58,5 +58,5 @@ you need to continue. Read it, then check the live state files before acting.
 
 Pipeline state files and logs, not the dead session. Watch:
 `C:\vr-out\pipeline\state_g2.json` (futility gate), the newest training log under
-`C:\vaaniguard` (epoch/step/loss), and `nvidia-smi`.
+`C:\vaanishield` (epoch/step/loss), and `nvidia-smi`.
 An external monitor checks every 10 minutes and reports stalls, errors, and completions.

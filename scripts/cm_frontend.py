@@ -4,7 +4,7 @@ A head trained with ``--unfreeze-top-n`` expects a *fine-tuned* frontend. Score
 it against the stock one and you get silently wrong numbers: no exception, no
 missing key, just a benchmark row that looks plausible and isn't.
 
-``vaaniguard/detectors/cm_aasist.py`` already fails closed on this. The six
+``vaanishield/detectors/cm_aasist.py`` already fails closed on this. The six
 ``scripts/evaluate_*.py`` harnesses did not -- they each build a stock fp16
 WavLM unconditionally. This module is the one place that knows how to do it
 correctly, so a harness either uses it or refuses.

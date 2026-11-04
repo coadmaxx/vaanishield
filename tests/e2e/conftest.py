@@ -1,4 +1,4 @@
-"""Pytest configuration and shared fixtures for vaaniguard E2E test suite."""
+"""Pytest configuration and shared fixtures for vaanishield E2E test suite."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ import pytest
 
 # Ensure repository root and backend package are in sys.path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 
 for p in [str(REPO_ROOT), str(BACKEND_ROOT)]:
     if p not in sys.path:
@@ -97,6 +97,6 @@ def make_valid_checkpoint() -> Callable[..., Dict[str, Any]]:
 def test_client() -> Generator:
     """FastAPI TestClient with isolated settings."""
     from fastapi.testclient import TestClient
-    from vaaniguard.server.app import app
+    from vaanishield.server.app import app
     client = TestClient(app)
     yield client

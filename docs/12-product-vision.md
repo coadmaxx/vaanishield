@@ -13,7 +13,7 @@ current measured numbers see `docs/08-cm-training-plan.md` §12.7 and
 
 ## Purpose & Vision
 
-vaaniguard is, at its core, a **voice-authenticity system**: it decides whether the voice
+vaanishield is, at its core, a **voice-authenticity system**: it decides whether the voice
 on a call is the *enrolled, real person* it claims to be, or someone (or something) else.
 Everything below — the streaming pipeline, the risk tiers, the transaction interlock — exists
 to answer that one question reliably and fast.
@@ -31,7 +31,7 @@ cloned or impersonated "Modi ji" call and have it pass.**
 ### How it scales: a telecom family-voice safety feature
 
 The same mechanism generalises far beyond one public figure. Carriers already experiment with
-scam-detecting calls (for example Airtel's fraud-warning prompts on suspected spam). vaaniguard
+scam-detecting calls (for example Airtel's fraud-warning prompts on suspected spam). vaanishield
 turns that idea inside-out into a **family safety feature sold on a family SIM plan**:
 
 1. **Enroll the family.** When a household takes a family SIM plan, each member records a few

@@ -1,4 +1,4 @@
-"""vaaniguard — ASV & Anti-Spoofing Dataset Split Generator.
+"""vaanishield — ASV & Anti-Spoofing Dataset Split Generator.
 
 Partitions enrolled target audio and recorded speech into standardized
 train and test / evaluation splits following forensic biometric conventions:
@@ -28,7 +28,7 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("vaaniguard.make_splits")
+logger = logging.getLogger("vaanishield.make_splits")
 
 
 def resolve_existing_path(path_str: str) -> Path:
@@ -279,7 +279,7 @@ def create_standard_splits(
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="vaaniguard — Create Reproducible Train/Test Dataset Splits",
+        description="vaanishield — Create Reproducible Train/Test Dataset Splits",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
@@ -326,7 +326,7 @@ def main() -> int:
         out_dir = resolve_output_dir(args.output_dir)
 
         print("\n" + "=" * 65)
-        print("  [vaaniguard DATASET SPLIT GENERATOR]")
+        print("  [vaanishield DATASET SPLIT GENERATOR]")
         print("=" * 65)
         print(f" Manifest Source : {manifest_path}")
         print(f" Output Directory: {out_dir}")

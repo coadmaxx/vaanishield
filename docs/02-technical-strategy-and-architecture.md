@@ -2,13 +2,13 @@
 
 ## 1. Executive Summary & Core Philosophy
 
-**vaaniguard** is a target-conditioned recorded-audio forensic intelligence platform designed for enterprise banking, fintech call centers, and customer-service voice pipelines. Its primary mission is real-time detection and interception of AI-synthesized speech, voice cloning, vocoded replay attacks, and conversational deepfakes.
+**vaanishield** is a target-conditioned recorded-audio forensic intelligence platform designed for enterprise banking, fintech call centers, and customer-service voice pipelines. Its primary mission is real-time detection and interception of AI-synthesized speech, voice cloning, vocoded replay attacks, and conversational deepfakes.
 
 ### The Acoustic-Only Forensic Principle
 
-A fundamental design constraint of vaaniguard is that it is **strictly an acoustic forensic system**:
+A fundamental design constraint of vaanishield is that it is **strictly an acoustic forensic system**:
 
-| Dimension | vaaniguard Architectural Reality | Common Industry Misconception |
+| Dimension | vaanishield Architectural Reality | Common Industry Misconception |
 |---|---|---|
 | **Audio Processing** | Pure acoustic waveform and spectral analysis (Welch PSD, sub-band energy ratios, phase jitter, micro-tremors). | ASR / Speech-to-Text (STT) conversion (Whisper, Kaldi). |
 | **Analysis Domain** | Physics and DSP characteristics of synthetic vocoders, codec anomalies, and speaker vocal tract resonances. | NLP semantic analysis, grammar inspection, sentiment extraction. |
@@ -16,7 +16,7 @@ A fundamental design constraint of vaaniguard is that it is **strictly an acoust
 | **Linguistic Neutrality**| Operates identically across English, Hindi, Hinglish, Marathi, Tamil, Telugu, etc. Language-agnostic by definition. | Degrades on Indian vernaculars, code-switching, and heavy regional accents. |
 | **Latency Budget** | $p95 < 200\text{ ms}$ per analysis window on single-threaded CPU. | Multi-second transcription and inference pipelines. |
 
-Deepfake speech models (FastSpeech2, VITS, StyleTTS2, Vall-E, ElevenLabs) generate speech by passing predicted acoustic representations through neural or parametric vocoders (HiFi-GAN, WaveGlow, LPCNet). While these vocoders produce high perceptual naturalness to human ears, they leave distinct mathematical anomalies in the physical audio domain: unnatural phase coherence, lack of physiological micro-tremor, suppressed high-frequency spectral rolloff, and periodic temporal frame energy variance. vaaniguard exploits these physical DSP artifacts directly.
+Deepfake speech models (FastSpeech2, VITS, StyleTTS2, Vall-E, ElevenLabs) generate speech by passing predicted acoustic representations through neural or parametric vocoders (HiFi-GAN, WaveGlow, LPCNet). While these vocoders produce high perceptual naturalness to human ears, they leave distinct mathematical anomalies in the physical audio domain: unnatural phase coherence, lack of physiological micro-tremor, suppressed high-frequency spectral rolloff, and periodic temporal frame energy variance. vaanishield exploits these physical DSP artifacts directly.
 
 ---
 
@@ -35,12 +35,12 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
 ┌───────────────────────────────────────────────────────────────────────────────────┐
 │ 2. DPDP-COMPLIANT SLIDING BUFFER (volatile RAM only, zero disk writes)            │
 │    • Window: 4.04 s (64,640 samples) | Hop: 1.0 s (16,000 samples)                │
-│    • Circular FIFO ring buffer in memory (vaaniguard/privacy/buffer.py)          │
+│    • Circular FIFO ring buffer in memory (vaanishield/privacy/buffer.py)          │
 └────────────────────────────────────────┬──────────────────────────────────────────┘
                                          │ 4.04 s Audio Window
                                          ▼
 ┌───────────────────────────────────────────────────────────────────────────────────┐
-│ 3. MULTI-LAYER FORENSIC DETECTOR STACK (vaaniguard/detectors/)                   │
+│ 3. MULTI-LAYER FORENSIC DETECTOR STACK (vaanishield/detectors/)                   │
 │  ┌───────────────────────┐ ┌────────────────────────┐ ┌────────────────────────┐  │
 │  │ Layer 1: CM           │ │ Layer 2: ASV           │ │ Layer 3: Channel/Codec │  │
 │  │ AASIST-Shaped Stub    │ │ ECAPA-TDNN Stub        │ │ Multi-Band PSD Welch   │  │
@@ -64,7 +64,7 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
                                     │ Feature Vector x
                                     ▼
 ┌───────────────────────────────────────────────────────────────────────────────────┐
-│ 4. CALIBRATED BAYESIAN RISK FUSION ENGINE (vaaniguard/risk/fusion.py)            │
+│ 4. CALIBRATED BAYESIAN RISK FUSION ENGINE (vaanishield/risk/fusion.py)            │
 │    • Logistic regression evidence aggregation: z = β₀ + Σ (wᵢ · xᵢ)               │
 │    • Posterior probability: P(spoof|x) = σ(z)                                     │
 │    • Raw risk: 100 · P(spoof|x)                                                   │
@@ -74,13 +74,13 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
                                     │ Risk Score & Tier
                                     ▼
 ┌───────────────────────────────────────────────────────────────────────────────────┐
-│ 5. DECISION TIERS & TRANSACTION INTERLOCK (vaaniguard/session.py)                │
+│ 5. DECISION TIERS & TRANSACTION INTERLOCK (vaanishield/session.py)                │
 │    ├── ALLOW (< 35): Voice verified, transaction authorized                       │
 │    ├── CHALLENGE (35-69): Suspicious, trigger dynamic phrase challenge            │
 │    └── BLOCK (>= 70): Cloned voice attack, activate transaction interlock latch   │
 │         │                                                                         │
 │         ├── Server-side Alert Webhook: POST VG_ALERT_WEBHOOK_URL                  │
-│         └── SHA-256 Hash-Chained Audit Log Receipt: vaaniguard/privacy/audit.py  │
+│         └── SHA-256 Hash-Chained Audit Log Receipt: vaanishield/privacy/audit.py  │
 └───────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -89,7 +89,7 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
 ## 3. The Forensic Detection Layers
 
 ### Layer 1: Countermeasure (CM) — Anti-Spoofing
-- **Module:** `vaaniguard.detectors.cm.CMModel`
+- **Module:** `vaanishield.detectors.cm.CMModel`
 - **Receptive Field:** 4.04 seconds (64,640 samples @ 16 kHz), matching the canonical AASIST input window.
 - **Physics Extracted:**
   1. *High-Band Ratio (`hb_ratio`):* $\frac{\sum P_{xx}(4000-8000\text{ Hz})}{\sum P_{xx}(0-4000\text{ Hz})}$. Neural vocoders regularly exhibit steep cutoff or high-frequency attenuation compared to natural vocal tract turbulence.
@@ -101,7 +101,7 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
   $$\text{cm\_genuine\_prob} = \sigma(\text{LLR}) = \frac{1}{1 + e^{-\text{LLR}}}$$
 
 ### Layer 2: Automatic Speaker Verification (ASV)
-- **Module:** `vaaniguard.detectors.asv.ASVModel`
+- **Module:** `vaanishield.detectors.asv.ASVModel`
 - **Function:** Target-conditioned verification. Determines whether the audio belongs to the claimed target enrolled speaker or is an impersonator.
 - **Acoustic Representation:** 192-dimensional vector embedding derived from log-mel spectral filterbanks and deterministic projection.
 - **Verification Score:**
@@ -110,14 +110,14 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
   *(Un-enrolled sessions return neutral fallback $\text{asv\_consistency} = 0.5$).*
 
 ### Layer 3: Channel & Codec Anomaly Detection
-- **Module:** `vaaniguard.detectors.channel.detect`
+- **Module:** `vaanishield.detectors.channel.detect`
 - **Function:** Identifies transmission channel profiles and detects out-of-band energy anomalies characteristic of synthetic generation pipelines.
 - **Features:** Energy concentration across sub-bands (<300 Hz, 300–3400 Hz, 4000–8000 Hz).
 - **Classification:** Categorizes audio into `gsm_efr_or_amr_wb`, `wideband_opus`, or `g711_or_pstn`.
 - **Metrics:** `channel_anomaly` $\in [0, 1]$ (divergence from expected spectral energy distribution) and estimated SNR in dB.
 
 ### Layer 4: Prosody & Micro-Tremor Detection
-- **Module:** `vaaniguard.detectors.prosody.prosody_score`
+- **Module:** `vaanishield.detectors.prosody.prosody_score`
 - **Function:** Evaluates physiological pitch variations in the fundamental vocal range (300–1500 Hz).
 - **Metric:** `prosody_unnatural` $\in [0, 1]$. Synthetic vocoders over-regularize pitch contour and eliminate natural human micro-tremors, yielding high unnaturalness values ($1.0 - \tanh(3 \cdot \text{pitch\_var} + 2 \cdot \text{jitter})$).
 
@@ -125,7 +125,7 @@ The end-to-end processing pipeline runs continuously from browser or telephony c
 
 ## 4. Calibrated Bayesian Risk Fusion Engine
 
-The fusion layer (`vaaniguard.risk.fusion`) aggregates the multi-dimensional evidence into a single calibrated risk score.
+The fusion layer (`vaanishield.risk.fusion`) aggregates the multi-dimensional evidence into a single calibrated risk score.
 
 ### Evidence Aggregation & Calibrated Posterior $P(\text{spoof} \mid \mathbf{x})$
 
@@ -172,10 +172,10 @@ $$\text{risk}_{\text{raw}} = 100.0 \times P(\text{spoof} \mid \mathbf{x})$$
 
 Real-world call audio contains transient glitches, packet drops, or brief coughing fits. An Exponential Moving Average (EMA) smooths scores across sliding windows to prevent spurious alerts during benign conversations.
 
-However, against high-confidence real-time voice cloning attacks, smoothing would introduce hazardous alert delay. To counter this, vaaniguard implements a **Fast-Rise Override**:
+However, against high-confidence real-time voice cloning attacks, smoothing would introduce hazardous alert delay. To counter this, vaanishield implements a **Fast-Rise Override**:
 
 ```python
-# vaaniguard/risk/fusion.py — RiskFusionEngine.update()
+# vaanishield/risk/fusion.py — RiskFusionEngine.update()
 p = calibrate(window, context_risk, self.fusion_cfg, semantic_risk)
 if p > self.risk_cfg.fast_rise_threshold:
     # Decisive spoof posterior: bypass EMA smoothing immediately
@@ -234,7 +234,7 @@ Every window yields a final risk score $\in [0, 100]$ mapped into three determin
 
 ### The Transaction Interlock Latch
 
-The banking transaction interlock (`vaaniguard.session.CallSession`) operates as a **unidirectional security latch**:
+The banking transaction interlock (`vaanishield.session.CallSession`) operates as a **unidirectional security latch**:
 - Once an analysis window triggers the **BLOCK** tier ($\text{risk} \ge 70$), `self._blocked` is set to `True`.
 - It remains latched for the remainder of the session; subsequent lower scores cannot release the interlock.
 - A failed challenge (`grade_challenge` failure) immediately escalates the session to **BLOCK** and triggers the latch.
@@ -249,10 +249,10 @@ To ensure technical integrity and honest engineering reporting, the following ta
 
 | Component | Current Implementation in Codebase | Production Upgrade Path (Drop-in Ready) |
 |---|---|---|
-| **Countermeasure (CM)** | Default: deterministic spectral Welch PSD feature extraction, pitch zero-crossing CV, and linear log-likelihood scoring (`vaaniguard.detectors.cm.CMModel`). | **Implemented.** `VG_CM_BACKEND=aasist` → `detectors.cm_aasist.CMModelAASIST`, real `microsoft/wavlm-base-plus` features feeding a trained AASIST-L graph head (`data/cm_aasist.pt`, 89k params) trained with full stochastic codec/telephony augmentation on ASVspoof 5 Track 1 Train partition (182,357 utterances). Measured ASVspoof 5 Dev partition performance: pooled **EER = 16.415 %**, **minDCF = 0.9912**, **actDCF = 3.2810**, calibrated $C_{\text{llr}} = 0.6536$. Measured ASVspoof 5 Eval partition performance across held-out attacks A17–A32 (`reports/cm_aasist_eval_partition.json`, 20k slice): raw **minDCF = 0.8048** (improves from pre-aug 0.8834), raw **EER = 13.627 %** (pre-aug 12.878%), calibrated **$\text{actDCF}_{\text{Bayes}} = 1.3795$**, **$C_{\text{llr}} = 0.7204$**. Per-attack eval EERs range from 2.93% (A29) to 26.22% (A28). Fully resolves YouTube compression acoustic domain shift: authentic speech (`demo_01_genuine.wav`) is classified as **ALLOW** in the production sliding-window path (Risk **31.6**, mean LLR **+2.55**, 3.4 points below the CHALLENGE threshold; center-cropped 10s yields Risk **24.0**, LLR **+3.85**, ASV 0.901). Impostor speech (`demo_04_impostor.wav`, an authentic human voice) is rejected as **BLOCK** (Risk 70.0) via the hard ASV biometric override (`asv_consistency ~ 0.011 < 0.10`). Falls back to `VG_CM_BACKEND=wavlm` or default DSP stub if checkpoint is absent. |
-| **Speaker Verification (ASV)** | Default: 192-dim deterministic random projection from standardized log-mel spectral energy (`vaaniguard.detectors.asv.ASVModel`). | **Implemented.** `VG_ASV_BACKEND=ecapa` → `detectors.asv_ecapa.ASVModelECAPA`, real SpeechBrain `ECAPA-TDNN` (192-dim) via `backend/app/models/ecapa_verifier.py`, same `_embed_raw`/`consistency_score` contract. Real anchor: `data/anchor_asv_embedding_ecapa.json` via `scripts/enroll_anchor.py --backend ecapa` — measured separation 0.845 mean anchor vs. 0.199 mean other-speaker, zero overlap (`archive/AUDIT_REPORT.md` §12). |
-| **Channel Detector** | Multi-band Welch power ratio partition (`vaaniguard.detectors.channel`). | Pretrained CNN/ResNet-18 channel codec classifier. |
-| **Prosody Extractor** | IIR Butterworth pitch-band filtering and zero-crossing interval variance (`vaaniguard.detectors.prosody`). | PyWorld / CREPE / TorchAudio pitch and shimmer/jitter estimation. |
+| **Countermeasure (CM)** | Default: deterministic spectral Welch PSD feature extraction, pitch zero-crossing CV, and linear log-likelihood scoring (`vaanishield.detectors.cm.CMModel`). | **Implemented.** `VG_CM_BACKEND=aasist` → `detectors.cm_aasist.CMModelAASIST`, real `microsoft/wavlm-base-plus` features feeding a trained AASIST-L graph head (`data/cm_aasist.pt`, 89k params) trained with full stochastic codec/telephony augmentation on ASVspoof 5 Track 1 Train partition (182,357 utterances). Measured ASVspoof 5 Dev partition performance: pooled **EER = 16.415 %**, **minDCF = 0.9912**, **actDCF = 3.2810**, calibrated $C_{\text{llr}} = 0.6536$. Measured ASVspoof 5 Eval partition performance across held-out attacks A17–A32 (`reports/cm_aasist_eval_partition.json`, 20k slice): raw **minDCF = 0.8048** (improves from pre-aug 0.8834), raw **EER = 13.627 %** (pre-aug 12.878%), calibrated **$\text{actDCF}_{\text{Bayes}} = 1.3795$**, **$C_{\text{llr}} = 0.7204$**. Per-attack eval EERs range from 2.93% (A29) to 26.22% (A28). Fully resolves YouTube compression acoustic domain shift: authentic speech (`demo_01_genuine.wav`) is classified as **ALLOW** in the production sliding-window path (Risk **31.6**, mean LLR **+2.55**, 3.4 points below the CHALLENGE threshold; center-cropped 10s yields Risk **24.0**, LLR **+3.85**, ASV 0.901). Impostor speech (`demo_04_impostor.wav`, an authentic human voice) is rejected as **BLOCK** (Risk 70.0) via the hard ASV biometric override (`asv_consistency ~ 0.011 < 0.10`). Falls back to `VG_CM_BACKEND=wavlm` or default DSP stub if checkpoint is absent. |
+| **Speaker Verification (ASV)** | Default: 192-dim deterministic random projection from standardized log-mel spectral energy (`vaanishield.detectors.asv.ASVModel`). | **Implemented.** `VG_ASV_BACKEND=ecapa` → `detectors.asv_ecapa.ASVModelECAPA`, real SpeechBrain `ECAPA-TDNN` (192-dim) via `backend/app/models/ecapa_verifier.py`, same `_embed_raw`/`consistency_score` contract. Real anchor: `data/anchor_asv_embedding_ecapa.json` via `scripts/enroll_anchor.py --backend ecapa` — measured separation 0.845 mean anchor vs. 0.199 mean other-speaker, zero overlap (`archive/AUDIT_REPORT.md` §12). |
+| **Channel Detector** | Multi-band Welch power ratio partition (`vaanishield.detectors.channel`). | Pretrained CNN/ResNet-18 channel codec classifier. |
+| **Prosody Extractor** | IIR Butterworth pitch-band filtering and zero-crossing interval variance (`vaanishield.detectors.prosody`). | PyWorld / CREPE / TorchAudio pitch and shimmer/jitter estimation. |
 | **Buffering & Fusion** | Fully functional production-grade DPDP-compliant sliding ring buffer and Bayesian fusion engine. | Direct reuse; zero changes required. |
 
 The contracts, interfaces, data formats, and Bayesian fusion mathematical formulations are identical between stubs and neural models.

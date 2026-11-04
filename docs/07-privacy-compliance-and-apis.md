@@ -19,7 +19,7 @@ The **Digital Personal Data Protection (DPDP) Act, 2023** establishes strict req
 Section 8(7) of the DPDP Act mandates:
 > *"A Data Fiduciary shall erase personal data, upon the Data Principal withdrawing her consent or as soon as it is reasonable to assume that the specified purpose for which personal data was collected is no longer being served, whichever is earlier."*
 
-vaaniguard achieves compliance through **privacy-by-architecture**:
+vaanishield achieves compliance through **privacy-by-architecture**:
 
 ```
                                  ┌─────────────────────────────────┐
@@ -55,7 +55,7 @@ vaaniguard achieves compliance through **privacy-by-architecture**:
 
 ## 2. In-Memory Buffering Architecture (`SlidingAudioBuffer`)
 
-The in-memory audio ring buffer is implemented in [`vaaniguard-backend/vaaniguard/privacy/buffer.py`](file:///d:/vaaniguard/vaaniguard-backend/vaaniguard/privacy/buffer.py):
+The in-memory audio ring buffer is implemented in [`vaanishield-backend/vaanishield/privacy/buffer.py`](file:///d:/vaanishield/vaanishield-backend/vaanishield/privacy/buffer.py):
 
 ### Key Operational Characteristics
 1. **Bounded Ring Memory Allocation:**
@@ -77,7 +77,7 @@ The in-memory audio ring buffer is implemented in [`vaaniguard-backend/vaaniguar
 
 ## 3. SHA-256 Append-Only Hash-Chained Audit Trail
 
-To satisfy banking compliance auditing (RBI Master Directions on Fraud Risk Management and CERT-In logging directives) while adhering to DPDP Act privacy rules, vaaniguard implements a **feature-only cryptographic audit log** in [`vaaniguard-backend/vaaniguard/privacy/audit.py`](file:///d:/vaaniguard/vaaniguard-backend/vaaniguard/privacy/audit.py).
+To satisfy banking compliance auditing (RBI Master Directions on Fraud Risk Management and CERT-In logging directives) while adhering to DPDP Act privacy rules, vaanishield implements a **feature-only cryptographic audit log** in [`vaanishield-backend/vaanishield/privacy/audit.py`](file:///d:/vaanishield/vaanishield-backend/vaanishield/privacy/audit.py).
 
 ### Non-Invertibility Guarantee
 The audit log stores strictly non-invertible scalar metrics:

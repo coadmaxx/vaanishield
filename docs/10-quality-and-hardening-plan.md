@@ -34,7 +34,7 @@ and having to retract a published conclusion.
    publishable and useful. Re-running until something passes is not.
 6. **Never edit an existing `reports/` JSON.** They are the record. New runs
    get new files.
-7. **Run the four gates before pushing:** `pytest vaaniguard-backend/tests/`,
+7. **Run the four gates before pushing:** `pytest vaanishield-backend/tests/`,
    `pytest tests/e2e/`, `python scripts/integration_check.py`,
    `python scripts/check_docs.py`.
 
@@ -201,7 +201,7 @@ moved a model in this repo from failing to passing once.
    eval; that is leakage and invalidates every number it touches.
 2. Store the two parameters in the checkpoint alongside the existing metadata.
 3. **Do not apply it in `score()`.** This is settled, not open. Read
-   `vaaniguard-backend/vaaniguard/detectors/cm_aasist.py:34-47`: the
+   `vaanishield-backend/vaanishield/detectors/cm_aasist.py:34-47`: the
    decision was already made and the reason recorded — applying
    `scale_w ≈ 0.37` inside `score()` compresses score variance and pushes
    genuine demo clips into false CHALLENGE/BLOCK. `score()` also already
@@ -485,9 +485,9 @@ head while being written up as an independent experiment.
 - `strict=False` loading logs missing and unexpected key counts every time.
 - Every saved checkpoint records `init_weights` (path or null) and the five
   augmenter probabilities.
-- `vaaniguard-backend/tests/test_ml_train_defaults.py` fails if the default
+- `vaanishield-backend/tests/test_ml_train_defaults.py` fails if the default
   ever comes back. Placed there, not under `tests/`, because
-  `pytest.ini`'s `testpaths` only covers `vaaniguard-backend/tests` — a test
+  `pytest.ini`'s `testpaths` only covers `vaanishield-backend/tests` — a test
   anywhere else runs on a laptop but never in CI. AST-parses `ml/train_cm.py`
   rather than importing it, so it needs neither `torch` nor `transformers` and
   runs on a CPU-only box.
@@ -615,7 +615,7 @@ multi-layer models gave those attacks away and never got them back.
 (`VG_CM_BACKEND=aasist VG_ASV_BACKEND=ecapa`). It is systemic, not
 environmental, and `RUNBOOK.md:96`'s "Risk 70.0 BLOCK / asv ~ 0.011" is stale.
 
-**Root cause.** `impostor_block_below` (`vaaniguard/config.py:57`, default
+**Root cause.** `impostor_block_below` (`vaanishield/config.py:57`, default
 `0.10`) is a single global constant, but the two ASV backends produce scores
 on entirely different scales:
 
@@ -686,7 +686,7 @@ behind a closed one, and it is roughly a day of work.
   another user's `user_id` is an identity attack, not a misconfiguration.
 - Rate limits on `/analyze` and `/enroll`.
 - Restrict `GET /v1/audit`; it is a log of who was scored and when.
-- New `VG_*` settings go in `vaaniguard-backend/vaaniguard/config.py` **and**
+- New `VG_*` settings go in `vaanishield-backend/vaanishield/config.py` **and**
   in `docs/PROTOCOL.md` §8, or `scripts/check_docs.py` fails.
 
 **RESULT (2026-09-12): DONE.**
@@ -694,7 +694,7 @@ behind a closed one, and it is roughly a day of work.
 - [x] Unauthenticated requests return 401 on `/v1/enroll` (GET and POST),
       `/v1/analyze`, `/v1/verify-speaker`, `/v1/sessions`,
       `/v1/sessions/{sid}/challenge` and `/v1/audit`; the WebSocket closes
-      **1008**. 25 tests in `vaaniguard-backend/tests/test_auth.py`.
+      **1008**. 25 tests in `vaanishield-backend/tests/test_auth.py`.
       `GET /v1/health` stays open on purpose — a load balancer cannot hold a
       credential, and it exposes only backend names and whether an anchor
       loaded.
@@ -742,7 +742,7 @@ tenants.
 
 ## G6 — Reconcile the semantic layer with the zero-retention claim
 
-`docs/09-post-cm-roadmap.md` P0 #2. `vaaniguard/semantic/signal.py` uploads
+`docs/09-post-cm-roadmap.md` P0 #2. `vaanishield/semantic/signal.py` uploads
 the caller's 4.04 s audio window to Groq, a third-party US cloud, while the
 system advertises zero retention and cites DPDP Act 2023 §8(7).
 
@@ -759,7 +759,7 @@ semantic signal is advisory (fusion weight 0.4 against 2.4 for the
 countermeasure), so disabling it by default costs little detection.
 
 - `VG_SEMANTIC_ENABLED` (default off) gates the layer in
-  `vaaniguard/semantic/signal.py` **before the ASR client is even imported**,
+  `vaanishield/semantic/signal.py` **before the ASR client is even imported**,
   so a disabled layer never constructs anything that could upload audio.
 - **A `GROQ_API_KEY` alone does not enable it.** That key sits in `.env` for the
   separate SACH and IndicConformer prototypes; keying the upload off its mere
@@ -772,7 +772,7 @@ countermeasure), so disabling it by default costs little detection.
 - Disabled, the `semantic` block still returns the full documented key set with
   `available: false` and a reason naming the flag.
 
-Tests: `vaaniguard-backend/tests/test_semantic_gate.py` (7). Documented in
+Tests: `vaanishield-backend/tests/test_semantic_gate.py` (7). Documented in
 `docs/PROTOCOL.md` s.8, `docs/API_SPEC.md`, `docs/RUNBOOK.md`.
 
 **Not done, and stated so:** a consent flow. Disclosure in the compliance fields
@@ -783,7 +783,7 @@ the layer in production owns that.
 
 ## G7 — Make ASV real by default
 
-`vaaniguard/config.py:180-181`: `VG_ASV_BACKEND` and `VG_CM_BACKEND` both
+`vaanishield/config.py:180-181`: `VG_ASV_BACKEND` and `VG_CM_BACKEND` both
 default to `"stub"`. The stub ASV is a **random projection**, not biometrics.
 So the impostor interlock that produces the demo BLOCK — and every
 `asv_consistency` value the dashboard renders — runs on synthetic similarity
@@ -792,7 +792,7 @@ unless someone sets `ecapa`.
 The honest-by-default posture is defensible for a demo and is documented. But
 "ships with real detectors off" should be a decision made on purpose, not an
 accident of defaults. Either flip the default and make
-`vaaniguard-backend/requirements-asv.txt` a hard dependency, or make the
+`vaanishield-backend/requirements-asv.txt` a hard dependency, or make the
 dashboard state unmissably that the similarity shown is synthetic.
 
 **Decided 2026-09-13 — label, don't flip the default.** The second option was
@@ -849,7 +849,7 @@ scale-wrong" above. Approved 2026-09-12; scheduled after G5 so the auth work
 lands first.
 
 **Work.** Replace the single hardcoded `impostor_block_below`
-(`vaaniguard/config.py:57`, default `0.10`) with a threshold read from the
+(`vaanishield/config.py:57`, default `0.10`) with a threshold read from the
 loaded anchor's own calibration block, which already ships
 `nontarget_scores.max` and a logistic `mid`. Keep `VG_IMPOSTOR_BLOCK_BELOW` as
 an explicit operator override, and fall back to it when an anchor carries no

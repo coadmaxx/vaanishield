@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""vaaniguard end-to-end integration check.
+"""vaanishield end-to-end integration check.
 
 Verifies the whole vertical slice the dashboard depends on:
 
@@ -37,7 +37,7 @@ import io
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 DEMO_DIR = REPO_ROOT / "frontend" / "public" / "demo"
 GROUND_TRUTH_PATH = REPO_ROOT / "data" / "demo" / "ground_truth.json"
 
@@ -142,7 +142,7 @@ def _client_factory(live: bool, base_url: str):
     audit_file = REPO_ROOT / "data" / "audit_log.jsonl"
     if audit_file.is_file():
         try:
-            from vaaniguard.privacy.audit import AuditLog  # type: ignore
+            from vaanishield.privacy.audit import AuditLog  # type: ignore
 
             chk = AuditLog(max_events=1000, path=audit_file)
             if not chk.verify_chain():
@@ -153,7 +153,7 @@ def _client_factory(live: bool, base_url: str):
 
     from fastapi.testclient import TestClient  # type: ignore
 
-    from vaaniguard.server.app import app  # type: ignore
+    from vaanishield.server.app import app  # type: ignore
 
     return TestClient(app), ""
 
@@ -316,7 +316,7 @@ def check_verify_speaker(client, checks: Checks) -> None:
         )
         print(
             "    NOTE: identity model not loadable in this environment.\n"
-            "          `pip install -r vaaniguard-backend/requirements-ml.txt` enables it."
+            "          `pip install -r vaanishield-backend/requirements-ml.txt` enables it."
         )
 
 
@@ -349,7 +349,7 @@ def check_ws_stream(live: bool, base_url: str, checks: Checks) -> None:
         sys.path.insert(0, str(BACKEND_ROOT))
         import uvicorn  # type: ignore
 
-        from vaaniguard.server.app import app  # type: ignore
+        from vaanishield.server.app import app  # type: ignore
 
         port = _free_port()
         config = uvicorn.Config(app, host="127.0.0.1", port=port, log_level="error")
@@ -545,8 +545,8 @@ def check_ws_stream(live: bool, base_url: str, checks: Checks) -> None:
     # process's own config actually governs the server that produced `verdicts`.
     if not live:
         sys.path.insert(0, str(BACKEND_ROOT))
-        from vaaniguard.config import resolve_risk_config, settings  # type: ignore
-        from vaaniguard.server.app import PIPELINE  # type: ignore
+        from vaanishield.config import resolve_risk_config, settings  # type: ignore
+        from vaanishield.server.app import PIPELINE  # type: ignore
 
         # The effective threshold: anchor-derived (G8) unless the env pins it.
         threshold = resolve_risk_config(
@@ -596,8 +596,8 @@ def check_auth(live: bool, checks: Checks) -> None:
         import importlib
         from fastapi.testclient import TestClient
 
-        app_module = importlib.import_module("vaaniguard.server.app")
-        from vaaniguard.server.auth import Authenticator
+        app_module = importlib.import_module("vaanishield.server.app")
+        from vaanishield.server.auth import Authenticator
 
         original = app_module.AUTH
         try:
@@ -648,7 +648,7 @@ def _silent_wav(seconds: float = 1.0, sr: int = 16000) -> bytes:
 
 def main() -> int:
     ap = argparse.ArgumentParser(
-        description="vaaniguard end-to-end integration check",
+        description="vaanishield end-to-end integration check",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     ap.add_argument("--live", action="store_true", help="exercise a running server instead of booting in-process")
@@ -656,7 +656,7 @@ def main() -> int:
     args = ap.parse_args()
 
     print("=" * 78)
-    print("vaaniguard integration check" + ("  (LIVE)" if args.live else "  (in-process)"))
+    print("vaanishield integration check" + ("  (LIVE)" if args.live else "  (in-process)"))
     print("=" * 78)
 
     checks = Checks()

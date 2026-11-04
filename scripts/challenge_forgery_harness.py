@@ -55,14 +55,14 @@ from typing import Callable, Dict, List, Optional
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT / "vaaniguard-backend"))
+sys.path.insert(0, str(REPO_ROOT / "vaanishield-backend"))
 
-from vaaniguard.challenge.transcribe import ChallengeTranscriber  # noqa: E402
-from vaaniguard.config import ChallengeConfig, RiskConfig, settings  # noqa: E402
-from vaaniguard.data.synthetic import synthetic_spoofed  # noqa: E402
-from vaaniguard.risk.fusion import RiskFusionEngine  # noqa: E402
-from vaaniguard.risk.simulate import WindowScore, _ScriptedPipeline  # noqa: E402
-from vaaniguard.session import CallSession, SessionContext  # noqa: E402
+from vaanishield.challenge.transcribe import ChallengeTranscriber  # noqa: E402
+from vaanishield.config import ChallengeConfig, RiskConfig, settings  # noqa: E402
+from vaanishield.data.synthetic import synthetic_spoofed  # noqa: E402
+from vaanishield.risk.fusion import RiskFusionEngine  # noqa: E402
+from vaanishield.risk.simulate import WindowScore, _ScriptedPipeline  # noqa: E402
+from vaanishield.session import CallSession, SessionContext  # noqa: E402
 
 SR = 16000
 # Tier CHALLENGE on the first window, then clean windows so only the

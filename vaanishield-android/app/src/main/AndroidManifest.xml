@@ -22,7 +22,7 @@
     <!-- Lets the incoming-call alert surface over the lock screen. -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
-    <!-- Required to reach the VaniRakshak backend: default 127.0.0.1:8000 over
+    <!-- Required to reach the vaanishield backend: default 127.0.0.1:8000 over
          `adb reverse tcp:8000 tcp:8000`, or a LAN IP set in the app's backend
          settings (see VaniBackendConfig). -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -35,13 +35,13 @@
         android:enableOnBackInvokedCallback="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true"
-        android:icon="@drawable/ic_logo_vanirakshak"
+        android:icon="@drawable/ic_logo_vaanishield"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_logo_vanirakshak"
+        android:roundIcon="@drawable/ic_logo_vaanishield"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VaniRakshak">
+        android:theme="@style/Theme.vaanishield">
 
-        <!-- LAUNCHER: VaniRakshak Main Activity -->
+        <!-- LAUNCHER: vaanishield Main Activity -->
         <activity
             android:name=".temp.TempContactsActivity"
             android:exported="true"
@@ -52,11 +52,11 @@
             </intent-filter>
         </activity>
 
-        <!-- VaniRakshak Call: in-app internet calling (WebRTC) -->
+        <!-- vaanishield Call: in-app internet calling (WebRTC) -->
         <activity
             android:name=".voip.VoipCallActivity"
             android:exported="true"
-            android:label="VaniRakshak Call" />
+            android:label="vaanishield Call" />
 
         <!-- Live Call Voice-Clone Defense Screen -->
         <activity

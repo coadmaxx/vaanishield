@@ -1,4 +1,4 @@
-# 14 — Master plan: what vaaniguard is, what it can become, every open gap
+# 14 — Master plan: what vaanishield is, what it can become, every open gap
 
 Written 2026-09-25. This is the **index** over `docs/08`, `09`, `10` and `13`.
 It does not replace them. Every pre-registered criterion in `docs/10` and
@@ -13,7 +13,7 @@ gaps no earlier document owned.
 
 ## 1. What it is today (one paragraph, no spin)
 
-vaaniguard is a **target-conditioned voice interlock**. It streams a call's audio
+vaanishield is a **target-conditioned voice interlock**. It streams a call's audio
 (16 kHz mono PCM over WebSocket) to a backend that scores each 4.04 s window with a
 countermeasure (CM: "is this audio machine-made?") and speaker verification (ASV:
 "is this the enrolled person?"). It fuses those scores with channel, prosody,
@@ -196,7 +196,7 @@ languages over AMR and G.711 phone lines. No amount of W3 closes that domain gap
   `data/consent/`), their genuine speech, plus clones from several open TTS and VC
   families. **Hold out whole generator families** for evaluation.
 - **Real codecs.** Transcode with ffmpeg to AMR-NB, AMR-WB and G.711 (docs/13 §2.3),
-  not only the simulated band-limits in `vaaniguard/data/augment.py`.
+  not only the simulated band-limits in `vaanishield/data/augment.py`.
 - **In-the-wild evaluation.** Real phone recordings (with consent) and public
   in-the-wild deepfake sets, used for evaluation only.
 - **Red-team set, refreshed quarterly.** Clones from current commercial
@@ -294,7 +294,7 @@ already gates them on step 1.
 **Step 1 commands** (training box; paths as in docs/13 §2):
 
 ```powershell
-$py = 'C:\vaaniguard\.venv\Scripts\python.exe'
+$py = 'C:\vaanishield\.venv\Scripts\python.exe'
 & $py scripts/score_checkpoint_eval.py --checkpoint incumbent=data/cm_aasist.pt `
     --manifest <dev manifest> --out C:\vr-out\p1\dev_scores.json --dump-scores C:\vr-out\p1\dev
 & $py scripts/score_checkpoint_eval.py --checkpoint incumbent=data/cm_aasist.pt `
@@ -307,7 +307,7 @@ $py = 'C:\vaaniguard\.venv\Scripts\python.exe'
 
 ## 7. Verification status of this change
 
-- `pytest vaaniguard-backend/tests`: 98 passed with torch installed (21 new in
+- `pytest vaanishield-backend/tests`: 98 passed with torch installed (21 new in
   `test_decision_layer.py`, plus the `operating_threshold` load test).
   `pytest tests/e2e`: 95 passed.
 - `scripts/integration_check.py` (stub backends): 25/25. This includes the new

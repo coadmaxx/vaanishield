@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""End-to-end handshake test for the vaaniguard VoIP signaling server.
+"""End-to-end handshake test for the vaanishield VoIP signaling server.
 
 Drives two concurrent websocket clients (alice, bob) through the full
 call flow plus negative cases. Every step is asserted; prints PASS/FAIL

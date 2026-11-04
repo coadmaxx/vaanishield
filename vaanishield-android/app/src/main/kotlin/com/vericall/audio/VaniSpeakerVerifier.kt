@@ -11,7 +11,7 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 /**
- * Bridges the on-device call audio to the VaniRakshak backend's trained model.
+ * Bridges the on-device call audio to the vaanishield backend's trained model.
  *
  * HONEST SCOPE: the model answers ONE question — "is this the enrolled target
  * voice (Modi ji)?", NOT "is this a synthetic/clone voice?". It was trained on a

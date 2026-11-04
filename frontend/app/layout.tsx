@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "vaaniguard — Enterprise Audio Deepfake & Voice Forensics",
+  title: "vaanishield — Enterprise Audio Deepfake & Voice Forensics",
   description:
     "Target-conditioned recorded-audio deepfake & voice cloning forensic intelligence. Segment-level risk localization, ECAPA-TDNN speaker verification, and DPDP Act 2023 compliance.",
   icons: {

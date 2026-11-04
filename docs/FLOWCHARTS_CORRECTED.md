@@ -1,4 +1,4 @@
-# vaaniguard - Corrected Architecture Flowcharts
+# vaanishield - Corrected Architecture Flowcharts
 
 > **If your Markdown viewer fails to render the Mermaid below**, open
 > `docs/flowcharts.html` in a browser - it bundles Mermaid and renders both
@@ -8,8 +8,8 @@
 **Why these were rewritten:** the two original flowcharts described a
 *semantic scam-classification system* (Speech-to-Text -> claim extraction ->
 web-search fact-checking -> LLM-RAG) as the PRIMARY detector. That does
-**not** match the vaaniguard codebase. vaaniguard (per `README.md`,
-`docs/PROTOCOL.md`, `vaaniguard-backend/README.md`) is a
+**not** match the vaanishield codebase. vaanishield (per `README.md`,
+`docs/PROTOCOL.md`, `vaanishield-backend/README.md`) is a
 **Target-Conditioned Recorded-Audio Forensic System** for **real-time
 detection of voice-cloning / deepfake-audio fraud on live calls**, ending in
 an **autonomous transaction interlock**. Detection is **acoustic + biometric
@@ -17,7 +17,7 @@ an **autonomous transaction interlock**. Detection is **acoustic + biometric
 remains the **sole authority** for `risk_score`/`tier`.
 
 > **Update (2026-09):** an optional advisory layer now exists —
-> `vaaniguard/semantic/` runs ASR (Groq Whisper) on the same audio window
+> `vaanishield/semantic/` runs ASR (Groq Whisper) on the same audio window
 > the acoustic detectors score, then a rule-based scorer over the transcript
 > for known scam vocabulary and claims that contradict published bank/RBI
 > policy (`docs/PROTOCOL.md` §3.1). This is **not** what the original
@@ -196,8 +196,8 @@ flowchart TD
 
 | Original node | Problem | Correction |
 |---|---|---|
-| Audio Capture (Live call, Recorded file, Screen-captured) | vaaniguard captures live mic via AudioWorklet AND accepts recorded file uploads via POST /v1/analyze; no screen-captured path. | Live mic PCM capture at 16 kHz via Web Audio API, streamed over WebSocket |
-| Speech-to-Text Service (Whisper / ASR) | STT exists but is **advisory, not primary** — Groq Whisper transcribes the same window the acoustic detectors score, contributing one small additive fusion term | Kept as an optional advisory signal (`vaaniguard/semantic/`), never the primary evidence — see `docs/PROTOCOL.md` §3.1 |
+| Audio Capture (Live call, Recorded file, Screen-captured) | vaanishield captures live mic via AudioWorklet AND accepts recorded file uploads via POST /v1/analyze; no screen-captured path. | Live mic PCM capture at 16 kHz via Web Audio API, streamed over WebSocket |
+| Speech-to-Text Service (Whisper / ASR) | STT exists but is **advisory, not primary** — Groq Whisper transcribes the same window the acoustic detectors score, contributing one small additive fusion term | Kept as an optional advisory signal (`vaanishield/semantic/`), never the primary evidence — see `docs/PROTOCOL.md` §3.1 |
 | Transcript Preprocessing / Speaker & time segmentation | A transcript is produced, but there is still no speaker diarization or time segmentation of it | Partially kept: transcript + Hinglish transliteration exist; segmentation does not |
 | Claim Extraction (payments, KYC, prizes, threats, urgency) | Primary detection is still **acoustic**; a rule-based (not NLP/LLM) claim-matching layer now runs advisory-only over the transcript | Kept as `semantic/claims.py` — a curated rule set matched against published policy, not open-ended NLP; fused at weight 0.4 vs 2.4 for the acoustic CM term |
 | Web Search / Scraping (RBI, NPCI, banks, news, fact-checkers) | **No web/LLM fact-checking** | Removed - replaced by calibrated Bayesian fusion over acoustic evidence |
@@ -216,7 +216,7 @@ flowchart TD
 | Synthetic audio (xTTS / TTS models) | Synthetic audio is **numpy DSP** (vocoded-style) | Replaced with synthetic_speech / synthetic_spoofed generators |
 | Public scam transcripts / forums | N/A | Removed |
 | Audio preprocessing: Noise reduction, VAD | Sliding buffer + per-window analysis; no VAD stage in the trained-model pipeline this diagram covers | Replaced with sliding-window buffering + per-window detection |
-| ASR/STT (WhisperX), Diarization, Text cleaning | Groq Whisper ASR now runs (advisory, outside this trained-model pipeline); no diarization or text cleaning | Not part of this diagram's trained models — it is a separate, untrained, rule-based advisory layer (`vaaniguard/semantic/`), fused at a small fixed weight |
+| ASR/STT (WhisperX), Diarization, Text cleaning | Groq Whisper ASR now runs (advisory, outside this trained-model pipeline); no diarization or text cleaning | Not part of this diagram's trained models — it is a separate, untrained, rule-based advisory layer (`vaanishield/semantic/`), fused at a small fixed weight |
 | NER, Regex urgency, BERT embeddings | No BERT/NER; a curated regex/keyword scorer now exists for scam vocabulary and urgency framing | Kept as `semantic/keywords.py` — hand-written categories, not learned embeddings; advisory only |
 | Speaker embeddings (Resemblyzer / ECAPA-TDNN) | ASV is a **numpy stub by default**; `VG_ASV_BACKEND=ecapa` swaps in real ECAPA-TDNN (192-dim) for speaker **verification** vs claimed_identity | Kept ECAPA as an opt-in real backend, reframed as enrolment + verification vs claimed identity |
 | Prosodic features + Emotion cues | Prosody = **pitch jitter + micro-tremor consistency** (not emotion) | Prosody definition corrected |
@@ -242,20 +242,20 @@ flowchart TD
 
 All major previously identified gaps have been addressed:
 - Architecture & technical strategy: Documented in `docs/02-technical-strategy-and-architecture.md`, `docs/ARCHITECTURE.md`, `docs/API_SPEC.md`, and `docs/RUNBOOK.md`.
-- Codec augmentation: Documented in `docs/03-codec-augmentation-and-telephony.md` and implemented in `vaaniguard/data/augment.py`.
-- Metrics & evaluation: Documented in `docs/04-metrics-and-honest-evaluation.md` and implemented in `benchmarks/compute_mindcf.py` (`python -m vaaniguard eval`).
-- Privacy & DPDP compliance: Documented in `docs/07-privacy-compliance-and-apis.md` and implemented in `vaaniguard/privacy/audit.py` and `buffer.py`.
+- Codec augmentation: Documented in `docs/03-codec-augmentation-and-telephony.md` and implemented in `vaanishield/data/augment.py`.
+- Metrics & evaluation: Documented in `docs/04-metrics-and-honest-evaluation.md` and implemented in `benchmarks/compute_mindcf.py` (`python -m vaanishield eval`).
+- Privacy & DPDP compliance: Documented in `docs/07-privacy-compliance-and-apis.md` and implemented in `vaanishield/privacy/audit.py` and `buffer.py`.
 - `Makefile` and `docker-compose.yml`: Fully written and operational.
 - WebSocket reconnect logic: Implemented with 5-attempt exponential backoff and jitter in `frontend/app/page.tsx`.
-- Server-side alerting: Implemented in `vaaniguard/alerts/dispatcher.py` and invoked on `CHALLENGE`/`BLOCK`.
+- Server-side alerting: Implemented in `vaanishield/alerts/dispatcher.py` and invoked on `CHALLENGE`/`BLOCK`.
 - Real detector backends (optional): the CM/ASV nodes in both flowcharts above show the
   **default** zero-dependency stubs, which remain the default. `VG_ASV_BACKEND=ecapa` /
   `VG_CM_BACKEND=wavlm` swap in real speechbrain ECAPA-TDNN / WavLM features
-  (`vaaniguard/detectors/{asv_ecapa,cm_wavlm}.py`) — real embeddings/features, but CM's
+  (`vaanishield/detectors/{asv_ecapa,cm_wavlm}.py`) — real embeddings/features, but CM's
   spoof decision is still heuristic, not a trained classifier. See
   `docs/02-technical-strategy-and-architecture.md`'s Production Upgrade Path table and
   `docs/archive/AUDIT_REPORT.md` §12 for the honest, partial calibration result this produces.
-- Advisory semantic signal (optional): `vaaniguard/semantic/` — Groq Whisper ASR plus a
+- Advisory semantic signal (optional): `vaanishield/semantic/` — Groq Whisper ASR plus a
   rule-based keyword/claim scorer, fused at a small fixed weight
   (`VG_FUSION_W_SEMANTIC`). This is genuinely new since the "no STT anywhere" claim above
   was first written; see the "Update (2026-09)" note at the top of this file and
@@ -265,12 +265,12 @@ All major previously identified gaps have been addressed:
 
 ## Canonical ML-side pipeline (use THIS, not the "fixed" variant)
 
-> **Heads-up:** a diagram titled **"vaaniguard - ML Pipeline (Fixed Mermaid
+> **Heads-up:** a diagram titled **"vaanishield - ML Pipeline (Fixed Mermaid
 > Syntax)"** has been circulating. It is **syntactically valid** (it renders) but
 > it describes a **different product** - a *semantic scam-call classifier*
 > where transcription and text classification are the primary decision path
 > (Whisper STT -> NER/BERT -> CNN/XVector -> LLM-RAG -> weighted scam-score 0-1).
-> vaaniguard's real ML side does now run ASR (see the Semantic subgraph in
+> vaanishield's real ML side does now run ASR (see the Semantic subgraph in
 > Flowchart 1 above), but **never as the decision path** — there is no
 > BERT/CNN/XVector classifier, no LLM-RAG, and no "scam probability" score;
 > the transcript only ever contributes one small additive term to a
@@ -303,7 +303,7 @@ flowchart LR
 
 | "Fixed" diagram claims | What the repo actually has |
 |---|---|
-| S1 Whisper/WhisperX STT -> transcript + speaker tags feeding the primary decision | ASR now runs (Groq Whisper, `vaaniguard/semantic/`), but only as a small advisory term — not a step in the primary decision path, and no speaker-tagging/diarization |
+| S1 Whisper/WhisperX STT -> transcript + speaker tags feeding the primary decision | ASR now runs (Groq Whisper, `vaanishield/semantic/`), but only as a small advisory term — not a step in the primary decision path, and no speaker-tagging/diarization |
 | S2 text NER / regex / BERT embeddings | A curated regex/keyword scorer exists (`semantic/keywords.py`), not NER or learned BERT embeddings |
 | S2 audio: Resemblyzer/ECAPA embeddings, prosody (pitch/energy/rate), emotion | ASV (numpy stub / optional ECAPA) is a **verification** signal vs `claimed_identity`, not a bare embedding; prosody = **pitch-jitter + micro-tremor** (a spoof cue), **no emotion**; missing the CM anti-spoofing and channel/codec branches entirely |
 | S3 BERT text classifier, CNN/XVector audio classifier, LLM-RAG -> P_text/P_audio/P_pattern | No classifiers, no LLM; outputs are `cm_score`, `asv_consistency`, `channel_anomaly`, `prosody_unnatural`, `snr_db` |

@@ -3,7 +3,7 @@ version: "3.9"
 services:
   backend:
     build:
-      context: ./vaaniguard-backend
+      context: ./vaanishield-backend
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -12,7 +12,7 @@ services:
       - VG_PORT=8000
       - VG_CORS_ORIGINS=http://localhost:3001,http://127.0.0.1:3001
     volumes:
-      - ./vaaniguard-backend:/app
+      - ./vaanishield-backend:/app
     command: python run.py
 
   frontend:

@@ -8,7 +8,7 @@ never enrolled, so `DetectionPipeline.analyse()` short-circuits.
 What this does:
   1. Reads the reference recordings in ``data/anchor_speaker/`` (MP3/WAV/FLAC).
   2. Resamples to 16 kHz, runs an energy VAD, keeps voiced frames only.
-  3. Embeds them with the *serving* ASV model (``vaaniguard.detectors.asv``),
+  3. Embeds them with the *serving* ASV model (``vaanishield.detectors.asv``),
      so the vector lives in the same space the live pipeline scores against.
   4. Writes ``data/anchor_asv_embedding.json`` — a 192-float vector plus provenance.
      No audio is written; the raw recordings are never retained (DPDP §8(7)).
@@ -36,7 +36,7 @@ from typing import List, Tuple
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 sys.path.insert(0, str(BACKEND_ROOT))
 
 ANCHOR_DIR = REPO_ROOT / "data" / "anchor_speaker"
@@ -146,7 +146,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.backend == "ecapa":
-        from vaaniguard.detectors.asv_ecapa import ASVModelECAPA  # type: ignore
+        from vaanishield.detectors.asv_ecapa import ASVModelECAPA  # type: ignore
 
         def ASVModel():  # noqa: N802 - shadows the stub factory used below
             inst = ASVModelECAPA.try_create()
@@ -156,7 +156,7 @@ def main() -> int:
                 raise SystemExit(1)
             return inst
     else:
-        from vaaniguard.detectors.asv import ASVModel  # type: ignore
+        from vaanishield.detectors.asv import ASVModel  # type: ignore
 
     anchor_dir = Path(args.anchor_dir)
     all_clips = load_dir(anchor_dir)

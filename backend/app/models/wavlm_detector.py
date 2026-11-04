@@ -1,5 +1,5 @@
 """
-vaaniguard — WavLM Intermediate Acoustic Feature Extractor & Forensic Detector
+vaanishield — WavLM Intermediate Acoustic Feature Extractor & Forensic Detector
 Compliant with DPDP Act 2023 Section 8(7) (Zero-retention voice biometrics).
 
 Loads microsoft/wavlm-base-plus directly onto RTX 4050 (device='cuda' with graceful CPU fallback).
@@ -17,7 +17,7 @@ import numpy as np
 import torch
 from transformers import AutoFeatureExtractor, WavLMModel
 
-logger = logging.getLogger("vaaniguard.wavlm_detector")
+logger = logging.getLogger("vaanishield.wavlm_detector")
 
 WAVLM_MODEL_ID = "microsoft/wavlm-base-plus"
 EXPECTED_SAMPLE_RATE = 16000

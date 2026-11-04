@@ -7,7 +7,7 @@ ChannelBind/ChannelData. Single-file, stdlib only (asyncio).
 
 Usage:
   python turn_server.py --port 3478 --external-ip 10.0.2.2
-Credentials: username "vr", password "vaaniguard-turn", realm "vaaniguard".
+Credentials: username "vr", password "vaanishield-turn", realm "vaanishield".
 Logs to stdout (redirect to a file when launched via WMI).
 """
 
@@ -22,7 +22,7 @@ import time
 import zlib
 
 MAGIC = 0x2112A442
-REALM = "vaaniguard"
+REALM = "vaanishield"
 USERNAME = "vr"
 PASSWORD=REPLACE_WITH_YOUR_OWN_SECRET
 

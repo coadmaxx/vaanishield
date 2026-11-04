@@ -13,7 +13,7 @@ import com.vericall.util.VaniCallRouter
  * opened in this boot. The user has to grant the call-screening role once
  * (Settings > Caller ID & spam, or the button on the main screen).
  *
- * We never reject or silence the call: VaniRakshak only observes and reports.
+ * We never reject or silence the call: vaanishield only observes and reports.
  */
 class VaniCallScreeningService : CallScreeningService() {
 

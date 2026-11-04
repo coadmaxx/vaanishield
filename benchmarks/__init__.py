@@ -1,1 +1,1 @@
-"""Benchmark harnesses and evaluation metrics for vaaniguard."""
+"""Benchmark harnesses and evaluation metrics for vaanishield."""

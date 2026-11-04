@@ -1,5 +1,5 @@
 """
-vaaniguard ASR Subsystem - AI4Bharat IndicConformer & Hinglish Normalization
+vaanishield ASR Subsystem - AI4Bharat IndicConformer & Hinglish Normalization
 """
 
 from .types import TranscriptionResult, AudioChunk, ASRConfig

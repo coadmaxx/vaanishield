@@ -1,6 +1,6 @@
-# vaaniguard Kavach — Android call-guard client
+# vaanishield Kavach — Android call-guard client
 
-On-device half of the vaaniguard system. It owns the microphone during a live
+On-device half of the vaanishield system. It owns the microphone during a live
 call and enforces the autonomous interlock on the handset. See `DESIGN.md` for
 architecture.
 
@@ -11,7 +11,7 @@ computing zero-crossing-rate variance, energy-plateau flatness, and spectral
 diff ratio every ~1s of speech to produce a synthetic-voice score, a speaker-
 match score, and a dynamic risk level (SAFE/WARNING/DANGER), entirely without
 calling the backend. It does not share code, weights, or calibration with the
-Python backend's `vaaniguard/detectors/{cm,cm_wavlm}.py` — two separate,
+Python backend's `vaanishield/detectors/{cm,cm_wavlm}.py` — two separate,
 unreconciled "is this fake" heuristics exist in the system. Like the Python
 CM stub, this Kotlin heuristic is hand-tuned thresholds, never trained or
 validated against real synthetic/cloned audio — see docs/archive/AUDIT_REPORT.md §12.3.
@@ -42,7 +42,7 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 Then start the backend from the repo root:
 
 ```bash
-npm run dev:all        # or: uvicorn vaaniguard.server.app:app --port 8000
+npm run dev:all        # or: uvicorn vaanishield.server.app:app --port 8000
 ```
 
 ## Permissions

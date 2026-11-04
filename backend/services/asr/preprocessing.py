@@ -1,5 +1,5 @@
 """
-Audio Preprocessing Pipeline for vaaniguard ASR
+Audio Preprocessing Pipeline for vaanishield ASR
 
 Converts incoming call audio (WAV, MP3, M4A, FLAC) into:
 - Sample rate: 16000 Hz
@@ -29,7 +29,7 @@ except ImportError:
 
 from .types import AudioChunk
 
-logger = logging.getLogger("vaaniguard.asr.preprocessing")
+logger = logging.getLogger("vaanishield.asr.preprocessing")
 
 
 TARGET_SAMPLE_RATE = 16000

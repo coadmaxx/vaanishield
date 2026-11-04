@@ -5,33 +5,33 @@
 > explicitly explains why the shipped system does not do open-ended,
 > web-search-based fact-checking — this prototype predates or explores that
 > alternative direction. Treated the same way `docs/ARCHITECTURE.md` already
-> treats `vaaniguard_sotto/` and `vaaniguard_indic_conformer/`: a standalone
+> treats `vaanishield_sotto/` and `vaanishield_indic_conformer/`: a standalone
 > prototype under this repo, not the currently-running system.
 
-# 👋 Ayush Agnihotri — Creator of vaaniguard
+# 👋 Ayush Agnihotri — Creator of vaanishield
 
 | | |
 |---|---|
 | **Name** | Ayush Agnihotri |
 | **GitHub** | [@ayushagnihotrii](https://github.com/ayushagnihotrii) |
 | **Role** | Creator, Architect & Lead Developer |
-| **Project** | vaaniguard |
+| **Project** | vaanishield |
 
 ---
 
 ## About This Folder
 
-This folder belongs to **Ayush Agnihotri**, the creator of vaaniguard.
+This folder belongs to **Ayush Agnihotri**, the creator of vaanishield.
 Here you'll find personal notes, design decisions, and a showcase of the work done on this project.
 
 ---
 
-## My Vision for vaaniguard
+## My Vision for vaanishield
 
-I built vaaniguard because I believe that in a world flooded with misinformation,
+I built vaanishield because I believe that in a world flooded with misinformation,
 every spoken and written claim should be instantly verifiable.
 
-**vaaniguard** (Voice Guardian) is my answer to that problem —
+**vaanishield** (Voice Guardian) is my answer to that problem —
 a system that takes any factual claim, searches the live internet for evidence,
 and uses AI to return a clear, explainable verdict.
 
@@ -66,5 +66,5 @@ and uses AI to return a clear, explainable verdict.
 
 ---
 
-> *"vaaniguard — Because every word deserves to be verified."*
+> *"vaanishield — Because every word deserves to be verified."*
 > — Ayush Agnihotri

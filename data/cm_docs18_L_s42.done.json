@@ -1,5 +1,5 @@
 {
-  "checkpoint": "C:\\vaaniguard\\data\\cm_docs18_L_s42.pt",
+  "checkpoint": "C:\\vaanishield\\data\\cm_docs18_L_s42.pt",
   "arm": "L",
   "seed": 42,
   "git_head": "e42b88a9d6a5d9be9dbc66dd1af69f8768e1fcfb",

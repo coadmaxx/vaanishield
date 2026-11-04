@@ -1,11 +1,11 @@
-# vaaniguard — Project Notes by Ayush Agnihotri
+# vaanishield — Project Notes by Ayush Agnihotri
 
 ## Core Idea
 
 **Problem:** Misinformation spreads fast. Podcasts, customer service calls,
 news broadcasts — nobody fact-checks in real time.
 
-**Solution:** vaaniguard listens, detects claims, searches the internet,
+**Solution:** vaanishield listens, detects claims, searches the internet,
 and gives a verdict — SUPPORTED, CONTRADICTED, or UNVERIFIABLE — with evidence.
 
 ---
@@ -82,7 +82,7 @@ I wrote tests for every failure mode, not just the happy path:
 
 ## Future Ideas
 
-- [ ] Voice input (Whisper transcription → vaaniguard pipeline)
+- [ ] Voice input (Whisper transcription → vaanishield pipeline)
 - [ ] Browser extension for real-time YouTube fact-checking
 - [ ] Multi-language support (Hindi claims verified in Hindi sources)
 - [ ] Live dashboard showing verification stats

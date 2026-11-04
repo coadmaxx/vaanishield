@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-vaaniguard — Target Speaker Profile Enrollment & Cryptographic Anchor Locking
+vaanishield — Target Speaker Profile Enrollment & Cryptographic Anchor Locking
 Compliant with DPDP Act 2023 (Section 8(7) - Zero Retention Voice Biometrics).
 
 This script:
@@ -35,7 +35,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.enroll")
+logger = logging.getLogger("vaanishield.enroll")
 
 EMBEDDING_DIM = 192
 
@@ -49,7 +49,7 @@ def check_cuda_availability() -> Tuple[str, Dict[str, Any]]:
     }
 
     print("\n" + "=" * 60)
-    print(" 🛡️  vaaniguard HARDWARE ACCELERATOR INSPECTION")
+    print(" 🛡️  vaanishield HARDWARE ACCELERATOR INSPECTION")
     print("=" * 60)
     print(f" PyTorch Version : {torch.__version__}")
 

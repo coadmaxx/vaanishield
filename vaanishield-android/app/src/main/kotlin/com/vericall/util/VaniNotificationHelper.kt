@@ -19,7 +19,7 @@ import com.vericall.temp.TempContactDetailActivity
 import com.vericall.temp.TempContactsActivity
 
 /**
- * Every notification VaniRakshak shows during a call.
+ * Every notification vaanishield shows during a call.
  *
  * Two channels, deliberately:
  *  - [CHANNEL_ALERT] is high importance and owns the moment a call arrives

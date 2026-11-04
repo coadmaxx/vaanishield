@@ -1,5 +1,5 @@
 """
-AI4Bharat IndicConformer / Groq Whisper ASR Engine — vaaniguard Indic Edition
+AI4Bharat IndicConformer / Groq Whisper ASR Engine — vaanishield Indic Edition
 Powered by Groq Cloud Whisper Large v3 Turbo
 Supports Hindi, Hinglish, English (Indian Accent), and 22+ Indian Languages with sub-second latency.
 """

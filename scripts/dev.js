@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * VaniRakshak — one-command integrated dev launcher.
+ * vaanishield — one-command integrated dev launcher.
  *
  * Boots the full vertical slice (FastAPI forensic backend on :8000 + Next.js
  * console on :3001) and prefixes every log line so you can tell them apart.
@@ -12,7 +12,7 @@
  *   node scripts/dev.js --real     # real ECAPA-TDNN + WavLM AASIST detectors
  *   npm run dev:all:real
  *
- * --real installs vanirakshak-backend/requirements-asv.txt into the venv (one
+ * --real installs vaanishield-backend/requirements-asv.txt into the venv (one
  * extra `pip install`, first run only) and sets VR_ASV_BACKEND=ecapa,
  * VR_CM_BACKEND=aasist. Without it, every run uses the deterministic stub
  * detectors: no GPU, no model download, no network — see the "Notes" section
@@ -21,7 +21,7 @@
  * on first use under --real (network access needed once).
  *
  * The backend interpreter is picked in this order:
- *   1. vanirakshak-backend/.venv            (preferred, isolated)
+ *   1. vaanishield-backend/.venv            (preferred, isolated)
  *   2. VR_PYTHON env var
  *   3. `python3` / `python` on PATH
  *
@@ -35,7 +35,7 @@ const path = require("path");
 const http = require("http");
 
 const ROOT = path.resolve(__dirname, "..");
-const BACKEND = path.join(ROOT, "vanirakshak-backend");
+const BACKEND = path.join(ROOT, "vaanishield-backend");
 const FRONTEND = path.join(ROOT, "frontend");
 const IS_WIN = process.platform === "win32";
 

@@ -1,6 +1,6 @@
-# vaaniguard — Collaboration Guidelines & Team Rules
+# vaanishield — Collaboration Guidelines & Team Rules
 
-Welcome to **vaaniguard**! To ensure seamless collaboration, prevent merge conflicts, keep code quality high, and maintain acoustic data integrity, all contributors and AI agents must follow these rules.
+Welcome to **vaanishield**! To ensure seamless collaboration, prevent merge conflicts, keep code quality high, and maintain acoustic data integrity, all contributors and AI agents must follow these rules.
 
 ---
 
@@ -33,12 +33,12 @@ Never push directly to `main`. Always create a feature or fix branch from the la
 
 ## 2. Architecture & Separation of Concerns
 
-vaaniguard consists of three main layers. Keep changes strictly decoupled:
+vaanishield consists of three main layers. Keep changes strictly decoupled:
 
 ```
-vaaniguard/
+vaanishield/
 ├── frontend/             # Next.js 16 (App Router) + Tailwind CSS + AudioWorklet
-├── vaaniguard-backend/  # FastAPI real-time forensic WebSocket/REST service — the ONE live backend
+├── vaanishield-backend/  # FastAPI real-time forensic WebSocket/REST service — the ONE live backend
 ├── docs/                 # Single source of truth for contracts & architecture
 ├── backend/              # Retired standalone server; only shared model-loading modules remain
 │                         # (backend/README.md explains exactly what's kept and why)
@@ -49,13 +49,13 @@ vaaniguard/
 
 ### Golden Rules Across Layers:
 1. **The Backend Owns the Interlock Decision:**
-   * Risk thresholds (`ALLOW` < 35, `CHALLENGE` 35–69, `BLOCK` >= 70) and transaction lock decisions originate from `vaaniguard/risk/fusion.py` and `vaaniguard/session.py`.
+   * Risk thresholds (`ALLOW` < 35, `CHALLENGE` 35–69, `BLOCK` >= 70) and transaction lock decisions originate from `vaanishield/risk/fusion.py` and `vaanishield/session.py`.
    * The frontend *must not* invent its own security verdicts except when explicitly running in offline synthetic demo mode.
 2. **Docs Are the Single Source of Truth:**
    * Any change to WebSocket payloads or field names must be documented first in `docs/PROTOCOL.md`.
    * Any change to the forensic signal pipeline must update `docs/FLOWCHARTS_CORRECTED.md`.
 3. **Server-Side Security Alerting:**
-   * Alerts and webhooks (`vaaniguard/alerts/`) are dispatched **from the server**, never from the client browser. Never expose gateway API keys or webhook secrets in frontend client code (`NEXT_PUBLIC_*`).
+   * Alerts and webhooks (`vaanishield/alerts/`) are dispatched **from the server**, never from the client browser. Never expose gateway API keys or webhook secrets in frontend client code (`NEXT_PUBLIC_*`).
 
 ---
 
@@ -74,31 +74,31 @@ vaaniguard/
 
 ---
 
-## 4. Backend & ML Guidelines (`vaaniguard-backend/`)
+## 4. Backend & ML Guidelines (`vaanishield-backend/`)
 
 * **Environment Setup (do this first):**
   ```bash
   make setup      # pip install -r requirements-dev.txt (CPU torch wheels)
   make test       # pytest -v  -> expect 15 passed
   ```
-  `pytest.ini` sets `testpaths = vaaniguard-backend/tests`, so plain `pytest`
-  and `pytest vaaniguard-backend/tests/` collect the same 15 tests — there
+  `pytest.ini` sets `testpaths = vaanishield-backend/tests`, so plain `pytest`
+  and `pytest vaanishield-backend/tests/` collect the same 15 tests — there
   is no longer a "12 passed vs 21 passed" distinction to watch for; that was
   true of an earlier tree layout that no longer exists (the standalone
   `backend/` server and its test suite were removed — see `backend/README.md`).
   A separate root-level `tests/` directory (18 tests, ASR stack coverage —
   `tests/test_asr.py`, `tests/test_groq_asr.py`) is **not** collected by
   `make test`; run `pytest tests/` explicitly if you're changing anything
-  under `backend/services/asr/` or `vaaniguard/semantic/`.
+  under `backend/services/asr/` or `vaanishield/semantic/`.
 * **Python Standard:** Python 3.10+ with strict type hinting (`from __future__ import annotations`).
 * **Deterministic Fallbacks ("Honest Stubs"):**
-  * When real heavy checkpoints (WavLM, ECAPA-TDNN) are not loaded or GPU is absent, models must gracefully fall back to the deterministic synthetic stubs in `vaaniguard/detectors/`.
+  * When real heavy checkpoints (WavLM, ECAPA-TDNN) are not loaded or GPU is absent, models must gracefully fall back to the deterministic synthetic stubs in `vaanishield/detectors/`.
   * The stack must always be runnable on a standard developer laptop with zero GPU requirements.
 * **Protocol Conformance:**
   Always test your changes against the end-to-end WebSocket test:
   ```bash
-  python vaaniguard-backend/tests/test_stream_e2e.py
-  python -m pytest vaaniguard-backend/tests/test_smoke.py
+  python vaanishield-backend/tests/test_stream_e2e.py
+  python -m pytest vaanishield-backend/tests/test_smoke.py
   ```
 
 ---
@@ -106,10 +106,10 @@ vaaniguard/
 ## 5. Audio Data & Privacy (DPDP Compliance)
 
 * **Ephemeral Buffering:**
-  * Raw caller audio must be processed in RAM sliding windows (`vaaniguard/privacy/buffer.py`) and cleared after scoring.
+  * Raw caller audio must be processed in RAM sliding windows (`vaanishield/privacy/buffer.py`) and cleared after scoring.
   * Never save unencrypted caller audio to disk or permanent storage without explicit user consent.
 * **Audit Receipts:**
-  * Every transaction verdict generates a cryptographically signed SHA-256 receipt (`vaaniguard/privacy/audit.py`). Do not tamper with hash chaining logic.
+  * Every transaction verdict generates a cryptographically signed SHA-256 receipt (`vaanishield/privacy/audit.py`). Do not tamper with hash chaining logic.
 
 ---
 

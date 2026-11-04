@@ -1,4 +1,4 @@
-"""vaaniguard — Acoustic Countermeasure & Anti-Spoofing Classifier.
+"""vaanishield — Acoustic Countermeasure & Anti-Spoofing Classifier.
 
 Target-conditioned neural forensic model designed for real-time inference:
   - Consumes 768-dimensional intermediate acoustic vectors (e.g. WavLM / AASIST)

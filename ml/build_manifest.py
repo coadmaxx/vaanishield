@@ -18,7 +18,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.build_manifest")
+logger = logging.getLogger("vaanishield.build_manifest")
 
 
 def parse_protocol_and_build_manifest(

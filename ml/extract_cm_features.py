@@ -38,7 +38,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.extract_cm_features")
+logger = logging.getLogger("vaanishield.extract_cm_features")
 
 SAMPLE_RATE = 16000
 WINDOW_S = 4.0

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-vaaniguard — Audio Standardization CLI
+vaanishield — Audio Standardization CLI
 Compliant with DPDP Act 2023 Section 8(7) (Zero raw voice retention on disk).
 
 Standardizes any libsndfile-supported audio file to 16 kHz mono float32 with
@@ -16,7 +16,7 @@ wired into the serving path this repo ships (see `backend/README.md`), and no
 caller of this script (`batch_standardize.bat`) ever read those fields, only
 `--output-wav`. This script now does exactly what is actually used:
 standardize + hash. See `docs/archive/AUDIT_REPORT.md` §5 / `docs/archive/scripts/` for
-the retired forensic-metrics code, and `vaaniguard/detectors/` for the
+the retired forensic-metrics code, and `vaanishield/detectors/` for the
 DSP that actually runs in production (channel.py, prosody.py, cm.py).
 """
 
@@ -45,7 +45,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.standardize")
+logger = logging.getLogger("vaanishield.standardize")
 
 TARGET_SR = 16000
 
@@ -132,7 +132,7 @@ def process_file(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="vaaniguard — Audio Standardization CLI")
+    parser = argparse.ArgumentParser(description="vaanishield — Audio Standardization CLI")
     parser.add_argument(
         "--audio",
         type=str,
@@ -170,7 +170,7 @@ def main() -> None:
         return
 
     print("\n" + "=" * 60)
-    print("  🛡️  vaaniguard AUDIO STANDARDIZATION")
+    print("  🛡️  vaanishield AUDIO STANDARDIZATION")
     print("=" * 60)
     print(f" File Name:         {result['file_name']}")
     print(f" SHA-256 Digest:    {result['audio_sha256']}")

@@ -1,5 +1,5 @@
 """
-Transcript Buffer for vaaniguard Audio Pipeline
+Transcript Buffer for vaanishield Audio Pipeline
 
 Maintains sequential 4-second chunk transcripts with precise timestamps,
 preventing loss of temporal evidence for downstream fraud detection and claim extraction.

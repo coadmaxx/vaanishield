@@ -1,4 +1,4 @@
-"""vaaniguard — Forensic Audio Dataset & Augmentation Pipeline.
+"""vaanishield — Forensic Audio Dataset & Augmentation Pipeline.
 
 Provides:
   - ForensicAudioDataset: PyTorch dataset supporting both file-based and in-memory
@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 if str(REPO_ROOT) not in sys.path:
@@ -25,8 +25,8 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-from vaaniguard.data.augment import apply_random_pipeline
-from vaaniguard.data.synthetic import synthetic_speech, synthetic_spoofed
+from vaanishield.data.augment import apply_random_pipeline
+from vaanishield.data.synthetic import synthetic_speech, synthetic_spoofed
 
 
 class ForensicAudioDataset(Dataset):
@@ -362,7 +362,7 @@ class ASVspoofDataset(Dataset):
         if self.augment:
             x = apply_random_pipeline(x, self.sample_rate)
 
-        # MFCC-40, matching ml/extract_features.py and vaaniguard/ml_bridge.py
+        # MFCC-40, matching ml/extract_features.py and vaanishield/ml_bridge.py
         # exactly — a CM trained on different features could not be served by
         # the existing inference path.
         mfcc = librosa.feature.mfcc(y=x, sr=self.sample_rate, n_mfcc=self.n_mfcc)

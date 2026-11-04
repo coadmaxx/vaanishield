@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:lineSpacingExtra="2dp"
-                android:text="Android restricts in-ear call recording. Turn on speakerphone so VaniRakshak can analyze the caller's acoustic voice stream."
+                android:text="Android restricts in-ear call recording. Turn on speakerphone so vaanishield can analyze the caller's acoustic voice stream."
                 android:textColor="@color/ink"
                 android:textSize="12sp" />
 

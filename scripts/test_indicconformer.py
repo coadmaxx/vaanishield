@@ -1,5 +1,5 @@
 """
-vaaniguard - Standalone Benchmark & Verification Script for AI4Bharat IndicConformer ASR
+vaanishield - Standalone Benchmark & Verification Script for AI4Bharat IndicConformer ASR
 
 Usage:
     python scripts/test_indicconformer.py [path_to_audio_file]

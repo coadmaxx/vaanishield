@@ -1,4 +1,4 @@
-"""vaaniguard — Unified Forensic Benchmark Orchestrator.
+"""vaanishield — Unified Forensic Benchmark Orchestrator.
 
 Runs the complete benchmark battery:
   1. ASVspoof 5 Metric Suite (minDCF, actDCF, CLLR, EER)
@@ -24,43 +24,43 @@ import numpy as np
 #
 # ORDER MATTERS. There are two importable packages named `benchmarks`:
 #   benchmarks/                        <- the live one (docs point here)
-#   vaaniguard-backend/benchmarks/    <- a dead byte-identical duplicate
+#   vaanishield-backend/benchmarks/    <- a dead byte-identical duplicate
 # Whichever parent directory lands at sys.path[0] wins, so inserting
 # BACKEND_DIR last silently made the benchmark import the DEAD COPY -- edits to
 # benchmarks/compute_mindcf.py had no effect at all. Insert BACKEND_DIR first
 # and REPO_ROOT second so REPO_ROOT ends up at sys.path[0] and `benchmarks`
 # unambiguously resolves to the live module.
 #
-# (The dead vaaniguard-backend/benchmarks/ duplicate has since been deleted --
+# (The dead vaanishield-backend/benchmarks/ duplicate has since been deleted --
 # 0 importers. Only the live benchmarks/ module remains.)
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from benchmarks.compute_mindcf import evaluate_system
-from vaaniguard.cli.bench import run_bench
-from vaaniguard.data.augment import (
+from vaanishield.cli.bench import run_bench
+from vaanishield.data.augment import (
     alaw_encode_decode,
     ulaw_encode_decode,
     amr_wb_simulate,
     gsm_efr_simulate,
     add_noise,
 )
-from vaaniguard.data.synthetic import synthetic_speech, synthetic_spoofed
-from vaaniguard.anchor import load_anchor
-from vaaniguard.detectors.pipeline import DetectionPipeline
-from vaaniguard.session import CallSession, SessionContext
+from vaanishield.data.synthetic import synthetic_speech, synthetic_spoofed
+from vaanishield.anchor import load_anchor
+from vaanishield.detectors.pipeline import DetectionPipeline
+from vaanishield.session import CallSession, SessionContext
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("vaaniguard.benchmarks")
+logger = logging.getLogger("vaanishield.benchmarks")
 
 # ---------------------------------------------------------------------------
 # Ground-truth verdict -> the risk tier the system is REQUIRED to reach.
 #
-# Tier ordering and cutoffs come from vaaniguard/config.py:
+# Tier ordering and cutoffs come from vaanishield/config.py:
 #   ALLOW < 35 <= CHALLENGE < 70 <= BLOCK
 #
 # POLICY LIVES IN THE DATA, NOT HERE. Each demo file declares its `expected_tier`
@@ -129,7 +129,7 @@ def run_all_benchmarks() -> dict:
     anchor_id = anchor.get("user_id") or ""
 
     print("\n" + "=" * 72)
-    print("           vaaniguard UNIFIED FORENSIC BENCHMARK SUITE")
+    print("           vaanishield UNIFIED FORENSIC BENCHMARK SUITE")
     print("=" * 72)
     if anchor.get("enrolled"):
         print(f"  Anchor: {anchor_id} ({anchor.get('source_clips')} clips, "

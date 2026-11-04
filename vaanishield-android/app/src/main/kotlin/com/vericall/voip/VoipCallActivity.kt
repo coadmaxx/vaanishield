@@ -21,7 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 /**
- * In-app internet calling screen for VaniRakshak Call (Layer 1).
+ * In-app internet calling screen for vaanishield Call (Layer 1).
  *
  * Register with a user id, see who is online, place a WebRTC voice call,
  * accept or reject incoming calls, and watch the live deepfake verdict
@@ -330,7 +330,7 @@ class VoipCallActivity : AppCompatActivity() {
         }
 
         val title = TextView(this).apply {
-            text = "VaniRakshak Call (internet)"
+            text = "vaanishield Call (internet)"
             textSize = 20f
         }
         root.addView(title)

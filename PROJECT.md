@@ -6,13 +6,13 @@
 - **Countermeasure Model**: PyTorch `AASISTLHead(in_dim=768)` in `ml/aasist_model.py` (~89k parameters) with graph attention and spectral/temporal pooling.
 - **Training Pipeline**: `ml/train_cm.py` with `--layer-index 5`, online codec augmentation (`ml/augment.py`), class-weighted cross-entropy loss, AdamW optimizer with cosine LR scheduling, early stopping on validation minDCF. Export to `data/cm_aasist_layer5.pt`.
 - **Evaluation Engine**: `ml/evaluate_cm.py` streaming audio waveforms to compute minDCF ($P_{\text{tar}}=0.05, C_{\text{miss}}=1.0, C_{\text{fa}}=1.0$), actDCF, CLLR, pooled EER, and per-attack breakdown (A17–A32).
-- **System Integration**: `vaaniguard-backend/vaaniguard/detectors/cm_aasist.py` supporting `layer_index` from checkpoint dictionary with default `-1` fallback for regression-free backward compatibility.
+- **System Integration**: `vaanishield-backend/vaanishield/detectors/cm_aasist.py` supporting `layer_index` from checkpoint dictionary with default `-1` fallback for regression-free backward compatibility.
 
 ## Feature Inventory
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
 | 1 | Configurable Layer Extraction in Feature/Train Pipeline | Support `--layer-index` (default 5 for L5, -1 for L12) in `ml/train_cm.py` and `ml/evaluate_cm.py` | M1 | R1 |
-| 2 | Configurable Layer Extraction in Backend Detector | Read `ckpt.get("layer_index", -1)` in `vaaniguard/detectors/cm_aasist.py` | M1 | R1, R4 |
+| 2 | Configurable Layer Extraction in Backend Detector | Read `ckpt.get("layer_index", -1)` in `vaanishield/detectors/cm_aasist.py` | M1 | R1, R4 |
 | 3 | Zero-Disk Streaming Validation Strategy | Streaming dev validation in `ml/train_cm.py` respecting Drive A ~8.5 GB budget | M1 | R1 |
 | 4 | AASIST Head Training on Layer 5 | Train AASIST-L on Layer 5 on RTX 5060 Ti GPU with class-weighted CE, AdamW, cosine LR, early stopping | M2 | R2 |
 | 5 | Checkpoint Schema Validation | Validate `data/cm_aasist_layer5.pt` against required schema (architecture, frontend, state_dict, eer_threshold, dev_eer, dev_min_dcf, layer_index) | M2 | R2 |
@@ -57,7 +57,7 @@
 - `ml/train_cm.py`: Recipe A training script supporting `--layer-index` and streaming dev validation
 - `ml/aasist_model.py`: AASIST-L head architecture
 - `ml/evaluate_cm.py`: Benchmark evaluation script supporting `--layer-index`
-- `vaaniguard-backend/vaaniguard/detectors/cm_aasist.py`: Production detector with checkpoint `layer_index` support
+- `vaanishield-backend/vaanishield/detectors/cm_aasist.py`: Production detector with checkpoint `layer_index` support
 - `data/eval_benchmark/eval_slice_20k.tsv`: 20,000-utterance evaluation slice
 - reports/ directory: Published side-by-side benchmark report (cm_layer5_vs_layer12_benchmark.json)
 - `docs/08-cm-training-plan.md`: Documentation of training plan, Pan et al. hypothesis, and A13 analysis

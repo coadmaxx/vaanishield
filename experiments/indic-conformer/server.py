@@ -1,5 +1,5 @@
 """
-vaaniguard IndicConformer Edition — AI4Bharat ASR Voice Scam & Fact Shield Server
+vaanishield IndicConformer Edition — AI4Bharat ASR Voice Scam & Fact Shield Server
 Engine: AI4Bharat IndicConformer (22+ Indian Languages + Hinglish)
 Port: 8084 (Runs side-by-side with 8080 & 8082)
 """
@@ -49,7 +49,7 @@ from google.genai import types
 from indic_conformer_engine import transcribe_with_indic_conformer, get_indic_conformer_model
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("vaaniguard_indic_conformer")
+logger = logging.getLogger("vaanishield_indic_conformer")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -58,7 +58,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="vaaniguard IndicConformer Edition — AI4Bharat Voice Scam Shield",
+    title="vaanishield IndicConformer Edition — AI4Bharat Voice Scam Shield",
     version="2.2.0",
     description="AI4Bharat IndicConformer Speech Recognition & Crawl4AI Fact Grounding",
     lifespan=lifespan
@@ -191,7 +191,7 @@ async def discover_and_crawl_sources(query_text: str, user_urls: Optional[List[s
     return scraped_results
 
 def evaluate_threat_and_scam(transcript: str, client: genai.Client) -> dict:
-    prompt = f"""You are vaaniguard IndicConformer's elite cyber-fraud defense engine.
+    prompt = f"""You are vaanishield IndicConformer's elite cyber-fraud defense engine.
 Analyze the following phone audio transcript (in English, Hindi, or Hinglish) for voice scams, financial fraud, impersonation, or social engineering tactics.
 
 TRANSCRIPT:
@@ -344,7 +344,7 @@ async def health_check():
     gemini_key = os.getenv("GEMINI_API_KEY", "")
     return {
         "status": "online",
-        "app": "vaaniguard IndicConformer Edition v2.2",
+        "app": "vaanishield IndicConformer Edition v2.2",
         "stt_engine": "Groq Cloud Whisper (whisper-large-v3-turbo LPU) Indic Adaptation",
         "model": "whisper-large-v3-turbo",
         "crawler": "Crawl4AI v0.9.3 (Playwright Headless Chromium)",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""vaaniguard doc/code drift check.
+"""vaanishield doc/code drift check.
 
 Docs drift from code silently -- this repo has already been through one
 audit-and-remediate cycle where fixes in `docs/archive/AUDIT_REPORT.md` section 12
@@ -12,14 +12,14 @@ drift this branch fixed, so it doesn't recur unnoticed:
      and `backend/app/core/...` (deleted) references that survived in three
      and four files respectively after those trees were removed.
   2. VG_* env vars. Every `VG_*` token in code (anywhere under
-     vaaniguard-backend/vaaniguard/) should appear in at least one doc;
+     vaanishield-backend/vaanishield/) should appear in at least one doc;
      every `VG_*` token in a doc should exist in code. Would have caught
      `VG_IMPOSTOR_BLOCK_BELOW` being undocumented everywhere except a JSON
      fixture's prose field, and would catch a typo'd or renamed var
      instantly instead of after someone tries it and it silently no-ops.
   3. WS verdict keys. The keys `docs/PROTOCOL.md`'s canonical verdict JSON
      example carries must be a superset of what
-     `vaaniguard-backend/tests/test_stream_e2e.py` actually asserts --
+     `vaanishield-backend/tests/test_stream_e2e.py` actually asserts --
      the two describing different contracts is worse than either alone.
 
 Exit code is 0 iff there are no HARD failures. WARN-level findings print but
@@ -40,9 +40,9 @@ from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 FRONTEND_ROOT = REPO_ROOT / "frontend"
-vaaniguard_PKG = BACKEND_ROOT / "vaaniguard"
+vaanishield_PKG = BACKEND_ROOT / "vaanishield"
 
 # Docs this check reads. Deliberately excludes docs/archive/ (superseded by
 # definition -- flagging its dead references would be noise, not a finding)
@@ -51,8 +51,8 @@ DOC_GLOBS = [
     "*.md",
     "docs/*.md",
     "frontend/*.md",
-    "vaaniguard-backend/*.md",
-    "vaaniguard-android/*.md",
+    "vaanishield-backend/*.md",
+    "vaanishield-android/*.md",
     "ml/*.md",
     "data/*.md",
     "backend/*.md",
@@ -70,7 +70,7 @@ DOC_GLOBS = [
 #     directory. False positives here are rare because the extension filter
 #     already excludes prose fragments and code identifiers.
 #   - A VG_* var named in a doc that does not exist anywhere in
-#     vaaniguard-backend/vaaniguard/. This is almost always a typo, a var
+#     vaanishield-backend/vaanishield/. This is almost always a typo, a var
 #     that was renamed without updating the doc, or a var that never
 #     existed -- all three are worth a red exit code.
 #   - A WS verdict key `test_stream_e2e.py` asserts that PROTOCOL.md's
@@ -83,7 +83,7 @@ DOC_GLOBS = [
 #     shouldn't block an unrelated commit from passing this check -- surface
 #     it, don't gate on it.
 #   - A path-shaped token without a recognized extension (e.g. a directory
-#     reference like `vaaniguard/detectors/`) that doesn't resolve. These
+#     reference like `vaanishield/detectors/`) that doesn't resolve. These
 #     have a much higher false-positive rate (trailing slashes, glob-like
 #     prose, code identifiers that happen to contain a slash in a docstring
 #     quote) so treating every miss as fatal would make the check too noisy
@@ -180,8 +180,8 @@ _IGNORED_DIR_NAMES = {"node_modules", ".venv", ".git", "__pycache__", ".next", "
 def _build_basename_index() -> Dict[str, List[Path]]:
     """basename -> every matching file anywhere in the repo (minus noise dirs).
 
-    Docs constantly cite files as `vaaniguard/session.py` (shorthand that
-    omits the vaaniguard-backend/ package root), or as a bare `config.py`
+    Docs constantly cite files as `vaanishield/session.py` (shorthand that
+    omits the vaanishield-backend/ package root), or as a bare `config.py`
     once the surrounding prose has already established which module it's in.
     Trying to enumerate every valid prefix convention is a losing game --
     a basename index sidesteps it: if a file with that exact name exists
@@ -235,7 +235,7 @@ def check_paths(docs: List[Path], findings: Findings, verbose: bool) -> None:
                 )
                 continue
             findings.hard_fail(
-                f"{rel_doc}: references `{candidate}` -- not found anywhere in the repo (checked repo-root-relative, this doc's own directory, vaaniguard-backend/-relative, and by exact filename)"
+                f"{rel_doc}: references `{candidate}` -- not found anywhere in the repo (checked repo-root-relative, this doc's own directory, vaanishield-backend/-relative, and by exact filename)"
             )
 
         for m in DIR_LIKE.finditer(text):
@@ -256,7 +256,7 @@ def check_paths(docs: List[Path], findings: Findings, verbose: bool) -> None:
 
 def _vr_vars_in_code() -> Set[str]:
     out: Set[str] = set()
-    for py in vaaniguard_PKG.rglob("*.py"):
+    for py in vaanishield_PKG.rglob("*.py"):
         text = py.read_text(encoding="utf-8", errors="replace")
         out.update(VG_VAR.findall(text))
     # run.py / cli entry point can also read env vars directly.
@@ -293,7 +293,7 @@ def check_env_vars(docs: List[Path], findings: Findings, verbose: bool) -> None:
 
     for var in unknown_in_docs:
         cited_in = ", ".join(in_docs[var])
-        findings.hard_fail(f"{var}: cited in {cited_in} but does not exist anywhere in vaaniguard-backend/vaaniguard/")
+        findings.hard_fail(f"{var}: cited in {cited_in} but does not exist anywhere in vaanishield-backend/vaanishield/")
 
     if verbose:
         print(f"  {len(in_code)} VG_* vars in code, {len(in_docs)} distinct VG_* vars cited across docs")
@@ -349,12 +349,12 @@ def check_ws_verdict_keys(findings: Findings, verbose: bool) -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="vaaniguard doc/code drift check")
+    ap = argparse.ArgumentParser(description="vaanishield doc/code drift check")
     ap.add_argument("--verbose", action="store_true", help="print per-check detail even when clean")
     args = ap.parse_args()
 
     print("=" * 78)
-    print("vaaniguard doc/code drift check")
+    print("vaanishield doc/code drift check")
     print("=" * 78)
 
     docs = _iter_docs()

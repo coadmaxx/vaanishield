@@ -1,8 +1,8 @@
 {
-  "name": "vaaniguard-workspace",
+  "name": "vaanishield-workspace",
   "version": "1.0.0",
   "private": true,
-  "description": "vaaniguard — Target-Conditioned Recorded-Audio Forensic System",
+  "description": "vaanishield — Target-Conditioned Recorded-Audio Forensic System",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
     "dev:all": "node scripts/dev.js",
@@ -19,6 +19,6 @@
     "wavlm",
     "ecapa-tdnn"
   ],
-  "author": "vaaniguard Team",
+  "author": "vaanishield Team",
   "license": "Apache-2.0"
 }

@@ -19,7 +19,7 @@ export interface ForensicReportData {
    * Whether ASV actually ran a real biometric comparison this report (the
    * backend's `asv_evaluated` / `metrics.asv_evaluated`). When false,
    * `mean_speaker_sim` is the fusion-neutral 0.5 placeholder, not a
-   * measured similarity — see vaaniguard/detectors/pipeline.py. Optional
+   * measured similarity — see vaanishield/detectors/pipeline.py. Optional
    * so a report built before this field existed still renders (as
    * "evaluated", matching the old always-render-a-number behavior).
    */
@@ -62,7 +62,7 @@ export interface ForensicReportData {
   } | null;
 
   /**
-   * Parallel ASR + scam-keyword context signal (vaaniguard/semantic/).
+   * Parallel ASR + scam-keyword context signal (vaanishield/semantic/).
    * Advisory only — a small additive term in the acoustic risk fusion, never
    * the source of `verdict` itself. See docs/PROTOCOL.md §3.1.
    */
@@ -388,7 +388,7 @@ export default function ForensicVerdictCard({ report, onDownloadReport }: Forens
           )}
 
           {/* Live transcript + scam-keyword flags — the parallel ASR/keyword
-              context signal (vaaniguard/semantic/). Advisory: it nudges the
+              context signal (vaanishield/semantic/). Advisory: it nudges the
               acoustic risk fusion by a small additive term, but the acoustic
               pipeline stays the sole source of `verdict` above. */}
           {report.semantic && (

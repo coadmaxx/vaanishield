@@ -1,4 +1,4 @@
-"""Audit helper: instrument what the vaaniguard detectors ACTUALLY emit.
+"""Audit helper: instrument what the vaanishield detectors ACTUALLY emit.
 
 Answers three questions with measurements, not reading:
   1. Does each of the 4 layers (CM / ASV / channel / prosody) vary at all?
@@ -18,10 +18,10 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, str(REPO / "vaaniguard-backend"))
+sys.path.insert(0, str(REPO / "vaanishield-backend"))
 
-from vaaniguard.data.synthetic import synthetic_speech, synthetic_spoofed  # noqa: E402
-from vaaniguard.detectors.pipeline import DetectionPipeline  # noqa: E402
+from vaanishield.data.synthetic import synthetic_speech, synthetic_spoofed  # noqa: E402
+from vaanishield.detectors.pipeline import DetectionPipeline  # noqa: E402
 
 SR = 16000
 
@@ -97,9 +97,9 @@ print()
 print("=" * 78)
 print("PART C - Is the synthetic generator's separability engineered?")
 print("=" * 78)
-print("  Reading vaaniguard/data/synthetic.py docstring, verbatim:")
+print("  Reading vaanishield/data/synthetic.py docstring, verbatim:")
 for line in (
-    (REPO / "vaaniguard-backend" / "vaaniguard" / "data" / "synthetic.py")
+    (REPO / "vaanishield-backend" / "vaanishield" / "data" / "synthetic.py")
     .read_text(encoding="utf-8")
     .splitlines()[:24][3:]
 ):

@@ -3,20 +3,20 @@
 > audio files, rather than ... live telephone infrastructure, Android payment
 > interception, or emergency-keyword detection") has since been superseded by
 > what actually shipped: live WS streaming (`docs/PROTOCOL.md`), Android
-> payment-app interception (`vaaniguard-android/`), and keyword-triggered
+> payment-app interception (`vaanishield-android/`), and keyword-triggered
 > detection (`VaniKeywordTrigger.kt`). The file also has a corrupted section
 > (a duplicated block starting around "Recommended Project Definition") from
 > its original drafting — left as-is rather than silently cleaned up, since
 > this is a historical artifact, not living documentation. For the current
 > scope and architecture, see `docs/ARCHITECTURE.md`.
 
-# vaaniguard — Project Context and Practical Build Plan
+# vaanishield — Project Context and Practical Build Plan
 
 > **Purpose:** Consolidated project context from this discussion for a hackathon-ready, technically honest, recorded-audio voice-clone detection prototype.
 
 ## Problem Focus
 
-**vaaniguard (वाणी रक्षक)** addresses AI-powered voice-cloning and voice-impersonation attacks.
+**vaanishield (वाणी रक्षक)** addresses AI-powered voice-cloning and voice-impersonation attacks.
 
 The final scope is deliberately limited to **forensic analysis of uploaded/recorded audio files**, rather than GPS/SOS features, live telephone infrastructure, Android payment interception, or emergency-keyword detection.
 
@@ -31,9 +31,9 @@ Given a suspicious recording and consented reference recordings of a claimed spe
 
 ## Recommended Project Definition
 
-**vaaniguard is a target-conditioned recorded-audio fore
+**vaanishield is a target-conditioned recorded-audio fore
 
-> vaaniguard analyzes recorded speech segment by segment, combining synthetic-audio risk with claimed-speaker similarity to flag likely cloned or spliced voice-impersonation content.
+> vaanishield analyzes recorded speech segment by segment, combining synthetic-audio risk with claimed-speaker similarity to flag likely cloned or spliced voice-impersonation content.
 
 ### Honest technical statement
 
@@ -49,7 +49,7 @@ It is not a universal “100% accurate” detector for every human voice, every 
 
 ### Suggested one-line pitch
 
-> vaaniguard analyzes recorded speech segment by segment, combining synthetic-audio risk with claimed-speaker similarity to flag likely cloned or spliced voice-impersonation content.
+> vaanishield analyzes recorded speech segment by segment, combining synthetic-audio risk with claimed-speaker similarity to flag likely cloned or spliced voice-impersonation content.
 
 ### Honest technical statement
 

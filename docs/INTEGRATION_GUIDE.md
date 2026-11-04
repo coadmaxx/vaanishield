@@ -1,8 +1,8 @@
-# vaaniguard — Third-Party Integration Guide
+# vaanishield — Third-Party Integration Guide
 
 For mobile apps, PBX/telephony gateways, and any client that isn't the
 bundled Next.js dashboard and wants to pipe live call audio (or a recorded
-file) into vaaniguard's forensic pipeline.
+file) into vaanishield's forensic pipeline.
 
 **This document summarizes; it does not redefine the contract.**
 [`docs/PROTOCOL.md`](PROTOCOL.md) is the single source of truth for the
@@ -17,7 +17,7 @@ REST reference.
 > Evidence Search" stage): none of that exists in this codebase and never
 > has. That guide described a different, aspirational design that was never
 > implemented — the endpoints, message types, and fields below are what the
-> server (`vaaniguard-backend/vaaniguard/server/app.py`) actually does.
+> server (`vaanishield-backend/vaanishield/server/app.py`) actually does.
 > `docs/FLOWCHARTS_CORRECTED.md` explains why a web-search fact-checking
 > stage specifically isn't part of this system's design, not just that it
 > happens to be unbuilt.
@@ -86,7 +86,7 @@ own gateway/VPN before exposing it beyond a trusted network.
 - If your PBX delivers G.711 (µ-law/A-law, 8 kHz) rather than 16-bit linear
   PCM at 16 kHz, **you must transcode before sending** — the server does not
   decode codec'd audio itself; it expects raw int16 samples already at the
-  declared `sample_rate`. `vaaniguard/data/augment.py` has the G.711/AMR-WB
+  declared `sample_rate`. `vaanishield/data/augment.py` has the G.711/AMR-WB
   encode/decode math this system uses on its own evaluation side, if you need
   a reference implementation.
 - The server does not resample. Whatever `sample_rate` you declare in the
@@ -99,9 +99,9 @@ A complete, synchronous SDK already ships in this repo — use it rather than
 hand-rolling the WebSocket framing:
 
 ```python
-from vaaniguard.sdk import vaaniguardClient
+from vaanishield.sdk import vaanishieldClient
 
-client = vaaniguardClient(host="http://127.0.0.1:8000")
+client = vaanishieldClient(host="http://127.0.0.1:8000")
 print(client.health())
 
 with client.stream(caller_id="+91-9xxxxxxxxx", claimed_user="narendra_modi") as s:
@@ -116,8 +116,8 @@ with client.stream(caller_id="+91-9xxxxxxxxx", claimed_user="narendra_modi") as 
             print("Challenge:", verdict.challenge["phrase"])
 ```
 
-Source: `vaaniguard-backend/vaaniguard/sdk/client.py` (`vaaniguardClient`,
-`StreamClient`, `Verdict`). `vaaniguard-backend/examples/sdk_demo.py` is a
+Source: `vaanishield-backend/vaanishield/sdk/client.py` (`vaanishieldClient`,
+`StreamClient`, `Verdict`). `vaanishield-backend/examples/sdk_demo.py` is a
 runnable end-to-end script covering health/enroll/analyze against a live
 server.
 
@@ -155,7 +155,7 @@ managing session/challenge state over REST separately from the audio socket.
 
 ## 5. Mobile clients that can't stream continuously
 
-`vaaniguard-android/` is the reference for this pattern today. It implements
+`vaanishield-android/` is the reference for this pattern today. It implements
 **two modes**, both using the same server contract:
 
 ### Mode A — Keyword-gated ARMED → SCORING (default, battery-efficient)
@@ -224,7 +224,7 @@ these:
 
 - No web search or live fact-checking of caller claims.
 - No LLM in the decision path, anywhere. The advisory semantic layer
-  (`vaaniguard/semantic/`, PROTOCOL.md §3.1) runs ASR and a rule-based
+  (`vaanishield/semantic/`, PROTOCOL.md §3.1) runs ASR and a rule-based
   keyword/claim scorer — never an LLM classifying the call.
 - No `threat_score`/`threat_level`/`scam_type` fields, no `event`-keyed
   message envelope, no server-initiated `stream_connected` handshake message.

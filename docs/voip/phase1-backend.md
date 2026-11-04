@@ -1,35 +1,35 @@
-# Phase 1: vaaniguard scoring backend relaunched on lab-beast
+# Phase 1: vaanishield scoring backend relaunched on lab-beast
 Date: 2026-10-09 ~00:40 IST. Machine: lab-beast (TON-618, user singu).
 
 ## Entry point found
-`C:\vaaniguard-voip\vaaniguard-backend\run.py` -> `vaaniguard.cli:main`
+`C:\vaanishield-voip\vaanishield-backend\run.py` -> `vaanishield.cli:main`
 Serve command: `python run.py serve --host 0.0.0.0 --port 8000`
-(FastAPI app `vaaniguard.server.app:app` via uvicorn; GET /v1/health, WS /ws/stream.)
+(FastAPI app `vaanishield.server.app:app` via uvicorn; GET /v1/health, WS /ws/stream.)
 
 ## Backend copy used
-Worktree copy (C:\vaaniguard-voip\vaaniguard-backend). Hash diff vs C:\vaaniguard
+Worktree copy (C:\vaanishield-voip\vaanishield-backend). Hash diff vs C:\vaanishield
 shows they are NOT identical: the voip branch (feat/voip-calling) already has its
-own changes (73 files vs 69; differs in vaaniguard/server/app.py, config.py,
+own changes (73 files vs 69; differs in vaanishield/server/app.py, config.py,
 session.py, challenge/*, risk/simulate.py, detectors/calibration.py, plus new
 examples/decision_layer_fitted.env and extra tests). Ran from the worktree copy.
 
 ## Launcher
-`C:\vaaniguard-voip\ops\launch_backend.cmd` (untracked in our branch; nothing
-written to C:\vaaniguard):
-- PATH prepends C:\vaaniguard\.venv\Scripts and the WinGet ffmpeg bin
+`C:\vaanishield-voip\ops\launch_backend.cmd` (untracked in our branch; nothing
+written to C:\vaanishield):
+- PATH prepends C:\vaanishield\.venv\Scripts and the WinGet ffmpeg bin
   (C:\Users\singu\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin)
 - `set "VG_CM_BACKEND=aasist"` (REQUIRED: without it, pipeline.py defaults to the
   synthetic stub CM and health reports cm_backend=synthetic_cm_v1; found via smoke test)
-- `set "VG_CM_AASIST_WEIGHTS=C:\vaaniguard\data\cm_docs17_R42_Tmc3_deploy.pt"` (read-only use of the deploy checkpoint)
-- cds to C:\vaaniguard-voip\vaaniguard-backend and runs the venv python
+- `set "VG_CM_AASIST_WEIGHTS=C:\vaanishield\data\cm_docs17_R42_Tmc3_deploy.pt"` (read-only use of the deploy checkpoint)
+- cds to C:\vaanishield-voip\vaanishield-backend and runs the venv python
 - stdout+stderr appended to C:\vr-out\voip-build-logs\backend_serve.log
 
 ## WMI launch (detached, survives SSH disconnect)
 PowerShell via -EncodedCommand (encode16.py helper; no $ inline):
 ```
 Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments `
-  @{CommandLine='cmd /c "C:\vaaniguard-voip\ops\launch_backend.cmd"';
-    CurrentDirectory='C:\vaaniguard-voip'}
+  @{CommandLine='cmd /c "C:\vaanishield-voip\ops\launch_backend.cmd"';
+    CurrentDirectory='C:\vaanishield-voip'}
 ```
 Result: ReturnValue=0, ProcessId=29432 (WMI launcher shell; real server PID below).
 

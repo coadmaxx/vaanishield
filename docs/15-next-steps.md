@@ -14,14 +14,14 @@ unchanged.
 |---|---|---|---|
 | 1 | Dev score dumps + `calibrate_decision_layer.py` | **Not run.** No calibration report in `reports/`. | — |
 | 2 | Set the fitted thresholds; `integration_check.py` on real backends | **Blocked on step 1.** The clone rule and the challenge CM gate are still off by default, so T3/T4 protection is off in practice. | — |
-| 3 | W2 server-side challenge | **Partial.** Acoustic grading of the response windows is in, and the challenge payload no longer carries the expected digits. The digit check still reads `response_text` from the client (`vaaniguard-backend/vaaniguard/challenge/engine.py`, `grade`). P1-C has not been measured. | `vaaniguard-backend/tests/test_challenge.py` |
-| 4 | W5 enrolment QA, per-user calibration, ECAPA required under auth | **Done in code.** Not verified under `VG_ASV_BACKEND=ecapa` (the cloud session cannot download the weights). | `vaaniguard-backend/vaaniguard/server/app.py` start-up guard |
+| 3 | W2 server-side challenge | **Partial.** Acoustic grading of the response windows is in, and the challenge payload no longer carries the expected digits. The digit check still reads `response_text` from the client (`vaanishield-backend/vaanishield/challenge/engine.py`, `grade`). P1-C has not been measured. | `vaanishield-backend/tests/test_challenge.py` |
+| 4 | W5 enrolment QA, per-user calibration, ECAPA required under auth | **Done in code.** Not verified under `VG_ASV_BACKEND=ecapa` (the cloud session cannot download the weights). | `vaanishield-backend/vaanishield/server/app.py` start-up guard |
 | 5 | docs/13 Phase 2 | **Done. C-2a failed, so STOP-B applies.** | `reports/cm_phase2_criteria.json` |
 | 6 | W4 Indic and telephony corpus | Not started. | — |
 | 7 | W3 encoder fine-tune, larger SSL | **Not authorised yet** (see §3). | — |
-| 8 | W7 and W8 for a pilot | Partly started: erasure endpoint and `tier_override` on the dashboard. | `vaaniguard-backend/tests/test_biometric_erasure.py` |
+| 8 | W7 and W8 for a pilot | Partly started: erasure endpoint and `tier_override` on the dashboard. | `vaanishield-backend/tests/test_biometric_erasure.py` |
 
-Verified in this session: `pytest vaaniguard-backend/tests` gives 107 passed
+Verified in this session: `pytest vaanishield-backend/tests` gives 107 passed
 (stub backends, no torch weights).
 
 ## 2. Gaps found while reviewing the last two commits
@@ -30,8 +30,8 @@ These are defects or overstatements in work already merged. Each is small and
 fixable without a GPU.
 
 - **G-A: "local zero-retention ASR" is not wired.** `VG_SEMANTIC_PROVIDER` is
-  read into `SemanticConfig.provider` (`vaaniguard-backend/vaaniguard/config.py`),
-  but `vaaniguard-backend/vaaniguard/semantic/signal.py` still builds
+  read into `SemanticConfig.provider` (`vaanishield-backend/vaanishield/config.py`),
+  but `vaanishield-backend/vaanishield/semantic/signal.py` still builds
   `ASRConfig(provider="groq")` and reports `provider: "groq"` as its fallback.
   Setting `VG_SEMANTIC_PROVIDER=local` changes nothing. The disabled-layer
   message also always says "third-party, US-hosted".
@@ -140,7 +140,7 @@ Branch `feat/next-steps-n1-n4`, on top of this plan's commit `18bd253`.
 | N3 | **Done.** docs/14 §4 scorecard and W2, W5, W6, W8 updated; docs/13 §10 records STOP-B. | `scripts/check_docs.py`: no hard failures |
 | N4 | **Done.** AES-GCM enrolment store, reloaded at start-up; erasure removes the record and revokes live sessions (WS `session_closed`). | `tests/test_enrolment_store.py`: two-process restart test, live-session erasure test |
 
-Backend suite: `pytest vaaniguard-backend/tests` gives 145 passed (107 before this work).
+Backend suite: `pytest vaanishield-backend/tests` gives 145 passed (107 before this work).
 
 **Step 4 of docs/14 §6, now checked under ECAPA** (dev box, cached weights):
 `VG_ASV_BACKEND=ecapa python scripts/integration_check.py` gives 29/30. The
@@ -182,7 +182,7 @@ Run by `scripts/gpu_pipeline.py` (resumable, checkpointed per stage and per
 | Item | Result | Evidence |
 |---|---|---|
 | **T1** | **P1-S pass** (+99.75 pp at the worst cell), **P1-F pass** (never rises). Genuine false-BLOCK 7.5–12 % per call on gate: **needs a decision before the clone rule goes live.** | docs/13 §11; `reports/t1_*_gate.json` |
-| **T2** | **P1-T pass** on CUDA fp16 and CPU fp32 with ECAPA + AASIST at the fitted point (28/29; the miss is a fixture that cannot reach the 3-window trigger) | `reports/t2_p1t_integration.json`; `vaaniguard-backend/examples/decision_layer_fitted.env` |
+| **T2** | **P1-T pass** on CUDA fp16 and CPU fp32 with ECAPA + AASIST at the fitted point (28/29; the miss is a fixture that cannot reach the 3-window trigger) | `reports/t2_p1t_integration.json`; `vaanishield-backend/examples/decision_layer_fitted.env` |
 | **D2 / STOP-C** | **Triggered**: worst narrowband miss 67.4 % (G.711, A28). No telephony claim for the incumbent family. | docs/13 §12; `reports/d2_telephony_stopc_incumbent.json` |
 | **W2.c Hindi** | small + forced hi/en + Devanagari normaliser: Hindi 25 % → 80.4 %, English 99.6 %, 0 % attacks accepted | docs/14 W2.c; `reports/w2c_hindi_asr_engines.json` |
 

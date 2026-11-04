@@ -1,4 +1,4 @@
-# 🎙️ vaaniguard Test Audio Directory
+# 🎙️ vaanishield Test Audio Directory
 
 Place your Hindi or Hinglish audio files (`.wav`, `.mp3`, `.m4a`, `.flac`) here for testing the AI4Bharat IndicConformer ASR pipeline.
 

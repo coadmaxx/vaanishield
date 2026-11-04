@@ -22,9 +22,9 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT / "vaaniguard-backend"))
+sys.path.insert(0, str(REPO_ROOT / "vaanishield-backend"))
 
-from vaaniguard.privacy.enrolment_store import KEY_ENV, NEW_KEY_ENV, parse_key, rotate_key  # noqa: E402
+from vaanishield.privacy.enrolment_store import KEY_ENV, NEW_KEY_ENV, parse_key, rotate_key  # noqa: E402
 
 
 def main() -> int:

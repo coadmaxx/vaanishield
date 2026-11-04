@@ -148,12 +148,12 @@ all/heads_telephony.json).
 ### Run log
 - g4_train_r44 (R seed 44, p=0.2): finished 21:33:30 IST, early stop at
   epoch 10 (patience 5/5). Best epoch 5: dev minDCF 0.3647, EER 3.753%.
-  Checkpoint C:\vaaniguard\data\cm_docs18_R_s44.pt. Wall 2.61h. One dev
+  Checkpoint C:\vaanishield\data\cm_docs18_R_s44.pt. Wall 2.61h. One dev
   spike at epoch 6 (minDCF 0.8707) resolved at epoch 7 (0.4768): dev-set
   noise, not sustained divergence.
 - g4_train_l42 (L seed 42, p=0.1): finished 23:03:19 IST, early stop at
   epoch 6 (patience 5/5). Best epoch 1: dev minDCF 0.5957, EER 6.733%.
-  Checkpoint C:\vaaniguard\data\cm_docs18_L_s42.pt. Wall 1.5h.
+  Checkpoint C:\vaanishield\data\cm_docs18_L_s42.pt. Wall 1.5h.
 - g4_futility: finished 23:24:16 IST, 120/120 shards, exit 0. STOP.
 - g4_train_l43: cancelled by the futility stop (marked done, zero duration).
 - g4_telephony: finished 23:46:25 IST, exit 0.

@@ -1,6 +1,6 @@
 # sip-screening-server (Phase 5 skeleton)
 
-Layer-2 PSTN screening for vaaniguard Call: a CPaaS provider answers an
+Layer-2 PSTN screening for vaanishield Call: a CPaaS provider answers an
 inbound PSTN call on a rented screening number, streams caller audio to this
 server over WebSocket, and this server pipes the audio to the scorer
 WebSocket on lab-beast, applies the verdict policy, and directs the provider

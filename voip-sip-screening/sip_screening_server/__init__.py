@@ -1,4 +1,4 @@
-"""vaaniguard Layer-2 PSTN screening server (skeleton).
+"""vaanishield Layer-2 PSTN screening server (skeleton).
 
 Provider-agnostic call screening: a CPaaS provider (Exotel, Plivo, Twilio)
 answers an inbound PSTN call, streams caller audio to this server over a

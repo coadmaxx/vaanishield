@@ -5,13 +5,13 @@
 > rather than reading this file's numbers as current — the check has since
 > grown to 17 assertions and this report does not reflect that.
 
-# vaaniguard — Integration Report
+# vaanishield — Integration Report
 
 **Status: integrated and verified end-to-end.** The Next.js console and the Python
 forensic backend now run as one application, started with a single command, and the
 whole vertical slice is checked mechanically.
 
-Date: 2026-09-08 · Repo: `BeastAyyG/vaaniguard` · Scope: frontend ↔ backend integration
+Date: 2026-09-08 · Repo: `BeastAyyG/vaanishield` · Scope: frontend ↔ backend integration
 
 ---
 
@@ -41,7 +41,7 @@ source of truth. The server owns the verdict; the client only renders it.
 npm run dev:all          # or: node scripts/dev.js
 ```
 
-That one command: creates `vaaniguard-backend/.venv` if missing, installs
+That one command: creates `vaanishield-backend/.venv` if missing, installs
 `requirements.txt`, boots the backend on `:8000`, waits for
 `GET /api/v1/health` to return 200, then boots Next.js on `:3001` with
 `NEXT_PUBLIC_BACKEND_URL` / `NEXT_PUBLIC_BACKEND_WS` already pointing at it.
@@ -80,7 +80,7 @@ so it catches the class of bug that made the stream die instantly on connect.
 
 | # | Defect | Fix |
 |---|---|---|
-| 1 | **`POST /api/v1/verify-speaker` returned HTTP 500** whenever the ML stack was absent. `ModuleNotFoundError: No module named 'torch'` escaped as an unhandled ASGI exception — the endpoint was a landmine on any minimal install. | `TargetSpeakerVerifier` now degrades to `{"available": false, "reason": ...}` at **both** load and inference time (`vaaniguard/ml_bridge.py`). Never raises. |
+| 1 | **`POST /api/v1/verify-speaker` returned HTTP 500** whenever the ML stack was absent. `ModuleNotFoundError: No module named 'torch'` escaped as an unhandled ASGI exception — the endpoint was a landmine on any minimal install. | `TargetSpeakerVerifier` now degrades to `{"available": false, "reason": ...}` at **both** load and inference time (`vaanishield/ml_bridge.py`). Never raises. |
 | 2 | **The trained model was unreachable from the analysis path.** `ml/checkpoints/best_model.pt` existed but nothing in `/api/v1/analyze/audio` called it — the "Anchor: Narendra Modi" badge in the UI was purely cosmetic. | `/api/v1/analyze/audio` now runs the verifier and returns a `target_speaker` block (`available`, `label`, `is_target`, `prob_target`, `llr`). |
 | 3 | **No way to see that signal.** | `ForensicVerdictCard` renders an *Enrolled-voice identity check* strip: `MATCH` / `NO MATCH` / `UNAVAILABLE`, with P(target) and LLR, labelled as an identity check — never as a clone verdict. |
 | 4 | **The ASV path could never engage.** The frontend never sent `claimed_identity`, so `pipeline.analyse()` always got `None` and returned the constant 0.5. | `page.tsx` now posts `claimed_identity=narendra_modi` with every analysis. |
@@ -134,15 +134,15 @@ These are real and should not be papered over:
 7. **Closed.** `backend/`'s standalone server (its incompatible `WINDOW_ANALYSIS`
    protocol included) has been deleted. Its two genuinely-working pieces —
    `app/models/ecapa_verifier.py` and `app/models/wavlm_detector.py` — are kept as the
-   shared source for `vaaniguard-backend/vaaniguard/detectors/{asv_ecapa,cm_wavlm}.py`
+   shared source for `vaanishield-backend/vaanishield/detectors/{asv_ecapa,cm_wavlm}.py`
    (imported via `sys.path`, the same pattern `ml_bridge.py` uses for `ml/`), alongside
-   `services/asr/` which `vaaniguard/semantic/signal.py` already depended on. One
+   `services/asr/` which `vaanishield/semantic/signal.py` already depended on. One
    integrated backend now; see `backend/README.md`.
 8. **Live-mic capture was not exercised in a real browser** (no browser automation
    available on Windows here). It was verified by replaying the exact protocol over a
    real WebSocket; a human should still click "Test live stream" once.
-9. **A third client exists and was undocumented here until now: `vaaniguard-android/`.**
-   A compiled APK (`vaaniguard_app-debug.apk`) implementing on-device keyword
+9. **A third client exists and was undocumented here until now: `vaanishield-android/`.**
+   A compiled APK (`vaanishield_app-debug.apk`) implementing on-device keyword
    triggering, a *second, independent* clone-detection heuristic in Kotlin (unreconciled
    with the Python CM detectors), real identity verification against
    `/v1/verify-speaker`, and a genuinely strong coercion-shield (overlay warning +
@@ -154,9 +154,9 @@ These are real and should not be papered over:
 
 | File | Change |
 |---|---|
-| `vaaniguard-backend/vaaniguard/ml_bridge.py` | Graceful degradation at load + inference; `load_error` surfaced in the reason |
-| `vaaniguard-backend/vaaniguard/server/app.py` | `target_speaker` on `AnalyzeResponse`; verifier wired into `/api/v1/analyze/audio` behind a total-exception guard |
-| `vaaniguard-backend/requirements-ml.txt` | **new** — optional torch/librosa stack for the identity model |
+| `vaanishield-backend/vaanishield/ml_bridge.py` | Graceful degradation at load + inference; `load_error` surfaced in the reason |
+| `vaanishield-backend/vaanishield/server/app.py` | `target_speaker` on `AnalyzeResponse`; verifier wired into `/api/v1/analyze/audio` behind a total-exception guard |
+| `vaanishield-backend/requirements-ml.txt` | **new** — optional torch/librosa stack for the identity model |
 | `frontend/app/page.tsx` | Sends `claimed_identity` so the target-conditioned path engages |
 | `frontend/app/components/ForensicVerdictCard.tsx` | `target_speaker` type + identity-check strip |
 | `scripts/dev.js` | **new** — one-command launcher for backend + dashboard |
@@ -168,14 +168,14 @@ These are real and should not be papered over:
 The `ayush` branch merge (commit `63c547d`) brought in a full ASR stack
 (`backend/services/asr/`: Groq Whisper cloud + IndicConformer/faster-whisper
 fallback, Hinglish transliteration) with no wiring into the serving backend.
-Per `docs/FLOWCHARTS_CORRECTED.md`, vaaniguard's acoustic pipeline must stay
+Per `docs/FLOWCHARTS_CORRECTED.md`, vaanishield's acoustic pipeline must stay
 the sole authority for the verdict — so this ASR stack is wired in as a
 **parallel, advisory context signal**, not a replacement pipeline:
 
-- `vaaniguard/semantic/keywords.py` — scam-phrase keyword lexicon (OTP/PIN
+- `vaanishield/semantic/keywords.py` — scam-phrase keyword lexicon (OTP/PIN
   exfiltration, KYC/account threats, impersonated authority, urgency,
   payment requests), scored against the transliterated transcript.
-- `vaaniguard/semantic/signal.py` — bridges `backend/services/asr` with the
+- `vaanishield/semantic/signal.py` — bridges `backend/services/asr` with the
   exact degrade-never-raise pattern `ml_bridge.py` established for the
   torch/librosa identity model: missing `torch`/`groq`/`GROQ_API_KEY`
   produces `{"available": false, "reason": ...}`, never a 500 or a dead
@@ -190,7 +190,7 @@ the sole authority for the verdict — so this ASR stack is wired in as a
 - New `semantic` field on both the WS verdict and `AnalyzeResponse` — see
   `docs/PROTOCOL.md` §3.1. Frontend: `ForensicVerdictCard.tsx` renders a
   "Live transcript & keyword flags" panel; `target_speaker`'s sibling.
-- Optional install: `vaaniguard-backend/requirements-asr.txt` (torch, groq,
+- Optional install: `vaanishield-backend/requirements-asr.txt` (torch, groq,
   python-dotenv) + `GROQ_API_KEY`. Verified end-to-end in this environment
   with `groq` installed and no API key set: correctly degrades to
   `{"available": false, "reason": "ASR warmup failed (ValueError: GROQ_API_KEY

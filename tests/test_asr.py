@@ -1,5 +1,5 @@
 """
-Unit Tests for vaaniguard ASR Subsystem
+Unit Tests for vaanishield ASR Subsystem
 
 Tests:
 1. Audio preprocessing (stereo -> mono, 8kHz -> 16kHz, 16kHz -> unchanged, error handling)

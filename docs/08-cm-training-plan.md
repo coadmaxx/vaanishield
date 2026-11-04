@@ -20,7 +20,7 @@ and evaluated across the full Dev partition (140,950 utterances).
   from 2.0988 down to **0.6536** (< 1.0) and $\text{actDCF}_{\text{Bayes}}$ down to **2.8796**.
   *Note:* Platt calibration parameters are stored in `data/cm_aasist.pt` for offline Bayes
   cost characterization, but are deliberately **inactive** during runtime inference (`score()`)
-  because downstream `vaaniguard/risk/fusion.py` already trains a dedicated logistic fusion layer.
+  because downstream `vaanishield/risk/fusion.py` already trains a dedicated logistic fusion layer.
 - **YouTube Domain Shift Defect Eliminated:** Genuine audio (`demo_01_genuine.wav`)
   scores positive in the production sliding-window path (Risk **31.6**, mean LLR **+2.55**, Tier **ALLOW**,
   3.4 points below the 35.0 CHALLENGE boundary; center-cropped 10s clip yields Risk **24.0**, LLR **+3.85**).
@@ -277,7 +277,7 @@ you find out in an hour instead of two days into a fine-tune.
 
 ### Front-end contract (identical for both — mismatch here silently voids the run)
 
-Mirrors the constants in `vaaniguard-backend/vaaniguard/detectors/cm_aasist.py`:
+Mirrors the constants in `vaanishield-backend/vaanishield/detectors/cm_aasist.py`:
 
 - Resample everything to **16 000 Hz mono**, float32 in [-1, 1].
 - Slice/pad to **4.0 s** (64 000 samples). Production analyses a 4.04 s
@@ -494,10 +494,10 @@ but attribute the gain honestly, and update `_ARCHITECTURE` (§6) to name it.
 
 ### Augmentation (both recipes, on-the-fly, train partition only)
 
-Use this repo's own `vaaniguard-backend/vaaniguard/data/augment.py` — G.711
+Use this repo's own `vaanishield-backend/vaanishield/data/augment.py` — G.711
 A-law/μ-law and AMR-WB simulation. **This is why that module exists** (see
 `docs/03-codec-augmentation-and-telephony.md`), and it is the single most
-relevant augmentation for vaaniguard specifically, because production audio
+relevant augmentation for vaanishield specifically, because production audio
 arrives over telephony codecs and a model trained only on clean studio audio
 will treat codec artefacts as spoofing artefacts.
 
@@ -734,7 +734,7 @@ the old one.
   to the stub while weights are absent — `VG_CM_BACKEND=aasist` without a
   checkpoint changes nothing but a log line. That is intentional, and it is
   why §7 step 2 exists.
-- Landing this checkpoint does **not** make vaaniguard trustworthy against
+- Landing this checkpoint does **not** make vaanishield trustworthy against
   arbitrary real calls (§5.4). See `docs/09-post-cm-roadmap.md` for what
   remains after it — several items there matter more than this one.
 - This file is a plan. Its existence improves nothing by itself.
@@ -777,7 +777,7 @@ The countermeasure has been retrained with stochastic on-the-fly telephony and c
     * `demo_02_degraded_copy.wav` -> Risk **28.9**, Tier **ALLOW**, ASV **0.738**
     * `demo_03_partial_splice.wav` -> Risk **39.4**, Tier **CHALLENGE**, ASV **0.888**
     * `demo_04_impostor.wav` -> Risk **70.0**, Tier **BLOCK**, ASV **0.018**
-  * **Mechanism of Impostor BLOCK**: Notice that `demo_04_impostor.wav` is an authentic human voice belonging to an impostor speaker (not a synthetic voice). The CM detector correctly treats human voice as genuine-ish (CM score +0.78 first window, +2.91 clip mean). The **BLOCK** verdict is enforced deterministically by the ASV subsystem: `asv_consistency ~ 0.011 < 0.10` triggers the hard `VG_IMPOSTOR_BLOCK_BELOW` override in `vaaniguard/risk/fusion.py`.
+  * **Mechanism of Impostor BLOCK**: Notice that `demo_04_impostor.wav` is an authentic human voice belonging to an impostor speaker (not a synthetic voice). The CM detector correctly treats human voice as genuine-ish (CM score +0.78 first window, +2.91 clip mean). The **BLOCK** verdict is enforced deterministically by the ASV subsystem: `asv_consistency ~ 0.011 < 0.10` triggers the hard `VG_IMPOSTOR_BLOCK_BELOW` override in `vaanishield/risk/fusion.py`.
 
 ### 12.2 Post-Evaluation Score Calibration (Platt Scaling Layer Fitted & Runtime Role)
 
@@ -790,15 +790,15 @@ A 1D Platt / logistic calibration layer ($w \cdot s + b$) was fitted directly on
 * **Deliberate Runtime Separation**:
   * The calibration parameters $w$ and $b$ are stored in the checkpoint metadata for offline verification, metric reporting, and potential direct Bayesian evaluation.
   * However, they are **deliberately unused** in `cm_aasist.score(x, sr)`.
-  * *Reason*: `vaaniguard/risk/fusion.py` already implements its own trained logistic fusion model mapping raw CM and ASV scores into risk ($w_{\text{cm}} = 1.5, \text{intercept} = -1.6$). Applying Platt scaling within `cm_aasist.py` compresses positive genuine scores (e.g. LLR +8.96 -> -0.30), inflating risk on genuine audio from 31.6 to 49.1 (`CHALLENGE`), breaking the Tier ALLOW contract.
+  * *Reason*: `vaanishield/risk/fusion.py` already implements its own trained logistic fusion model mapping raw CM and ASV scores into risk ($w_{\text{cm}} = 1.5, \text{intercept} = -1.6$). Applying Platt scaling within `cm_aasist.py` compresses positive genuine scores (e.g. LLR +8.96 -> -0.30), inflating risk on genuine audio from 31.6 to 49.1 (`CHALLENGE`), breaking the Tier ALLOW contract.
 
 ### 12.3 A real gap found while verifying this section
 
 `tests/e2e/test_tier1_feature_coverage.py` (95 tests) passes — confirmed by
 running it directly — but is not listed in `pytest.ini`'s or
-`vaaniguard-backend/pytest.ini`'s `testpaths`, and
+`vaanishield-backend/pytest.ini`'s `testpaths`, and
 `.github/workflows/ci.yml`'s "Run backend tests" step invokes
-`pytest vaaniguard-backend/tests/` only. Nothing currently runs this suite
+`pytest vaanishield-backend/tests/` only. Nothing currently runs this suite
 except a human who knows to ask for it by path. It is fixed in the same
 commit as this section — either `pytest.ini` gained a second testpath or CI
 gained a second step; check either file's current content rather than
@@ -814,7 +814,7 @@ trusting this sentence to stay accurate.
     680,774-utterance list): Rebuilt using `python ml/build_manifest.py --partition eval --only-existing` to index exactly the **628,848** verified audio files on Drive A (0 missing files on disk).
   - All 16 held-out evaluation attack families A17–A32 are fully represented in this set.
 * **Side-by-Side Eval Comparison (20,000 Representative Sample)**:
-  Evaluated on the exact same 20,000-utterance sample (4,058 bonafide, 15,942 spoof) committed directly to git at [`data/eval_benchmark/eval_slice_20k.tsv`](file:///c:/vaaniguard/data/eval_benchmark/eval_slice_20k.tsv) for full external reproducibility:
+  Evaluated on the exact same 20,000-utterance sample (4,058 bonafide, 15,942 spoof) committed directly to git at [`data/eval_benchmark/eval_slice_20k.tsv`](file:///c:/vaanishield/data/eval_benchmark/eval_slice_20k.tsv) for full external reproducibility:
   ```bash
   # Reproduce Post-Augmentation Eval metrics (raw):
   python ml/evaluate_cm.py --checkpoint data/cm_aasist.pt --manifest data/eval_benchmark/eval_slice_20k.tsv --audio-eval --device cuda --out-report reports/cm_aasist_eval_partition.json
@@ -869,7 +869,7 @@ A13 is an advanced neural vocoder / neural acoustic synthesis attack (HiFi-GAN /
 #### 3. Inference-Time Window Pooling in `/analyze`
 In `/analyze/audio`, a 10s audio file produces 6 overlapping sliding windows (4.04s window, 1.0s hop).
 - A spoofed recording (e.g. `demo_03_partial_splice.wav`) may only contain spoof artifacts in a 2–3 second burst. Arithmetic mean across all windows dilutes the localized anomaly.
-- To address this without retraining, `vaaniguard-backend` now supports configurable pooling via `VG_ANALYZE_POOLING`:
+- To address this without retraining, `vaanishield-backend` now supports configurable pooling via `VG_ANALYZE_POOLING`:
   - `last`: (Default) Returns the terminal window's smoothed risk.
   - `max`: Captures peak anomaly across windows (e.g. `demo_03_partial_splice` window anomaly hits **0.6739** max vs **0.4435** mean, raising splice risk from 42.6 to **59.3**).
   - `topk`: Averages the top $k = \lceil N/2 \rceil$ highest windows, preventing transient glitches from dominating while catching localized splices.

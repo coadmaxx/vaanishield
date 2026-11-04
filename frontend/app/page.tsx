@@ -25,7 +25,7 @@ const BACKEND_WS = process.env.NEXT_PUBLIC_BACKEND_WS || "ws://localhost:8000/ws
 // claims an identity the server has no vector for.
 const CLAIMED_IDENTITY_FALLBACK = "narendra_modi";
 
-// --- CHALLENGE interlock helpers (mirror vaaniguard/challenge/engine.py) --
+// --- CHALLENGE interlock helpers (mirror vaanishield/challenge/engine.py) --
 type LocalChallenge = {
   phrase: string;
   expected_digits?: string[];
@@ -320,7 +320,7 @@ export default function Home() {
   const handleDownloadCertificate = () => {
     if (!report) return;
     const certificate = {
-      title: "vaaniguard Cryptographic Forensic Audio Audit Certificate",
+      title: "vaanishield Cryptographic Forensic Audio Audit Certificate",
       statute: "India Digital Personal Data Protection (DPDP) Act 2023 Section 8(7)",
       zeroRetentionVerified: true,
       timestamp: new Date().toISOString(),
@@ -332,7 +332,7 @@ export default function Home() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `vaaniguard-Audit-${report.session_id.slice(0, 8)}.json`;
+    a.download = `vaanishield-Audit-${report.session_id.slice(0, 8)}.json`;
     a.click();
     URL.revokeObjectURL(url);
     addEvent("Cryptographic audit receipt certificate exported", "info");
@@ -802,7 +802,7 @@ export default function Home() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/brand/vani-rakshak-icon.jpg"
-                alt="vaaniguard shield+mic logo"
+                alt="vaanishield shield+mic logo"
                 width={36}
                 height={36}
                 className="h-9 w-9 object-contain"
@@ -811,7 +811,7 @@ export default function Home() {
 
             <div className="flex flex-col">
               <span className="font-semibold text-sm tracking-[-0.3px] text-white">
-                vaaniguard
+                vaanishield
               </span>
               <span className="font-mono text-[9px] uppercase tracking-wider text-[#888888]">
                 Forensic Voice Intelligence

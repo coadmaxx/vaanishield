@@ -1,4 +1,4 @@
-# vaaniguard — API Specification
+# vaanishield — API Specification
 
 ## WebSocket API
 
@@ -151,7 +151,7 @@ pair appears in `/analyze`'s `dpdp_compliance` block as
 `zero_retention_verified` and `third_party_audio_processors`. Off by default.
 
 `anchor` describes the single enrolled target speaker loaded at server
-startup (`vaaniguard/anchor.py::load_anchor`) — `user_id` is `null` and
+startup (`vaanishield/anchor.py::load_anchor`) — `user_id` is `null` and
 `error` is set when the anchor file is missing, corrupt, or was embedded by a
 different ASV backend than the one currently running (loading a mismatched
 vector space is refused, not silently misinterpreted). This is also the

@@ -1,4 +1,4 @@
-# vaaniguard Machine Learning & Forensic Benchmark Suite
+# vaanishield Machine Learning & Forensic Benchmark Suite
 
 Target-conditioned neural models, ASVspoof-5 evaluation metrics, and telephony codec robustness benchmarks.
 
@@ -6,7 +6,7 @@ Target-conditioned neural models, ASVspoof-5 evaluation metrics, and telephony c
 
 ## Mission & Telecom Scaling
 
-The model is the engine behind vaaniguard's voice-authenticity promise. It was first built to
+The model is the engine behind vaanishield's voice-authenticity promise. It was first built to
 **guarantee that a call from Narendra Modi (Modi ji) cannot be faked or impersonated** — one
 enrolled anchor voice, checked against every inbound claim to be him. The same mechanism scales
 into a **telecom family-SIM safety feature** (in the spirit of Airtel's scam-detecting calls):
@@ -74,7 +74,7 @@ of the training protocol and its EER must not be quoted as generalisation.
 
 Deliberately speaker-independent: a countermeasure should learn vocoder artefacts in
 general, not one person's clones. The per-person half of the system is ASV
-(`vaaniguard/detectors/asv_ecapa.py`), which already generalises to any enrolled voice
+(`vaanishield/detectors/asv_ecapa.py`), which already generalises to any enrolled voice
 with no retraining — so enrolling a new family member never requires new spoof data.
 
 > **Do not train a countermeasure by cloning your own anchor speaker.** Beyond producing
@@ -99,7 +99,7 @@ carries `task` / `task_note` fields so its metrics cannot be read as anti-spoofi
 **The shipped checkpoint is fine-tuned for one person.** The enrolled target is a single
 identity — **Narendra Modi** — represented by 8 recordings in `data/anchor_speaker_std/`
 (see `data/anchor_asv_embedding.json` / `data/anchor_asv_embedding_ecapa.json`,
-`user_id: narendra_modi` — the files `vaaniguard/anchor.py` actually loads;
+`user_id: narendra_modi` — the files `vaanishield/anchor.py` actually loads;
 `data/anchor_speaker_profile.json` was deleted, see `data/README.md`). It is a one-person
 target-speaker verifier, not a general voice-clone detector. Re-enrolling a different target
 requires retraining; the weights here do not transfer.

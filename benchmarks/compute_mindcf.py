@@ -26,7 +26,7 @@ import numpy as np
 #
 # The old default of 0.5 was neither that nor derived from the data. Worse,
 # the CM stub emits scores in roughly [2.3, 3.4] for BOTH classes (see
-# vaaniguard/detectors/cm.py), so every threshold below ~2.3 classifies every
+# vaanishield/detectors/cm.py), so every threshold below ~2.3 classifies every
 # input -- genuine and spoof alike -- as genuine. That is what produced
 # actDCF = 19.0 (i.e. a 100% false-accept rate) alongside EER = 0.00%.
 #

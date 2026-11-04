@@ -3,7 +3,7 @@
 `backend.app.core.forensic_signal.ForensicSignalProcessor`, which this script
 scores, was deleted when the standalone `backend/` server was retired (see
 `backend/README.md`). The DSP it measured was never wired into the serving
-path this repo actually ships (see `vaaniguard-backend/`), so nothing today
+path this repo actually ships (see `vaanishield-backend/`), so nothing today
 depends on this script running. Kept for historical reference alongside
 `AUDIT_REPORT.md` §5, which this script's output supported.
 
@@ -11,7 +11,7 @@ depends on this script running. Kept for historical reference alongside
 
 Phase 4: score the component the published benchmark NEVER measures.
 
-`benchmarks/run_benchmarks.py` imports only `vaaniguard.*` (the deterministic
+`benchmarks/run_benchmarks.py` imports only `vaanishield.*` (the deterministic
 stubs). It never imports `backend.app.*` — so the 429-line real DSP
 `ForensicSignalProcessor`, the ECAPA-TDNN verifier and the WavLM extractor have
 never been scored against any ground truth.
@@ -33,7 +33,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, str(REPO / "vaaniguard-backend"))
+sys.path.insert(0, str(REPO / "vaanishield-backend"))
 
 from backend.app.core.forensic_signal import ForensicSignalProcessor  # noqa: E402
 

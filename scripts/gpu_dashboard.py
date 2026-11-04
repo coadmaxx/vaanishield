@@ -77,7 +77,7 @@ def snapshot() -> dict:
 
 PAGE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>vaaniguard GPU Pipeline</title>
+<title>vaanishield GPU Pipeline</title>
 <style>
 :root{--bg:#f7f7f5;--card:#fff;--ink:#1d1d1b;--muted:#6b6b66;--line:#e3e2dc;--ok:#1f7a4d;--bad:#b3261e;--run:#1f5fb3;--bar:#1f5fb3}
 @media (prefers-color-scheme:dark){:root{--bg:#141413;--card:#1e1e1c;--ink:#ecebe6;--muted:#9d9c95;--line:#33332f;--ok:#5cc28f;--bad:#f2867d;--run:#7fb0f5;--bar:#7fb0f5}}
@@ -97,7 +97,7 @@ pre{white-space:pre-wrap;word-break:break-word;font:12px/1.4 ui-monospace,Consol
 table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;overflow-wrap:anywhere}
 .res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
 </style></head><body><main>
-<h1>vaaniguard GPU pipeline</h1><div class="sub" id="sub">loading…</div>
+<h1>vaanishield GPU pipeline</h1><div class="sub" id="sub">loading…</div>
 <div class="grid" id="gpu"></div>
 <h2>Stages</h2><div id="stages"></div>
 <h2 style="margin-top:18px">Results</h2><div class="res" id="res"></div>

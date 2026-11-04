@@ -1,5 +1,5 @@
 """
-Existing Faster-Whisper ASR Provider for vaaniguard
+Existing Faster-Whisper ASR Provider for vaanishield
 
 Preserves the existing Whisper implementation behind the common ASRProvider interface.
 Does NOT modify or replace the legacy whisper scripts or files.
@@ -15,7 +15,7 @@ from .provider import ASRProvider
 from .types import TranscriptionResult, ASRConfig
 from .transliteration import HinglishTransliterationService
 
-logger = logging.getLogger("vaaniguard.asr.whisper")
+logger = logging.getLogger("vaanishield.asr.whisper")
 
 
 class ExistingWhisperASR(ASRProvider):

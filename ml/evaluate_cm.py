@@ -41,7 +41,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.evaluate_cm")
+logger = logging.getLogger("vaanishield.evaluate_cm")
 
 
 class FeatureDataset(Dataset):

@@ -1,4 +1,4 @@
-# vaaniguard UI Design System
+# vaanishield UI Design System
 
 ## Overview
 - Dark theme
@@ -39,7 +39,7 @@ Risk tiers mapped to colors:
 - Live event log
 - Risk score gauge
 
-## vaaniguard Kavach — Android Guard Screen (vaaniguard-android)
+## vaanishield Kavach — Android Guard Screen (vaanishield-android)
 Two pipeline phases visible on the guard screen:
 
 ### ARMED (keyword-gated, default ON)

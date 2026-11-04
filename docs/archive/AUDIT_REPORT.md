@@ -10,7 +10,7 @@
 > measurements it made at the time, not as a current statement of what's
 > built.
 
-# vaaniguard — Audit: What Is Built vs What Is Claimed
+# vaanishield — Audit: What Is Built vs What Is Claimed
 
 **Audited:** 2026-09-08 · branch `workbuddy/main-df6431a9` (`1d4a8e4`) vs `origin/main` (`d77623a`)
 **Method:** phases 1–6 of the ML-project audit workflow. Every number below was measured by me
@@ -78,7 +78,7 @@ the older/slower numbers are simply the pre-refresh artifact. The practical conc
 unchanged but the cause is different: there is no new work here, and the only way merging could
 alter `main` is by **reverting** main's newer, faster report to this older, slower one.
 
-Also note: **no pull request exists.** `gh pr list --state all` on `BeastAyyG/vaaniguard`
+Also note: **no pull request exists.** `gh pr list --state all` on `BeastAyyG/vaanishield`
 returns empty, and `origin/main` == `upstream/main` == `d77623a`. This branch has never been
 opened as a PR.
 
@@ -93,12 +93,12 @@ commit you are standing on — I verified this by diffing `1d4a8e4..d77623a` (on
 Benchmarks 1 and 3 generate *both* classes from the repo's own synthetic generator:
 
 - `benchmarks/run_benchmarks.py:63-67` → `synthetic_speech()` vs `synthetic_spoofed()`
-- `vaaniguard-backend/vaaniguard/data/synthetic.py:4-6`, verbatim:
+- `vaanishield-backend/vaanishield/data/synthetic.py:4-6`, verbatim:
 
   > "they are **designed so that, for a CM model that uses the four standard features below**,
   > genuine and spoofed produce **clearly separated feature values**."
 
-The CM stub (`vaaniguard/detectors/cm.py:41-98`) reads exactly those four features
+The CM stub (`vaanishield/detectors/cm.py:41-98`) reads exactly those four features
 (`hb_ratio`, `flatness`, `energy_var`, `jitter_resid`). Same author, same file set, one designed
 to be separable by the other.
 
@@ -203,7 +203,7 @@ DPDP Act 2023 compliance. That claim currently has no traceable basis for these 
 
 ## §5 — The best component was never measured; it beats the published path  🟠 HIGH
 
-`benchmarks/run_benchmarks.py` imports **only** `vaaniguard.*` — the deterministic stubs. It
+`benchmarks/run_benchmarks.py` imports **only** `vaanishield.*` — the deterministic stubs. It
 contains **zero** imports of `backend.*`. So `backend/app/core/forensic_signal.py` (429 LOC of
 real DSP), `ecapa_verifier.py` (257) and `wavlm_detector.py` (223) have never been scored.
 
@@ -267,7 +267,7 @@ backend.app.core.forensic_signal -> ModuleNotFoundError: No module named 'libros
 Install `torch torchaudio librosa soundfile` → **21 passed, 0 skipped.**
 
 Contributing factor: there is **no root requirements file**. Dependencies are split across
-`backend/requirements.txt`, `ml/requirements.txt`, `vaaniguard-backend/requirements.txt`, and
+`backend/requirements.txt`, `ml/requirements.txt`, `vaanishield-backend/requirements.txt`, and
 **none of them includes pytest** — so `make test` cannot work on a clean checkout. Stale pin:
 `backend/requirements.txt` requires `numpy<2.0.0`; everything passes on numpy 2.5.2.
 
@@ -305,13 +305,13 @@ Verified by import graph (`audit_imports.py`), not by reading:
   `AcousticForensicClassifier` has never been trained. `ml/evaluate.py:41` imports the *stubs*,
   not a trained model, so even if run it would not evaluate the ML model.
 - **Byte-identical duplicate:** `benchmarks/compute_mindcf.py` ≡
-  `vaaniguard-backend/benchmarks/compute_mindcf.py` (252 lines each, `diff` empty).
+  `vaanishield-backend/benchmarks/compute_mindcf.py` (252 lines each, `diff` empty).
 - `backend/app/main.py` — 0 importers (the heavy FastAPI entrypoint).
-- `vaaniguard/config.py:67` `_DEMO_OVERRIDES` — dead; `VG_FUSION_PRESET` is never read.
-- `vaaniguard/config.py:44` `fast_rise_threshold` — declared, never used;
+- `vaanishield/config.py:67` `_DEMO_OVERRIDES` — dead; `VG_FUSION_PRESET` is never read.
+- `vaanishield/config.py:44` `fast_rise_threshold` — declared, never used;
   `risk/fusion.py:84` hardcodes `-2.0` instead.
-- **Two parallel backends** (`backend/` real, `vaaniguard-backend/` stubs) with duplicated risk
-  logic (`backend/app/engine/risk_fusion.py` vs `vaaniguard/risk/fusion.py`). Only the stub one
+- **Two parallel backends** (`backend/` real, `vaanishield-backend/` stubs) with duplicated risk
+  logic (`backend/app/engine/risk_fusion.py` vs `vaanishield/risk/fusion.py`). Only the stub one
   is described in AGENTS.md / CONTRIBUTING.md / README.
 
 ---
@@ -353,7 +353,7 @@ ceiling only becomes the binding constraint after that.
 | `npm run build` | frontend, before push (§3) | ✅ **exit 0** — Next 16.3.4/Turbopack, TS clean, 4/4 static pages |
 | Protocol conformance test | `test_stream_e2e.py` (§4, PROTOCOL §9) | ✅ **3/3 pass** |
 | Backend tests | `pytest` | ✅ 21/21 (after fixing env, §7) |
-| PR exists | — | ❌ none on `BeastAyyG/vaaniguard` |
+| PR exists | — | ❌ none on `BeastAyyG/vaanishield` |
 
 **Frontend gates genuinely pass** — I installed the 365 packages (18 min, 0 vulnerabilities) and
 ran both. Lint: 11 files, 0 problems. Build: exit 0, TypeScript clean, 4/4 pages prerendered.
@@ -422,7 +422,7 @@ assembling one is the actual prerequisite for closing this gap further. Do not q
 ### §12.3 — The Android app: real, working, and previously under-documented
 
 The user pointed out this session missed a real piece of the system: a
-compiled Android app (`vaaniguard-android/vaaniguard_app-debug.apk` exists
+compiled Android app (`vaanishield-android/vaanishield_app-debug.apk` exists
 on disk) that already implements most of the live-call flow described at the
 start of this session — keyword trigger → speaker verify → coercion response —
 independently of the Next.js web console and the Python backend's own
@@ -469,7 +469,7 @@ detectors. Read in full; here is what is real and what isn't.
   own detector, given the same audio, would say something else. Nothing
   reconciles the two.
 - The README claimed *"does not compute forensics locally"* — directly
-  contradicted by the above. Corrected in `vaaniguard-android/README.md`.
+  contradicted by the above. Corrected in `vaanishield-android/README.md`.
 
 **Structural limitation, not a bug:** the app reaches the backend via
 `adb reverse tcp:8000 tcp:8000` — a USB-tethered ADB port bridge to a
@@ -522,7 +522,7 @@ The path is now built and tested; the data is the remaining input.
 **Environment note:** `librosa`/`soundfile` are now installed, so the trained identity model
 actually loads and scores (`label=modi_ji, p_target=0.9913`) instead of reporting
 `available: false` — limitation #4 in `INTEGRATION_REPORT.md` §5 is resolved. This pulled numpy
-to 2.5.3, so `vaaniguard-backend/requirements.txt` no longer hard-pins `numpy==1.26.4`
+to 2.5.3, so `vaanishield-backend/requirements.txt` no longer hard-pins `numpy==1.26.4`
 (verified 13/13 on both 1.26.4 and 2.5.3).
 
 ### §12.2 — Claim verification added (distinct from keyword matching)
@@ -594,21 +594,21 @@ outcome — a suite whose only possible output is "SUCCESS" is not a test.
 
 My edit to `benchmarks/compute_mindcf.py` had **no effect at all**. There are two
 importable packages named `benchmarks`, and `run_benchmarks.py` inserted
-`vaaniguard-backend/` *after* the repo root, so the backend copy landed at
+`vaanishield-backend/` *after* the repo root, so the backend copy landed at
 `sys.path[0]` and won:
 
 ```
-run_benchmarks.py actually imports: .../vaaniguard-backend/benchmarks/compute_mindcf.py
+run_benchmarks.py actually imports: .../vaanishield-backend/benchmarks/compute_mindcf.py
 ```
 
 The dead duplicate was shadowing the live module. Anyone editing the real metric
 code would have seen no change and no error. Fixed by inserting `BACKEND_DIR`
 first and `REPO_ROOT` second, with a comment explaining the ordering.
 
-**Still to do by hand:** delete `vaaniguard-backend/benchmarks/` (0 importers,
+**Still to do by hand:** delete `vaanishield-backend/benchmarks/` (0 importers,
 unreferenced, byte-identical). I attempted `git rm -r` and it removed the entire
-`vaaniguard-backend/` tree instead — a known git misbehaviour in this
-environment — so I restored it from HEAD with `git checkout HEAD -- vaaniguard-backend`
+`vaanishield-backend/` tree instead — a known git misbehaviour in this
+environment — so I restored it from HEAD with `git checkout HEAD -- vaanishield-backend`
 and verified the tree is intact. **Please run the deletion outside this sandbox.**
 
 ### Before / after
@@ -730,7 +730,7 @@ new signal. Both are now corrected.
 1. **`benchmarks/run_benchmarks.py`** — benchmarks 3 and 4 now assert instead of narrating, a
    `CHECK SUMMARY` block counts failures, and the process exits non-zero on failure.
 2. **The sys.path shadowing bug is fixed** — the load-bearing find. Two packages are named
-   `benchmarks`; `vaaniguard-backend/benchmarks/` was winning `sys.path[0]`, so edits to the live
+   `benchmarks`; `vaanishield-backend/benchmarks/` was winning `sys.path[0]`, so edits to the live
    `benchmarks/compute_mindcf.py` had **zero effect**. Verified fixed: the live module now resolves
    and reports `has TAU_BAYES: True`.
 3. **`evaluate_system` reports calibration** — added `act_dcf_bayes`, `threshold_bayes`,
@@ -782,9 +782,9 @@ pointer to fix calibration rather than the reporting threshold.
 
 ### Cleanup / follow-up still owed
 
-- **Delete `vaaniguard-backend/benchmarks/`.** Still present, still imported by nothing once R1/R4
+- **Delete `vaanishield-backend/benchmarks/`.** Still present, still imported by nothing once R1/R4
   landed. **Do not use `git rm -r` in this sandbox** — it deleted the whole parent tree during the
-  audit and needed `git checkout HEAD -- vaaniguard-backend` to recover. Delete it from a normal
+  audit and needed `git checkout HEAD -- vaanishield-backend` to recover. Delete it from a normal
   shell or via the GitHub UI.
 - **`EXPECTED_TIER` is policy I chose, not measured fact.** Move it to
   `data/demo/ground_truth.json` as `expected_tier` and have the owner confirm. Requiring `BLOCK`

@@ -1,6 +1,6 @@
 # India VoIP Setup Guide: Layer-2 PSTN Screening
 
-Operational checklist for standing up the vaaniguard Call screening number
+Operational checklist for standing up the vaanishield Call screening number
 in India. This is a Phase 5 planning document: follow it when the build
 moves to Phase 6. Every provider fact below is cited against a current
 source or marked TBD. Prices are never invented: where a price cannot be

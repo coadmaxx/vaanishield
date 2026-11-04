@@ -24,20 +24,20 @@ import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-BACKEND_ROOT = REPO_ROOT / "vaaniguard-backend"
+BACKEND_ROOT = REPO_ROOT / "vaanishield-backend"
 for p in [str(REPO_ROOT), str(BACKEND_ROOT)]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from vaaniguard.config import settings
-from vaaniguard.detectors.cm import CMModel
-from vaaniguard.detectors.cm_aasist import (
+from vaanishield.config import settings
+from vaanishield.detectors.cm import CMModel
+from vaanishield.detectors.cm_aasist import (
     CMModelAASIST,
     _validate_checkpoint,
     weights_path,
 )
-from vaaniguard.detectors.pipeline import DetectionPipeline, _default_cm
-from vaaniguard.server.app import app
+from vaanishield.detectors.pipeline import DetectionPipeline, _default_cm
+from vaanishield.server.app import app
 from benchmarks.compute_mindcf import compute_eer, compute_mindcf, compute_act_dcf as compute_actdcf, compute_cllr, TAU_BAYES
 from ml.aasist_model import AASISTLHead
 
@@ -604,14 +604,14 @@ class TestF15_LiveDetectorIntegration:
 # ---------------------------------------------------------------------------
 class TestF16_BackendUnitTestSuite:
     def test_f16_test_smoke_passes(self):
-        from vaaniguard.detectors.cm import CMModel
+        from vaanishield.detectors.cm import CMModel
         cm = CMModel()
         sig = np.zeros(16000, dtype=np.float32)
         score = cm.score(sig, 16000)
         assert np.isfinite(score)
 
     def test_f16_test_audit_persistence_passes(self, tmp_path):
-        from vaaniguard.privacy.audit import AuditLog
+        from vaanishield.privacy.audit import AuditLog
         log_file = tmp_path / "audit.jsonl"
         chain = AuditLog(path=str(log_file))
         event = chain.append(
@@ -643,7 +643,7 @@ class TestF16_BackendUnitTestSuite:
         assert res.status_code == 200
 
     def test_f16_full_backend_suite_execution(self):
-        backend_tests = REPO_ROOT / "vaaniguard-backend" / "tests"
+        backend_tests = REPO_ROOT / "vaanishield-backend" / "tests"
         assert (backend_tests / "test_smoke.py").exists()
         assert (backend_tests / "test_stream_e2e.py").exists()
 

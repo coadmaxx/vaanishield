@@ -1,4 +1,4 @@
-"""vaaniguard — Acoustic Countermeasure & Target Verification Training Pipeline.
+"""vaanishield — Acoustic Countermeasure & Target Verification Training Pipeline.
 
 Trains the AcousticForensicClassifier (BiGRU + Attentive Stats Pooling) using
 cost-weighted detection loss and AM-Softmax over extracted MFCC or latent features,
@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, WeightedRandomSampler
 
 # Add repository root and backend to path
 REPO_ROOT = Path(__file__).resolve().parent.parent
-BACKEND_DIR = REPO_ROOT / "vaaniguard-backend"
+BACKEND_DIR = REPO_ROOT / "vaanishield-backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 if str(REPO_ROOT) not in sys.path:
@@ -43,7 +43,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-logger = logging.getLogger("vaaniguard.train")
+logger = logging.getLogger("vaanishield.train")
 
 
 def train_epoch(
@@ -123,7 +123,7 @@ def _drop_last(n_samples: int, batch_size: int) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Train vaaniguard Target Verification Model")
+    parser = argparse.ArgumentParser(description="Train vaanishield Target Verification Model")
     parser.add_argument("--epochs", type=int, default=50, help="Number of training epochs (default: 50)")
     parser.add_argument("--batch_size", "--batch-size", dest="batch_size", type=int, default=32, help="Batch size (default: 32)")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate (default: 0.001)")
@@ -295,7 +295,7 @@ def main() -> int:
     ckpt_path = checkpoint_dir / ("countermeasure_asvspoof.pt" if is_countermeasure else "best_model.pt")
 
     print("\n" + "=" * 65)
-    print("  [vaaniguard MODEL TRAINING & FINE-TUNING]")
+    print("  [vaanishield MODEL TRAINING & FINE-TUNING]")
     print("=" * 65)
     print(f" Train Samples   : {len(train_dataset)}")
     print(f" Validation      : {len(val_dataset)}")

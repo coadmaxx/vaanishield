@@ -1,5 +1,5 @@
 """
-Unified ASR Service for vaaniguard
+Unified ASR Service for vaanishield
 
 Orchestrates:
 Audio Preprocessing -> 4-second Chunks -> ASRProvider (IndicConformer / Whisper) -> Hinglish Transliteration -> TranscriptBuffer
@@ -20,12 +20,12 @@ from .provider import get_asr_provider, ASRProvider
 from .buffer import TranscriptBuffer
 from .transliteration import HinglishTransliterationService
 
-logger = logging.getLogger("vaaniguard.asr.service")
+logger = logging.getLogger("vaanishield.asr.service")
 
 
 class ASRService:
     """
-    High-level ASR Service consumed by the rest of vaaniguard.
+    High-level ASR Service consumed by the rest of vaanishield.
     Hides internal provider and decoding details.
     """
     _instance: Optional["ASRService"] = None

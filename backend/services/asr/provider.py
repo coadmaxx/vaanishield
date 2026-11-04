@@ -1,5 +1,5 @@
 """
-ASR Provider Base Class and Factory for vaaniguard
+ASR Provider Base Class and Factory for vaanishield
 
 Implements the ASRProvider interface to ensure:
 - IndicConformer is the primary Hindi/Hinglish ASR provider
@@ -15,11 +15,11 @@ import torch
 
 from .types import TranscriptionResult, ASRConfig
 
-logger = logging.getLogger("vaaniguard.asr.provider")
+logger = logging.getLogger("vaanishield.asr.provider")
 
 
 class ASRProvider(ABC):
-    """Abstract base class for all ASR engines in vaaniguard."""
+    """Abstract base class for all ASR engines in vaanishield."""
 
     def __init__(self, config: Optional[ASRConfig] = None):
         self.config = config or ASRConfig()
