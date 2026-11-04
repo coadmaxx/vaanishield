@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./vaaniguard-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - VG_HOST=0.0.0.0
+      - VG_PORT=8000
+      - VG_CORS_ORIGINS=http://localhost:3001,http://127.0.0.1:3001
+    volumes:
+      - ./vaaniguard-backend:/app
+    command: python run.py
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_BACKEND_WS=ws://localhost:8000/ws/stream
+        - NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+    ports:
+      - "3001:3001"
+    environment:
+      - NEXT_PUBLIC_BACKEND_WS=ws://localhost:8000/ws/stream
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - backend

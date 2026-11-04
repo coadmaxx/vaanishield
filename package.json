@@ -1,0 +1,24 @@
+{
+  "name": "vaaniguard-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "vaaniguard — Target-Conditioned Recorded-Audio Forensic System",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:all": "node scripts/dev.js",
+    "dev:all:real": "node scripts/dev.js --real",
+    "integration:check": "python scripts/integration_check.py",
+    "build": "npm --prefix frontend run build",
+    "lint": "npm --prefix frontend run lint",
+    "start": "npm --prefix frontend run start"
+  },
+  "keywords": [
+    "deepfake-detection",
+    "voice-cloning",
+    "audio-forensics",
+    "wavlm",
+    "ecapa-tdnn"
+  ],
+  "author": "vaaniguard Team",
+  "license": "Apache-2.0"
+}

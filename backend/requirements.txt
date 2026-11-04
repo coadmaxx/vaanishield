@@ -1,0 +1,8 @@
+# Deps for the model-loading modules kept in backend/app/models/ (see README.md).
+# There is no server here anymore — this is not meant to be pip-installed on
+# its own. Use vaaniguard-backend/requirements-asv.txt instead, which
+# installs the same packages for the code that actually imports these files.
+torch>=2.1.0
+torchaudio>=2.1.0
+transformers>=4.36.0
+speechbrain>=1.0.0

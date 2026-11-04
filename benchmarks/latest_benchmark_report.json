@@ -1,0 +1,119 @@
+{
+  "timestamp_iso": "2026-09-08T05:42:24Z",
+  "total_benchmark_duration_sec": 12.46,
+  "all_passed": false,
+  "checks": [
+    {
+      "check": "ASVspoof 5 score calibration (actDCF@tau_Bayes=19.00 vs minDCF=0.00)",
+      "passed": false
+    },
+    {
+      "check": "Latency SLA p95 < 200 ms (p95=17.13)",
+      "passed": true
+    },
+    {
+      "check": "Telephony robustness (2/6 conditions uninformative: AMR-WB (VoLTE), GSM-EFR (2G))",
+      "passed": false
+    },
+    {
+      "check": "Demo ground-truth verification (4/4 files reach their required tier)",
+      "passed": true
+    }
+  ],
+  "asvspoof5": {
+    "min_dcf": 0.0,
+    "act_dcf": 0.0,
+    "act_dcf_bayes": 18.999999999999996,
+    "cllr": 1.831225650005115,
+    "eer": 0.0,
+    "minDCF": 0.0,
+    "actDCF": 0.0,
+    "actDCF_bayes": 18.999999999999996,
+    "CLLR": 1.831225650005115,
+    "EER": 0.0,
+    "threshold_eer": 2.935396327296604,
+    "threshold_mindcf": 2.935396327296604,
+    "threshold_actdcf": 2.935396327296604,
+    "threshold_bayes": -0.6444820085786643,
+    "threshold_source": "eer_operating_point",
+    "calibrated": false
+  },
+  "latency_sla": {
+    "p50_ms": 6.997050000791205,
+    "p95_ms": 17.13371000114421,
+    "p99_ms": 18.21410800388548,
+    "mean_ms": 9.48848949978128,
+    "sla_threshold_p95_ms": 200.0,
+    "compliant": true
+  },
+  "telephony_robustness": {
+    "Clean (Broadband)": {
+      "EER_pct": 0.0,
+      "minDCF": 0.0,
+      "passed": true
+    },
+    "G.711 A-law": {
+      "EER_pct": 0.0,
+      "minDCF": 0.0,
+      "passed": true
+    },
+    "G.711 mu-law": {
+      "EER_pct": 0.0,
+      "minDCF": 0.0,
+      "passed": true
+    },
+    "AMR-WB (VoLTE)": {
+      "EER_pct": 0.5,
+      "minDCF": 1.0,
+      "passed": false
+    },
+    "GSM-EFR (2G)": {
+      "EER_pct": 1.0,
+      "minDCF": 1.0,
+      "passed": false
+    },
+    "Noise (15dB SNR)": {
+      "EER_pct": 0.0,
+      "minDCF": 0.0,
+      "passed": true
+    }
+  },
+  "demo_verification": {
+    "demo_01_genuine.wav": {
+      "risk": 33.9,
+      "tier": "ALLOW",
+      "expected": "AUTHENTIC_TARGET",
+      "required_tier": "ALLOW",
+      "windows": 6,
+      "passed": true
+    },
+    "demo_02_degraded_copy.wav": {
+      "risk": 34.1,
+      "tier": "ALLOW",
+      "expected": "AUTHENTIC_TARGET",
+      "required_tier": "ALLOW",
+      "windows": 6,
+      "passed": true
+    },
+    "demo_03_partial_splice.wav": {
+      "risk": 51.4,
+      "tier": "CHALLENGE",
+      "expected": "SUSPICIOUS_SPLICED_AUDIO",
+      "required_tier": "CHALLENGE",
+      "windows": 6,
+      "passed": true
+    },
+    "demo_04_impostor.wav": {
+      "risk": 70.0,
+      "tier": "BLOCK",
+      "expected": "IMPOSTOR_SPEAKER",
+      "required_tier": "BLOCK",
+      "windows": 6,
+      "passed": true
+    }
+  },
+  "demo_verification_summary": {
+    "passed": 4,
+    "total": 4
+  }
+}

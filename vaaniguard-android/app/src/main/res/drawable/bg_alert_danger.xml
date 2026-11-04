@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- verdict card: soft rose pastel wash, 20dp radius -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/error_pale" />
+    <corners android:radius="20dp" />
+</shape>

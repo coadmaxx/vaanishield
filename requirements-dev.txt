@@ -1,0 +1,57 @@
+# vaaniguard - development and test environment
+#
+# Why this file exists: the repo previously had no single manifest that could
+# bootstrap it. Dependencies were split across backend/requirements.txt,
+# ml/requirements.txt and vaaniguard-backend/requirements.txt, and NONE of them
+# included pytest -- so `make test` (which runs bare `pytest`) could never work
+# on a clean checkout.
+#
+# This manifest installs enough to run `pytest` (15 tests, pytest.ini's
+# testpaths = vaaniguard-backend/tests) and to boot the one live backend
+# (vaaniguard-backend/). It does NOT by itself cover the root-level tests/
+# directory (18 more tests, the ASR stack) -- that additionally needs `groq`
+# and `python-dotenv` from the root requirements.txt, which `make setup` does
+# not install. Run `pip install -r requirements.txt` too if you're touching
+# backend/services/asr/ or vaaniguard/semantic/.
+#
+#   pip install -r requirements-dev.txt
+#
+# torch/torchaudio are large. The CPU wheels keep it to roughly 200 MB and are
+# what `make setup` uses:
+#
+#   pip install -r requirements-dev.txt \
+#       --extra-index-url https://download.pytorch.org/whl/cpu
+
+# --- test runner -------------------------------------------------------------
+pytest>=8.0
+
+# --- core numerics -----------------------------------------------------------
+numpy>=1.24
+scipy>=1.10
+
+# --- vaaniguard-backend (deterministic-stub realtime service) ---------------
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.9
+python-multipart>=0.0.10
+httpx>=0.27
+websockets>=12.0
+
+# --- real (optional) detector backends and the trained ml/ identity model ---
+# The standalone backend/ server these were originally installed for has been
+# retired (backend/README.md) -- backend/app/models/{ecapa_verifier,
+# wavlm_detector}.py now serve as shared modules imported by
+# vaaniguard/detectors/{asv_ecapa,cm_wavlm}.py (VG_ASV_BACKEND=ecapa,
+# VG_CM_BACKEND=wavlm) and by ml_bridge.py (the ml/ identity model, MFCC
+# features via librosa). None of this is required for the default,
+# zero-dependency stub detectors -- only for the real backends and
+# POST /v1/verify-speaker.
+soundfile>=0.12
+torch>=2.1
+torchaudio>=2.1
+librosa>=0.10
+transformers>=4.36
+
+# Imported lazily inside ECAPAVerifier._ensure_model_loaded(), which falls back
+# to a deterministic stub per CONTRIBUTING.md. Only needed for real ECAPA-TDNN:
+# speechbrain>=1.0

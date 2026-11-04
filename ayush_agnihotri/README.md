@@ -1,0 +1,70 @@
+> **Note:** this directory describes a real-time claim fact-checking system
+> (Tavily + Gemini web-search verification) — a different product from the
+> acoustic voice-forensics system the rest of this repository documents (see
+> `docs/ARCHITECTURE.md` and `docs/PROTOCOL.md`). `docs/FLOWCHARTS_CORRECTED.md`
+> explicitly explains why the shipped system does not do open-ended,
+> web-search-based fact-checking — this prototype predates or explores that
+> alternative direction. Treated the same way `docs/ARCHITECTURE.md` already
+> treats `vaaniguard_sotto/` and `vaaniguard_indic_conformer/`: a standalone
+> prototype under this repo, not the currently-running system.
+
+# 👋 Ayush Agnihotri — Creator of vaaniguard
+
+| | |
+|---|---|
+| **Name** | Ayush Agnihotri |
+| **GitHub** | [@ayushagnihotrii](https://github.com/ayushagnihotrii) |
+| **Role** | Creator, Architect & Lead Developer |
+| **Project** | vaaniguard |
+
+---
+
+## About This Folder
+
+This folder belongs to **Ayush Agnihotri**, the creator of vaaniguard.
+Here you'll find personal notes, design decisions, and a showcase of the work done on this project.
+
+---
+
+## My Vision for vaaniguard
+
+I built vaaniguard because I believe that in a world flooded with misinformation,
+every spoken and written claim should be instantly verifiable.
+
+**vaaniguard** (Voice Guardian) is my answer to that problem —
+a system that takes any factual claim, searches the live internet for evidence,
+and uses AI to return a clear, explainable verdict.
+
+---
+
+## What I Built
+
+| Component | What I designed |
+|-----------|----------------|
+| **Verification Pipeline** | End-to-end claim → search → AI verdict flow |
+| **Factual Question Handler** | Single-question API for quick lookups |
+| **Claim Parser** | Extracts entities, locations, time refs, claim types |
+| **Query Builder** | Smart search query generation per claim type |
+| **Evidence Normalizer** | Converts raw web results into structured evidence |
+| **REST API** | FastAPI endpoints with Swagger docs |
+| **Test Suite** | 76 tests covering all verification outcomes |
+
+---
+
+## Tech Choices & Why
+
+- **Tavily** — best real-time web search API for AI agents
+- **Gemini AI** — best-in-class reasoning for factual verification
+- **FastAPI** — fast, async, production-ready Python API framework
+- **Pydantic** — strict data validation at every layer
+
+---
+
+## Connect With Me
+
+- GitHub: [@ayushagnihotrii](https://github.com/ayushagnihotrii)
+
+---
+
+> *"vaaniguard — Because every word deserves to be verified."*
+> — Ayush Agnihotri
